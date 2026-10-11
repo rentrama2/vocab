@@ -83,7 +83,10 @@
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 !important;
-                padding: 15mm !important;
+                padding: 12mm !important;
+            }
+            .sheet-item {
+                page-break-inside: avoid;
             }
         }
         .print-only {
@@ -153,7 +156,7 @@
                     </h2>
 
                     <p class="text-pink-100 text-base md:text-lg mb-8 font-medium leading-relaxed">
-                        ฝึกทักษะภาษาอังกฤษผ่านภาพการ์ตูนน่ารัก เสียงอ่านเจ้าของภาษา 
+                        ฝึกทักษะภาษาอังกฤษผ่านภาพการ์ตูนสีสดใสขนาดใหญ่ เสียงอ่านเจ้าของภาษา 
                         และแบบฝึกหัดเติมประโยคที่เริ่มใหม่ได้เรื่อยๆ <strong class="text-yellow-200 underline">สุ่มไม่ซ้ำกันในแต่ละรอบ!</strong>
                     </p>
 
@@ -161,7 +164,7 @@
                     <div class="flex items-center gap-4 bg-white/95 text-gray-800 p-4 rounded-2xl shadow-xl border-2 border-pink-200 mb-8 max-w-lg">
                         <span class="text-5xl animate-bounce">🐻</span>
                         <div class="text-xs md:text-sm font-bold">
-                            <span class="text-pink-600">พี่หมีชวนรู้:</span> "สวัสดีครับคนเก่ง! วันนี้เรามาเรียนรู้การใช้คำศัพท์ในประโยคจริงกันนะ กดปุ่มด้านล่างเพื่อเริ่มเล่นได้เลย!"
+                            <span class="text-pink-600">พี่หมีชวนรู้:</span> "สวัสดีครับคนเก่ง! วันนี้เรามาเรียนรู้การใช้คำศัพท์ในประโยคจริงกันนะ ภาพการ์ตูนใหญ่ชัดเจน พร้อมลุยแล้วกดปุ่มด้านล่างได้เลย!"
                         </div>
                     </div>
 
@@ -190,9 +193,9 @@
                     <p class="text-xs text-gray-500 leading-relaxed">เรียนรู้การนำคำศัพท์ไปแต่งประโยคจริง เข้าใจความหมายและการใช้งานอย่างถูกต้อง</p>
                 </div>
                 <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-sky-200 text-center hover:scale-105 transition duration-300">
-                    <div class="text-5xl mb-3">🔊</div>
-                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">เสียงอ่านสำเนียงแท้</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">ฟังเสียงอ่านภาษาอังกฤษชัดเจน ทั้งคำศัพท์เดี่ยวและประโยคเต็ม</p>
+                    <div class="text-5xl mb-3">🖼️</div>
+                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">ภาพการ์ตูนใหญ่คมชัด</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">ภาพเวกเตอร์ขนาดใหญ่ สีสันสดใส ชัดเจน สบายตาสำหรับเด็กๆ</p>
                 </div>
                 <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-emerald-200 text-center hover:scale-105 transition duration-300">
                     <div class="text-5xl mb-3">🖨️</div>
@@ -369,8 +372,8 @@
 
                                 <!-- Current Selected Image Preview -->
                                 <div class="flex items-center gap-4 bg-white p-3 rounded-2xl border border-emerald-200 shadow-sm mb-3">
-                                    <div id="current-preview-box" class="w-16 h-16 rounded-xl bg-pink-50 border-2 border-pink-200 flex items-center justify-center overflow-hidden shrink-0">
-                                        <span id="preview-fallback-emoji" class="text-3xl">🌟</span>
+                                    <div id="current-preview-box" class="w-20 h-20 rounded-2xl bg-pink-50 border-2 border-pink-200 flex items-center justify-center overflow-hidden shrink-0 p-1">
+                                        <span id="preview-fallback-emoji" class="text-4xl">🌟</span>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div id="preview-label" class="text-xs font-bold text-gray-700 truncate">ยังไม่ได้เลือกรูป</div>
@@ -665,7 +668,7 @@
             cat: { en: "A cute ______ climbs trees and says meow.", th: "แมวน่ารักปีนต้นไม้และร้องเหมียวๆ" },
             dog: { en: "A faithful ______ wags its tail and barks woof.", th: "สุนัขแสนซื่อสัตย์กระดิกหางและเห่าโฮ่งๆ" },
             rabbit: { en: "A fluffy ______ has long ears and loves carrots.", th: "กระต่ายขนปุยมีหูยาวและชอบกินแครอท" },
-            elephant: { en: "An ______ is a giant animal with a long trunk.", th: "ช้างเป็นสัตว์ตัวโตที่มีงวงยาว" },
+            elephant: { en: "An ______ is a big animal with a long trunk.", th: "ช้างเป็นสัตว์ตัวโตที่มีงวงยาว" },
             lion: { en: "The brave ______ is known as king of the jungle.", th: "สิงโตผู้กล้าหาญได้รับฉายาว่าเป็นเจ้าป่า" },
             tiger: { en: "A fierce ______ has orange fur with black stripes.", th: "เสือมีขนสีส้มพร้อมลายพาดกลอนสีดำ" },
             bear: { en: "A big brown ______ loves to eat sweet honey.", th: "หมีสีน้ำตาลตัวใหญ่ชอบกินน้ำผึ้งหวาน" },
@@ -706,7 +709,7 @@
             pink: { en: "A blooming rose and cherry blossoms are ______.", th: "ดอกกุหลาบและดอกซากุระบานสะพรั่งเป็นสีชมพู" },
             purple: { en: "Ripe grapes and lavender flowers are ______.", th: "องุ่นสุกและดอกลาเวนเดอร์มีสีม่วง" },
 
-            book: { en: "I open my English ______ to read funny stories.", th: "ฉันเปิดหนังสือภาษาอังกฤษเพื่ออ่านนิทานสนุกๆ" },
+            book: { en: "I open my English ______ to study new words.", th: "ฉันเปิดหนังสือภาษาอังกฤษเพื่อเรียนคำศัพท์ใหม่" },
             pencil: { en: "I sharpen my wooden ______ to write neatly.", th: "ฉันเหลาดินสอไม้เพื่อเขียนให้เรียบร้อย" },
             pen: { en: "The teacher writes feedback using a blue ______.", th: "คุณครูเขียนคำแนะนำโดยใช้ปากกาสีน้ำเงิน" },
             bag: { en: "I pack my school ______ every evening.", th: "ฉันจัดกระเป๋านักเรียนทุกๆ เย็น" },
@@ -727,7 +730,7 @@
             boat: { en: "A small sailing ______ floats across the calm lake.", th: "เรือใบเล็กๆ ลอยข้ามทะเลสาบที่เงียบสงบ" },
             rocket: { en: "Astronauts travel into deep space in a ______.", th: "นักบินอวกาศเดินทางสู่อวกาศลึกด้วยจรวด" },
 
-            sun: { en: "The bright ______ gives light and warmth to our world.", th: "ดวงอาทิตย์ส่องแสงสว่างและความอบอุ่นแก่โลกเรา" },
+            sun: { en: "The golden ______ gives light and warmth to our world.", th: "ดวงอาทิตย์ส่องแสงสว่างและความอบอุ่นแก่โลกเรา" },
             moon: { en: "The silver ______ shines brightly in the dark night.", th: "ดวงจันทร์สีเงินส่องแสงสว่างในยามค่ำคืนที่มืดมิด" },
             star: { en: "Look up at the night sky and make a wish on a ______.", th: "มองขึ้นไปบนท้องฟ้ายามค่ำคืนแล้วอธิษฐานกับดวงดาว" },
             rainbow: { en: "After the rain, I see a colorful ______ in the sky.", th: "หลังฝนตก ฉันเห็นสายรุ้งหลากสีสันบนท้องฟ้า" },
@@ -742,8 +745,8 @@
                 return WORD_SENTENCES[key];
             }
             return {
-                en: `This sentence is about ______ (${item.meaning}).`,
-                th: `ประโยคนี้เกี่ยวข้องกับ [ ${item.meaning} ] ที่เรากำลังเรียนรู้`
+                en: `This picture shows a cute ______ (${item.meaning}).`,
+                th: `ประโยคนี้แสดงถึง [ ${item.meaning} ] ที่เรากำลังเรียนรู้`
             };
         }
 
@@ -846,18 +849,28 @@
             return arr;
         }
 
-        // Helper: Render Visual (Image with graceful fallback to Emoji)
-        function renderVisual(item, sizeClass = "text-7xl", imgClass = "w-28 h-28 object-contain") {
+        // Formats Iconify SVG to explicit pixel dimensions (fixes 1em tiny SVG bug!)
+        function formatImageUrl(url, size = 160) {
+            if (!url) return '';
+            if (url.includes('api.iconify.design') && !url.includes('width=')) {
+                return url + (url.includes('?') ? '&' : '?') + `width=${size}&height=${size}`;
+            }
+            return url;
+        }
+
+        // Helper: Render Visual (Large, crystal-clear with graceful fallback to Emoji)
+        function renderVisual(item, sizeClass = "text-6xl", imgClass = "w-24 h-24") {
             const emojiText = item.emoji || '🌟';
             if (item.image) {
+                const src = formatImageUrl(item.image, 160);
                 return `
-                    <div class="relative inline-flex items-center justify-center">
-                        <img src="${item.image}" alt="${item.word}" class="${imgClass} inline-block filter drop-shadow-md transition-transform hover:scale-105" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='inline-block';" loading="lazy">
-                        <span style="display:none;" class="${sizeClass}">${emojiText}</span>
+                    <div class="relative inline-flex items-center justify-center ${imgClass}">
+                        <img src="${src}" alt="${item.word}" class="w-full h-full max-w-full max-h-full object-contain filter drop-shadow-md transition-transform hover:scale-105" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='inline-block';" loading="lazy">
+                        <span style="display:none;" class="${sizeClass} leading-none select-none">${emojiText}</span>
                     </div>
                 `;
             }
-            return `<span class="${sizeClass}">${emojiText}</span>`;
+            return `<span class="${sizeClass} leading-none select-none">${emojiText}</span>`;
         }
 
         // ========================================================
@@ -918,6 +931,16 @@
         function speakFullSentence(sentenceTemplate, word) {
             const completed = sentenceTemplate.replace(/______+/g, word);
             speakWord(completed);
+        }
+
+        function speakCurrentQuestion() {
+            if (!generatedQuestions || !generatedQuestions[currentQuestionIdx]) return;
+            const q = generatedQuestions[currentQuestionIdx];
+            if (q.type === 'sentence') {
+                speakFullSentence(q.sentenceEn, q.target.word);
+            } else {
+                speakWord(q.target.word);
+            }
         }
 
         function toggleAudio() {
@@ -1074,7 +1097,7 @@
             countEl.textContent = `${candidates.length} รูปที่พบ`;
             container.innerHTML = candidates.map(c => `
                 <button type="button" onclick="selectCandidateImage('${encodeURIComponent(c.url)}', '${c.emoji || '🌟'}', '${c.title}')" class="p-2 rounded-xl border-2 border-gray-200 hover:border-pink-400 hover:bg-pink-50 transition flex items-center justify-center aspect-square group bg-white shadow-xs" title="${c.title}">
-                    <img src="${c.url}" alt="${c.title}" class="w-10 h-10 object-contain group-hover:scale-110 transition-transform">
+                    <img src="${formatImageUrl(c.url, 96)}" alt="${c.title}" class="w-10 h-10 object-contain group-hover:scale-110 transition-transform">
                 </button>
             `).join('');
 
@@ -1089,7 +1112,7 @@
             document.getElementById('selected-emoji').value = emoji || '🌟';
 
             const box = document.getElementById('current-preview-box');
-            box.innerHTML = `<img src="${url}" class="w-12 h-12 object-contain animate-float" onerror="this.outerHTML='<span class=\\'text-3xl\\'>${emoji || '🌟'}</span>'">`;
+            box.innerHTML = `<img src="${formatImageUrl(url, 128)}" class="w-16 h-16 object-contain animate-float" onerror="this.outerHTML='<span class=\\'text-4xl\\'>${emoji || '🌟'}</span>'">`;
             document.getElementById('preview-label').textContent = title || "รูปภาพที่เลือก";
         }
 
@@ -1099,7 +1122,7 @@
             document.getElementById('image-candidates').innerHTML = `
                 <div class="col-span-full py-4 text-center text-xs text-gray-400">พิมพ์คำศัพท์ภาษาอังกฤษเพื่อค้นหาภาพอัตโนมัติ</div>
             `;
-            document.getElementById('current-preview-box').innerHTML = `<span class="text-3xl">🌟</span>`;
+            document.getElementById('current-preview-box').innerHTML = `<span class="text-4xl">🌟</span>`;
             document.getElementById('preview-label').textContent = "ยังไม่ได้เลือกรูป";
             document.getElementById('selected-image-url').value = "";
         }
@@ -1200,7 +1223,7 @@
 
             container.innerHTML = candidates.map(c => `
                 <button type="button" onclick="applyModalImage('${encodeURIComponent(c.url)}', '${c.emoji || '🌟'}')" class="p-2.5 rounded-2xl border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-100/60 transition flex items-center justify-center aspect-square group bg-white shadow-sm">
-                    <img src="${c.url}" alt="${c.title}" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                    <img src="${formatImageUrl(c.url, 96)}" alt="${c.title}" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
                 </button>
             `).join('');
         }
@@ -1262,13 +1285,13 @@
                         <p class="text-xs text-gray-500 mb-4">${p.desc}</p>
 
                         <!-- Preview Mini Avatars -->
-                        <div class="flex items-center gap-1.5 mb-6 overflow-hidden py-1">
+                        <div class="flex items-center gap-2 mb-6 overflow-hidden py-1">
                             ${p.words.slice(0, 5).map(w => `
-                                <div class="w-8 h-8 rounded-lg bg-pink-50 border border-pink-100 flex items-center justify-center text-xs" title="${w.word} (${w.meaning})">
-                                    ${renderVisual(w, 'text-sm', 'w-6 h-6 object-contain')}
+                                <div class="w-10 h-10 rounded-xl bg-pink-50 border border-pink-100 flex items-center justify-center p-1" title="${w.word} (${w.meaning})">
+                                    ${renderVisual(w, 'text-base', 'w-8 h-8')}
                                 </div>
                             `).join('')}
-                            <span class="text-[11px] text-gray-400 font-bold ml-1">+${p.words.length} คำ</span>
+                            <span class="text-xs text-gray-400 font-bold ml-1">+${p.words.length} คำ</span>
                         </div>
                     </div>
 
@@ -1319,18 +1342,11 @@
             }
 
             const generated = [];
-            
-            // True Randomization of words
             const randomizedWords = shuffleArray(currentWords);
-
-            // True Randomization of question types pool
             const shuffledTypes = shuffleArray(enabledTypes);
 
             randomizedWords.forEach((targetItem, i) => {
-                // Pick question type randomly ensuring variety
                 const questionType = shuffledTypes[i % shuffledTypes.length];
-                
-                // Shuffle others for distractors
                 const others = currentWords.filter(w => w.word !== targetItem.word);
                 const randomizedOthers = shuffleArray(others);
                 const distractors = randomizedOthers.slice(0, 3);
@@ -1388,14 +1404,16 @@
 
                 // --- 4. SPELLING (เรียงตัวอักษรสะกดคำ) ---
                 else if (questionType === 'spelling') {
-                    const letters = shuffleArray(targetItem.word.toUpperCase().split(''));
+                    // Normalize word for spelling tiles (strip spaces for multi-words)
+                    const cleanWord = targetItem.word.toUpperCase().replace(/[^A-Z]/g, '');
+                    const letters = shuffleArray(cleanWord.split(''));
                     generated.push({
                         type: 'spelling',
                         target: targetItem,
                         title: "เกมเรียงตัวอักษรสะกดคำ (Spelling)",
                         instruction: `สะกดคำว่า "${targetItem.meaning}" ให้ถูกต้อง`,
                         letters: letters,
-                        answer: targetItem.word.toUpperCase()
+                        answer: cleanWord
                     });
                 }
 
@@ -1416,7 +1434,7 @@
                 }
             });
 
-            // Randomize the entire question list order as well!
+            // Randomize whole question set order
             generatedQuestions = shuffleArray(generated);
             currentQuestionIdx = 0;
             userScore = 0;
@@ -1471,7 +1489,7 @@
                             </div>
                             
                             <div class="mt-3 flex items-center justify-center gap-2">
-                                <button onclick="speakFullSentence('${q.sentenceEn.replace(/'/g, "\\'")}', '${q.target.word}')" class="text-xs bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition flex items-center gap-1.5 btn-bounce" title="กดฟังประโยคเต็ม">
+                                <button onclick="speakCurrentQuestion()" class="text-xs bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition flex items-center gap-1.5 btn-bounce" title="กดฟังประโยคเต็ม">
                                     <span>🔊</span> กดฟังประโยคภาษาอังกฤษ
                                 </button>
                             </div>
@@ -1487,11 +1505,11 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-4">
                         ${q.options.map((opt, idx) => `
-                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/70 text-gray-800 font-bold p-3.5 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between group">
+                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word.replace(/'/g, "\\'")}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/70 text-gray-800 font-bold p-3.5 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between group">
                                 <span class="flex items-center gap-3">
-                                    <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-black">${String.fromCharCode(65 + idx)}</span>
-                                    <div class="w-8 h-8 flex items-center justify-center">
-                                        ${renderVisual(opt.item, 'text-xl', 'w-7 h-7 object-contain')}
+                                    <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-black shrink-0">${String.fromCharCode(65 + idx)}</span>
+                                    <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                                        ${renderVisual(opt.item, 'text-2xl', 'w-8 h-8')}
                                     </div>
                                     <span class="font-fredoka text-base md:text-lg">${opt.text}</span>
                                 </span>
@@ -1502,15 +1520,15 @@
                 `;
             }
 
-            // --- 2. Type: PICTURE ---
+            // --- 2. Type: PICTURE (ดูรูปการ์ตูนขนาดใหญ่) ---
             else if (q.type === 'picture') {
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="relative inline-block">
                             <div class="p-6 bg-gradient-to-b from-amber-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-pink-100">
-                                ${renderVisual(q.target, 'text-8xl md:text-9xl', 'w-36 h-36 md:w-44 md:h-44 object-contain animate-float')}
+                                ${renderVisual(q.target, 'text-8xl md:text-9xl', 'w-40 h-40 md:w-48 md:h-48 animate-float')}
                             </div>
-                            <button onclick="speakWord('${q.target.word}')" class="absolute -bottom-2 -right-2 bg-pink-500 hover:bg-pink-600 text-white p-3.5 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-90" title="กดฟังเสียงอ่าน">
+                            <button onclick="speakCurrentQuestion()" class="absolute -bottom-2 -right-2 bg-pink-500 hover:bg-pink-600 text-white p-3.5 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-90" title="กดฟังเสียงอ่าน">
                                 🔊
                             </button>
                         </div>
@@ -1519,7 +1537,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-6">
                         ${q.options.map((opt, idx) => `
-                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/60 text-gray-800 font-bold p-4 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between group">
+                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word.replace(/'/g, "\\'")}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/60 text-gray-800 font-bold p-4 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between group">
                                 <span class="flex items-center gap-2">
                                     <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-black">${String.fromCharCode(65 + idx)}</span>
                                     <span class="font-fredoka text-lg">${opt.text}</span>
@@ -1531,12 +1549,12 @@
                 `;
             }
 
-            // --- 3. Type: LISTENING ---
+            // --- 3. Type: LISTENING (ภาพการ์ตูนใหญ่ชัดเจน 80-96px) ---
             else if (q.type === 'listening') {
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="inline-block p-6 bg-amber-50 rounded-3xl border-2 border-amber-200 shadow-inner">
-                            <button onclick="speakWord('${q.target.word}')" class="bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-black py-4 px-8 rounded-full shadow-lg text-xl flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 glow-effect">
+                            <button onclick="speakCurrentQuestion()" class="bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-black py-4 px-8 rounded-full shadow-lg text-xl flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 glow-effect">
                                 <span class="text-3xl">🔊</span> กดฟังเสียงคำศัพท์นี้!
                             </button>
                             <p class="text-xs text-amber-700 font-bold mt-3">ฟังแล้วเลือกว่าตรงกับภาพการ์ตูนใดด้านล่าง</p>
@@ -1544,13 +1562,14 @@
                         <h3 class="text-lg md:text-xl font-extrabold text-gray-800 mt-5">${q.instruction}</h3>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-6">
+                    <!-- Large & Clear Cartoon Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
                         ${q.options.map(opt => `
-                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-3 border-pink-200 hover:border-pink-500 hover:bg-pink-50 p-4 rounded-3xl shadow-sm transition duration-200 btn-bounce text-center flex flex-col items-center justify-center">
-                                <div class="w-20 h-20 mb-2 flex items-center justify-center">
-                                    ${renderVisual(opt.item, 'text-5xl', 'w-18 h-18 object-contain')}
+                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word.replace(/'/g, "\\'")}')" class="bg-white border-3 border-pink-200 hover:border-pink-500 hover:bg-pink-50/80 p-4 md:p-5 rounded-3xl shadow-sm hover:shadow-md transition duration-200 btn-bounce text-center flex flex-col items-center justify-center group">
+                                <div class="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center p-2 mb-3 bg-pink-50/60 group-hover:bg-pink-100/60 rounded-2xl border border-pink-100 group-hover:border-pink-300 transition-all">
+                                    ${renderVisual(opt.item, 'text-6xl sm:text-7xl', 'w-20 h-20 sm:w-24 sm:h-24')}
                                 </div>
-                                <span class="text-xs font-bold text-gray-600">${opt.item.meaning}</span>
+                                <span class="text-sm sm:text-base font-extrabold text-gray-700 group-hover:text-pink-600 transition-colors">${opt.item.meaning}</span>
                             </button>
                         `).join('')}
                     </div>
@@ -1562,7 +1581,7 @@
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="p-5 bg-gradient-to-b from-purple-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-purple-100">
-                            ${renderVisual(q.target, 'text-7xl', 'w-32 h-32 object-contain')}
+                            ${renderVisual(q.target, 'text-8xl', 'w-36 h-36 md:w-40 md:h-40')}
                         </div>
                         <h3 class="text-lg md:text-xl font-extrabold text-gray-800 mt-4">${q.instruction}</h3>
                         <p class="text-sm text-pink-600 font-bold mt-1">คลิกตัวอักษรเพื่อเรียงคำศัพท์</p>
@@ -1594,11 +1613,11 @@
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="p-5 bg-amber-50 rounded-3xl inline-block shadow-inner border-2 border-amber-100 mb-3">
-                            ${renderVisual(q.target, 'text-7xl', 'w-28 h-28 object-contain')}
+                            ${renderVisual(q.target, 'text-7xl md:text-8xl', 'w-32 h-32 md:w-36 md:h-36')}
                         </div>
                         <div class="font-fredoka text-4xl font-extrabold text-pink-600 flex items-center justify-center gap-3">
                             <span>${q.target.word}</span>
-                            <button onclick="speakWord('${q.target.word}')" class="text-sm bg-pink-100 text-pink-600 hover:bg-pink-200 p-2 rounded-full shadow-sm" title="ฟังเสียง">
+                            <button onclick="speakCurrentQuestion()" class="text-sm bg-pink-100 text-pink-600 hover:bg-pink-200 p-2 rounded-full shadow-sm" title="ฟังเสียง">
                                 🔊
                             </button>
                         </div>
@@ -1607,7 +1626,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-6">
                         ${q.options.map((opt, idx) => `
-                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/60 text-gray-800 font-bold p-4 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between">
+                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word.replace(/'/g, "\\'")}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/60 text-gray-800 font-bold p-4 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between">
                                 <span class="flex items-center gap-2">
                                     <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-black">${idx + 1}</span>
                                     <span class="text-base">${opt.text}</span>
@@ -1623,9 +1642,9 @@
 
             // Audio trigger
             if (q.type === 'sentence') {
-                setTimeout(() => speakFullSentence(q.sentenceEn, q.target.word), 400);
+                setTimeout(() => speakCurrentQuestion(), 400);
             } else if (q.type === 'picture' || q.type === 'meaning') {
-                setTimeout(() => speakWord(q.target.word), 400);
+                setTimeout(() => speakCurrentQuestion(), 400);
             } else if (q.type === 'spelling') {
                 initSpellingQuestion(q.letters);
             }
@@ -1821,8 +1840,8 @@
                     <div class="p-3.5 bg-pink-50/60 hover:bg-pink-50 rounded-2xl border border-pink-200 transition">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div onclick="openChangeImageModal(${idx})" class="w-12 h-12 bg-white rounded-xl shadow-sm border border-pink-100 flex items-center justify-center cursor-pointer hover:border-pink-400 transition shrink-0" title="คลิกเพื่อเปลี่ยนรูปภาพ">
-                                    ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+                                <div onclick="openChangeImageModal(${idx})" class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-pink-100 flex items-center justify-center p-1 cursor-pointer hover:border-pink-400 transition shrink-0" title="คลิกเพื่อเปลี่ยนรูปภาพ">
+                                    ${renderVisual(item, 'text-3xl', 'w-10 h-10')}
                                 </div>
                                 <div>
                                     <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
@@ -1937,7 +1956,7 @@
 
             area.innerHTML = `
                 <!-- Part 1: โยงเส้นจับคู่ภาพ -->
-                <div>
+                <div class="sheet-item">
                     <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">1</span>
                         <span>ตอนที่ 1: โยงเส้นจับคู่ภาพการ์ตูนกับคำศัพท์ภาษาอังกฤษที่ถูกต้อง</span>
@@ -1946,11 +1965,11 @@
                     <div class="grid grid-cols-2 gap-8 border-2 border-gray-200 rounded-2xl p-6 bg-pink-50/20">
                         <!-- Column Left: Picture + Thai -->
                         <div class="space-y-4">
-                            ${currentWords.map((item, idx) => `
+                            ${currentWords.map(item => `
                                 <div class="flex items-center justify-between p-2 border-b border-gray-200">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 flex items-center justify-center">
-                                            ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+                                        <div class="w-12 h-12 flex items-center justify-center">
+                                            ${renderVisual(item, 'text-3xl', 'w-10 h-10')}
                                         </div>
                                         <span class="text-sm font-bold text-gray-700">${item.meaning}</span>
                                     </div>
@@ -1961,7 +1980,7 @@
 
                         <!-- Column Right: English Words (Shuffled) -->
                         <div class="space-y-4">
-                            ${shuffledWords.map((item, idx) => `
+                            ${shuffledWords.map(item => `
                                 <div class="flex items-center justify-between p-2 border-b border-gray-200">
                                     <div class="w-4 h-4 rounded-full border-2 border-pink-500"></div>
                                     <span class="font-fredoka text-lg font-bold text-pink-600 tracking-wide">${item.word}</span>
@@ -1972,7 +1991,7 @@
                 </div>
 
                 <!-- Part 2: เติมคำในประโยคให้สมบูรณ์ (NEW SENTENCE CONTEXT) -->
-                <div class="mt-8">
+                <div class="mt-8 sheet-item">
                     <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">2</span>
                         <span>ตอนที่ 2: เติมคำศัพท์ลงในช่องว่างของประโยคให้ถูกต้องสมบูรณ์</span>
@@ -1996,14 +2015,14 @@
                 </div>
 
                 <!-- Part 3: เติมตัวอักษรที่หายไป -->
-                <div class="mt-8">
+                <div class="mt-8 sheet-item">
                     <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">3</span>
                         <span>ตอนที่ 3: เติมตัวอักษรที่หายไปให้เป็นคำศัพท์ที่สมบูรณ์</span>
                     </h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        ${currentWords.map((item, idx) => {
+                        ${currentWords.map(item => {
                             const chars = item.word.split('');
                             const maskIdx = Math.floor(chars.length / 2);
                             const maskedWord = chars.map((c, i) => i === maskIdx ? '___' : c).join(' ');
@@ -2011,7 +2030,7 @@
                             return `
                                 <div class="border-2 border-dashed border-gray-300 rounded-2xl p-4 flex items-center gap-4 bg-white">
                                     <div class="w-14 h-14 p-1 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
-                                        ${renderVisual(item, 'text-3xl', 'w-12 h-12 object-contain')}
+                                        ${renderVisual(item, 'text-4xl', 'w-12 h-12')}
                                     </div>
                                     <div class="flex-1">
                                         <div class="text-xs text-gray-500 font-bold">${item.meaning}</div>
