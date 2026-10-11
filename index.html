@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KidsVocab Studio - ระบบสร้างแบบฝึกหัดคำศัพท์ภาษาอังกฤษสำหรับเด็ก พร้อมหาภาพอัตโนมัติ</title>
+    <title>KidsVocab Studio - ดินแดนผจญภัยคำศัพท์และประโยคภาษาอังกฤษสำหรับเด็ก</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Prompt for Thai, Fredoka for playful English -->
@@ -96,25 +96,28 @@
     <!-- Top Navigation / Header -->
     <header class="no-print bg-white/85 backdrop-blur-md sticky top-0 z-40 border-b-4 border-pink-200 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('game')">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
                 <span class="text-4xl animate-bounce">🎈</span>
                 <div>
                     <h1 class="text-xl md:text-2xl font-extrabold text-pink-600 tracking-wide flex items-center gap-2">
                         KidsVocab Studio <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-0.5 rounded-full font-bold">ป.1 - ป.3</span>
                     </h1>
-                    <p class="text-xs text-gray-500 font-medium">ระบบสร้างแบบฝึกหัดภาษาอังกฤษการ์ตูน พร้อมระบบค้นหาภาพอัตโนมัติ 🖼️</p>
+                    <p class="text-xs text-gray-500 font-medium">ผจญภัยคำศัพท์ & ประโยคภาษาอังกฤษการ์ตูนแสนสนุก 🌟</p>
                 </div>
             </div>
 
             <!-- View Switcher Tabs -->
-            <div class="flex items-center gap-2 bg-pink-50 p-1.5 rounded-2xl border-2 border-pink-200">
-                <button onclick="switchView('game')" id="nav-btn-game" class="px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 bg-pink-500 text-white shadow-md">
+            <div class="flex items-center gap-1.5 md:gap-2 bg-pink-50 p-1.5 rounded-2xl border-2 border-pink-200">
+                <button onclick="switchView('home')" id="nav-btn-home" class="px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 bg-pink-500 text-white shadow-md">
+                    <span>🏠</span> หน้าแรก
+                </button>
+                <button onclick="launchNewRandomGame()" id="nav-btn-game" class="px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
                     <span>🎮</span> เล่นเกมแบบฝึกหัด
                 </button>
-                <button onclick="switchView('editor')" id="nav-btn-editor" class="px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
+                <button onclick="switchView('editor')" id="nav-btn-editor" class="px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
                     <span>✏️</span> จัดการคำศัพท์ & หาภาพ
                 </button>
-                <button onclick="switchView('print')" id="nav-btn-print" class="px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
+                <button onclick="switchView('print')" id="nav-btn-print" class="px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
                     <span>🖨️</span> พิมพ์ใบงาน A4
                 </button>
             </div>
@@ -130,9 +133,95 @@
     <div class="max-w-6xl mx-auto p-4 md:p-6 pb-20">
 
         <!-- ========================================== -->
+        <!-- VIEW 0: LANDING PAGE (หน้าแรกต้อนรับสดใส) -->
+        <!-- ========================================== -->
+        <div id="view-home" class="view-panel transition-all duration-300 space-y-10">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-pink-500 via-rose-400 to-amber-400 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border-4 border-white/60">
+                <div class="absolute -right-8 -bottom-10 opacity-20 text-[180px] pointer-events-none select-none">
+                    🎪
+                </div>
+
+                <div class="relative z-10 max-w-2xl">
+                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black mb-4">
+                        <span>🌟 ยินดีต้อนรับสู่โลกแห่งการเรียนรู้</span>
+                        <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded-full text-[10px]">รุ่น ป.1 - ป.3</span>
+                    </div>
+
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-wide leading-tight mb-4 drop-shadow-sm">
+                        เรียนรู้คำศัพท์ & <br>เติมประโยคภาษาอังกฤษแสนสนุก! 🎈
+                    </h2>
+
+                    <p class="text-pink-100 text-base md:text-lg mb-8 font-medium leading-relaxed">
+                        ฝึกทักษะภาษาอังกฤษผ่านภาพการ์ตูนน่ารัก เสียงอ่านเจ้าของภาษา 
+                        และแบบฝึกหัดเติมประโยคที่เริ่มใหม่ได้เรื่อยๆ <strong class="text-yellow-200 underline">สุ่มไม่ซ้ำกันในแต่ละรอบ!</strong>
+                    </p>
+
+                    <!-- Mascot Speech Bubble -->
+                    <div class="flex items-center gap-4 bg-white/95 text-gray-800 p-4 rounded-2xl shadow-xl border-2 border-pink-200 mb-8 max-w-lg">
+                        <span class="text-5xl animate-bounce">🐻</span>
+                        <div class="text-xs md:text-sm font-bold">
+                            <span class="text-pink-600">พี่หมีชวนรู้:</span> "สวัสดีครับคนเก่ง! วันนี้เรามาเรียนรู้การใช้คำศัพท์ในประโยคจริงกันนะ กดปุ่มด้านล่างเพื่อเริ่มเล่นได้เลย!"
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-3.5">
+                        <button onclick="launchNewRandomGame()" class="bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-8 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center gap-2">
+                            <span>🚀</span> เริ่มผจญภัยทันที (สุ่มโหมดใหม่)
+                        </button>
+                        <a href="#category-section" class="bg-white/20 hover:bg-white/30 text-white font-bold py-4 px-6 rounded-2xl backdrop-blur transition btn-bounce flex items-center gap-2 text-base">
+                            <span>🎒</span> เลือกหมวดหมู่ที่ชอบ
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Highlights (4 เสาหลักการเรียนรู้) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-pink-200 text-center hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-3">🎲</div>
+                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">สุ่มใหม่ไม่ซ้ำกัน</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">ทุกครั้งที่เริ่มเล่นใหม่ ระบบจะสลับข้อสอบ สลับโหมด และสลับตัวเลือก ไม่จำเจ</p>
+                </div>
+                <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-amber-200 text-center hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-3">📝</div>
+                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">เติมประโยคให้สมบูรณ์</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">เรียนรู้การนำคำศัพท์ไปแต่งประโยคจริง เข้าใจความหมายและการใช้งานอย่างถูกต้อง</p>
+                </div>
+                <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-sky-200 text-center hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-3">🔊</div>
+                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">เสียงอ่านสำเนียงแท้</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">ฟังเสียงอ่านภาษาอังกฤษชัดเจน ทั้งคำศัพท์เดี่ยวและประโยคเต็ม</p>
+                </div>
+                <div class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-xl border-4 border-emerald-200 text-center hover:scale-105 transition duration-300">
+                    <div class="text-5xl mb-3">🖨️</div>
+                    <h3 class="font-extrabold text-gray-800 text-lg mb-1">พิมพ์ใบงาน A4 สวยๆ</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">แปลงคำศัพท์เป็นแบบฝึกหัดบนกระดาษพร้อมรูปการ์ตูน คมชัด นำไปสอนในห้องเรียนได้ทันที</p>
+                </div>
+            </div>
+
+            <!-- Categories Showcase Grid -->
+            <div id="category-section" class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-black text-gray-800 flex items-center gap-2">
+                            <span>🎒</span> เลือกหมวดหมู่คำศัพท์ที่อยากเรียน
+                        </h3>
+                        <p class="text-xs text-gray-500">คลิกที่การ์ดหมวดหมู่เพื่อเริ่มเล่นแบบฝึกหัดของหมวดนั้นได้ทันที</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="home-category-cards">
+                    <!-- Category Cards Injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
         <!-- VIEW 1: GAME VIEW (โหมดเล่นแบบฝึกหัด) -->
         <!-- ========================================== -->
-        <div id="view-game" class="view-panel transition-all duration-300">
+        <div id="view-game" class="view-panel hidden transition-all duration-300">
             <div class="max-w-2xl mx-auto">
                 <!-- Info Bar -->
                 <div class="bg-white/90 backdrop-blur rounded-3xl p-4 shadow-xl border-4 border-pink-200 mb-6 flex items-center justify-between gap-3">
@@ -150,8 +239,8 @@
                         <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
                             ⭐ <span id="game-score-badge">0</span> คะแนน
                         </span>
-                        <button onclick="switchView('editor')" class="text-xs bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold px-3 py-1.5 rounded-xl transition">
-                            ตั้งค่าคำศัพท์ ⚙️
+                        <button onclick="launchNewRandomGame()" class="text-xs bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold px-3 py-1.5 rounded-xl transition" title="สุ่มข้อสอบชุดใหม่">
+                            🎲 สุ่มรอบใหม่
                         </button>
                     </div>
                 </div>
@@ -170,7 +259,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- ========================================== -->
         <!-- VIEW 2: EDITOR VIEW (โหมดจัดการคำศัพท์ & หาภาพ) -->
@@ -202,7 +290,7 @@
                                 <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
                                     <span>📝</span> รายการคำศัพท์ในชุดนี้ (<span id="vocab-count">0</span> คำ)
                                 </h2>
-                                <p class="text-xs text-gray-500">มีภาพการ์ตูนประจำแต่ละคำศัพท์ สามารถคลิกที่ภาพเพื่อเปลี่ยนได้</p>
+                                <p class="text-xs text-gray-500">มีภาพการ์ตูนและประโยคประจำแต่ละคำศัพท์ คลิกที่ภาพเพื่อเปลี่ยนได้</p>
                             </div>
                             <button onclick="clearCurrentVocab()" class="text-xs text-rose-500 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl font-bold transition">
                                 🗑️ ล้างทั้งหมด
@@ -223,7 +311,7 @@
                             </h2>
                             <span class="text-xs bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full font-bold">Smart Auto-Image</span>
                         </div>
-                        <p class="text-xs text-gray-500 mb-3">พิมพ์คำศัพท์บรรทัดละ 1 คำ (ระบบจะค้นหารูปการ์ตูนให้ทุกคำอัตโนมัติ): <code>คำภาษาอังกฤษ, คำแปลไทย</code></p>
+                        <p class="text-xs text-gray-500 mb-3">พิมพ์คำศัพท์บรรทัดละ 1 คำ (ระบบจะค้นหารูปการ์ตูนและสร้างประโยคให้อัตโนมัติ): <code>คำภาษาอังกฤษ, คำแปลไทย</code></p>
                         <textarea id="bulk-input" rows="3" placeholder="ตัวอย่าง:&#10;giraffe, ยีราฟ&#10;helicopter, เฮลิคอปเตอร์&#10;dinosaur, ไดโนเสาร์" class="w-full text-sm p-3 border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 rounded-2xl outline-none"></textarea>
                         
                         <div id="bulk-status" class="hidden text-xs text-purple-700 font-bold my-2 flex items-center gap-2">
@@ -299,7 +387,6 @@
                                         <span id="candidate-count" class="text-[10px] text-emerald-600">0 รูป</span>
                                     </div>
                                     <div id="image-candidates" class="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-36 overflow-y-auto p-1 bg-white rounded-xl border border-gray-200">
-                                        <!-- Candidate buttons injected by JS -->
                                         <div class="col-span-full py-4 text-center text-xs text-gray-400">พิมพ์คำศัพท์ภาษาอังกฤษเพื่อค้นหาภาพอัตโนมัติ</div>
                                     </div>
                                 </div>
@@ -325,30 +412,34 @@
                             <span class="text-3xl animate-bounce">🚀</span>
                             <div>
                                 <h3 class="text-xl font-black">พร้อมสร้างแบบฝึกหัด!</h3>
-                                <p class="text-pink-100 text-xs">ผสมโหมดรูปภาพ เสียง และสะกดคำให้อัตโนมัติ</p>
+                                <p class="text-pink-100 text-xs">ผสมโหมดประโยค รูปภาพ เสียง และสะกดคำ (สุ่มใหม่ไม่ซ้ำกัน)</p>
                             </div>
                         </div>
 
                         <div class="space-y-3 mb-6 bg-white/10 backdrop-blur p-4 rounded-2xl text-sm">
+                            <label class="flex items-center gap-2.5 cursor-pointer font-bold bg-white/10 p-2 rounded-xl">
+                                <input type="checkbox" id="cfg-sentence" checked class="w-4 h-4 accent-amber-300 rounded">
+                                <span>📝 โหมดเติมคำในประโยคให้สมบูรณ์ (Sentence)</span>
+                            </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-multiple" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดทายรูปภาพการ์ตูน (Picture Match)</span>
+                                <span>🎨 โหมดทายรูปภาพการ์ตูน (Picture Match)</span>
                             </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-listen" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดฟังเสียงแล้วเลือกภาพ (Listening)</span>
+                                <span>🔊 โหมดฟังเสียงแล้วเลือกภาพ (Listening)</span>
                             </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-spelling" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดเรียงตัวอักษรสะกดคำ (Spelling)</span>
+                                <span>🧩 โหมดเรียงตัวอักษรสะกดคำ (Spelling)</span>
                             </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-meaning" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดทายความหมายภาษาไทย (Meaning)</span>
+                                <span>🇹🇭 โหมดจับคู่ความหมายภาษาไทย (Meaning)</span>
                             </label>
                         </div>
 
-                        <button onclick="generateAndPlay()" class="w-full bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-6 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center justify-center gap-2">
+                        <button onclick="launchNewRandomGame()" class="w-full bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-6 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center justify-center gap-2">
                             <span>🎮</span> เริ่มเล่นเกมแบบฝึกหัดทันที!
                         </button>
                     </div>
@@ -357,7 +448,6 @@
 
             </div>
         </div>
-
 
         <!-- ========================================== -->
         <!-- VIEW 3: PRINT WORKSHEET VIEW (โหมดพิมพ์ใบงาน) -->
@@ -369,7 +459,7 @@
                     <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                         <span>🖨️</span> ตัวอย่างใบงานพร้อมพิมพ์ (Printable A4 Worksheet)
                     </h2>
-                    <p class="text-sm text-gray-500">พิมพ์ภาพการ์ตูนคมชัด ออกทางเครื่องพิมพ์ หรือบันทึกเป็นไฟล์ PDF แจกเด็กๆ ได้เลย</p>
+                    <p class="text-sm text-gray-500">มีทั้งตอนจับคู่ภาพ ตอนคัดลายมือ และตอนเติมคำในประโยคให้สมบูรณ์ คมชัดพร้อมสั่งพิมพ์</p>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -461,9 +551,8 @@
     <!-- JavaScript Logic -->
     <script>
         // ========================================================
-        // 1. COMPREHENSIVE LOCAL VOCABULARY & IMAGE DATABASE
+        // 1. DATA DICTIONARIES (VOCABULARY & SENTENCE CONTEXTS)
         // ========================================================
-        // Pre-indexed high-quality cute Fluent / OpenMoji / Noto vector SVGs
         const LOCAL_KID_VOCAB = {
             // Body
             orange: { image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊", meaning: "สีส้ม / ผลส้ม" },
@@ -559,13 +648,113 @@
             umbrella: { image: "https://api.iconify.design/fluent-emoji-flat/umbrella.svg", emoji: "☂️", meaning: "ร่ม" }
         };
 
-        // Presets with high-res cute SVG images
+        // Context Sentences for learning sentence structure & usage
+        const WORD_SENTENCES = {
+            orange: { en: "An ______ is a round, sweet and juicy fruit.", th: "ผลส้มเป็นผลไม้กลมๆ มีรสหวานและชุ่มฉ่ำ" },
+            nose: { en: "I use my ______ to breathe and smell flowers.", th: "ฉันใช้จมูกหายใจและดมกลิ่นดอกไม้" },
+            mouth: { en: "I smile and eat delicious food with my ______.", th: "ฉันยิ้มและทานอาหารอร่อยด้วยปาก" },
+            eyes: { en: "I have two ______ to see colorful things.", th: "ฉันมีตาสองข้างสำหรับมองสิ่งต่างๆ" },
+            eye: { en: "Close your ______ when you go to sleep.", th: "หลับตาลงเมื่อเข้านอน" },
+            ear: { en: "I listen to music and teacher with my ______.", th: "ฉันฟังเพลงและฟังคุณครูด้วยหู" },
+            hand: { en: "I wash my ______ with soap before eating.", th: "ฉันล้างมือด้วยสบู่ก่อนรับประทานอาหาร" },
+            foot: { en: "I wear a shoe on my ______.", th: "ฉันสวมรองเท้าที่เท้าของฉัน" },
+            head: { en: "I wear a cute hat on my ______.", th: "ฉันสวมหมวกน่ารักบนศีรษะ" },
+            arm: { en: "I hug my mother with my ______.", th: "ฉันกอดคุณแม่ด้วยแขนของฉัน" },
+            leg: { en: "I use my ______ to run and jump high.", th: "ฉันใช้ขาเพื่อวิ่งและกระโดดสูง" },
+
+            cat: { en: "A cute ______ climbs trees and says meow.", th: "แมวน่ารักปีนต้นไม้และร้องเหมียวๆ" },
+            dog: { en: "A faithful ______ wags its tail and barks woof.", th: "สุนัขแสนซื่อสัตย์กระดิกหางและเห่าโฮ่งๆ" },
+            rabbit: { en: "A fluffy ______ has long ears and loves carrots.", th: "กระต่ายขนปุยมีหูยาวและชอบกินแครอท" },
+            elephant: { en: "An ______ is a giant animal with a long trunk.", th: "ช้างเป็นสัตว์ตัวโตที่มีงวงยาว" },
+            lion: { en: "The brave ______ is known as king of the jungle.", th: "สิงโตผู้กล้าหาญได้รับฉายาว่าเป็นเจ้าป่า" },
+            tiger: { en: "A fierce ______ has orange fur with black stripes.", th: "เสือมีขนสีส้มพร้อมลายพาดกลอนสีดำ" },
+            bear: { en: "A big brown ______ loves to eat sweet honey.", th: "หมีสีน้ำตาลตัวใหญ่ชอบกินน้ำผึ้งหวาน" },
+            monkey: { en: "A clever ______ swings from tree to tree.", th: "ลิงแสนฉลาดโหนตัวจากต้นไม้ต้นหนึ่งไปอีกต้น" },
+            bird: { en: "A lovely ______ sings sweetly in the morning.", th: "นกแสนน่ารักส่งเสียงร้องเพลงหวานในตอนเช้า" },
+            fish: { en: "A little ______ swims happily in the blue water.", th: "ปลาตัวน้อยว่ายน้ำอย่างมีความสุขในน้ำสีฟ้า" },
+            duck: { en: "A yellow ______ swims in the pond and says quack.", th: "เป็ดสีเหลืองว่ายน้ำในสระและร้องก้าบๆ" },
+            pig: { en: "A pink ______ plays in the mud happily.", th: "หมูสีชมพูเล่นในโคลนอย่างสนุกสนาน" },
+            cow: { en: "A dairy ______ gives us fresh and healthy milk.", th: "แม่วัวให้นมสดที่มีประโยชน์แก่พวกเรา" },
+            horse: { en: "A fast ______ can gallop across green fields.", th: "ม้าที่วิ่งเร็วสามารถควบข้ามทุ่งหญ้าเขียวขจี" },
+            sheep: { en: "A gentle ______ has soft and warm white wool.", th: "แกะแสนอ่อนโยนมีขนสีขาวนุ่มและอบอุ่น" },
+            chicken: { en: "A mother ______ lays fresh eggs every day.", th: "แม่ไก่ออกไข่สดใหม่ทุกๆ วัน" },
+            frog: { en: "A green ______ jumps high and says ribbit.", th: "กบสีเขียวกระโดดสูงและส่งเสียงร้อง" },
+            snake: { en: "A long ______ slithers quietly on the grass.", th: "งูตัวยาวเลื้อยอย่างเงียบๆ บนพื้นหญ้า" },
+            turtle: { en: "A slow ______ carries a hard shell on its back.", th: "เต่าที่เดินช้ามีกระดองแข็งอยู่บนหลัง" },
+            butterfly: { en: "A colorful ______ flutters around blooming flowers.", th: "ผีเสื้อหลากสีสันกระพือปีกรอบๆ ดอกไม้ที่เบ่งบาน" },
+            dinosaur: { en: "A giant ______ lived on Earth millions of years ago.", th: "ไดโนเสาร์ตัวมหึมาเคยอาศัยอยู่บนโลกเมื่อหลายล้านปีก่อน" },
+            giraffe: { en: "A tall ______ eats leaves from the top of tall trees.", th: "ยีราฟคอยาวกินใบไม้จากยอดไม้สูง" },
+            zebra: { en: "A wild ______ has beautiful black and white stripes.", th: "ม้าลายมีลายสีขาวดำที่สวยงาม" },
+
+            apple: { en: "I eat a crunchy red ______ for a healthy snack.", th: "ฉันกินแอปเปิ้ลสีแดงกรอบเป็นอาหารว่างสุขภาพ" },
+            banana: { en: "Peel a yellow ______ before you take a bite.", th: "ปอกเปลือกกล้วยสีเหลืองก่อนกัดกิน" },
+            watermelon: { en: "A juicy slice of ______ is sweet on hot days.", th: "แตงโมชิ้นชุ่มฉ่ำหวานอร่อยในวันที่อากาศร้อน" },
+            strawberry: { en: "A sweet red ______ topped on my birthday cake.", th: "สตรอว์เบอร์รีสีแดงรสหวานแต่งหน้าเค้กวันเกิด" },
+            mango: { en: "Sweet ripe ______ is delicious with sticky rice.", th: "มะม่วงสุกรสหวานทานคู่กับข้าวเหนียวอร่อยมาก" },
+            grape: { en: "I share a bunch of sweet purple ______ with friends.", th: "ฉันแบ่งพวงองุ่นสีม่วงแสนหวานให้เพื่อนๆ" },
+            pineapple: { en: "A tropical ______ has a spiky crown on top.", th: "สับปะรดมีมงกุฎใบแหลมอยู่ด้านบน" },
+            pizza: { en: "We baked a cheesy hot ______ for our party.", th: "เราอบพิซซ่าร้อนๆ ชีสเยิ้มๆ สำหรับงานปาร์ตี้" },
+            milk: { en: "Drink a glass of warm ______ before bedtime.", th: "ดื่มนมอุ่นๆ หนึ่งแก้วก่อนเข้านอน" },
+            egg: { en: "Mom cooks a fried ______ for my breakfast.", th: "คุณแม่ทำไข่ดาวสำหรับอาหารเช้าของฉัน" },
+            cake: { en: "We blow out candles on a yummy birthday ______.", th: "เราเป่าเทียนบนเค้กวันเกิดแสนอร่อย" },
+            "ice cream": { en: "A cold chocolate ______ melts quickly under the sun.", th: "ไอศกรีมช็อกโกแลตเย็นๆ ละลายเร็วเมื่อเจอแดด" },
+
+            red: { en: "Strawberries and fire trucks are painted ______.", th: "สตรอว์เบอร์รีและรถดับเพลิงทาด้วยสีแดง" },
+            blue: { en: "The ocean water and clear sky are ______.", th: "น้ำในมหาสมุทรและท้องฟ้าโปร่งใสมีสีฟ้า" },
+            yellow: { en: "The warm sun and a ripe banana are ______.", th: "ดวงอาทิตย์ที่อบอุ่นและกล้วยสุกมีสีเหลือง" },
+            green: { en: "Fresh grass and healthy spinach leaves are ______.", th: "ต้นหญ้าสดและใบผักมีสีเขียว" },
+            pink: { en: "A blooming rose and cherry blossoms are ______.", th: "ดอกกุหลาบและดอกซากุระบานสะพรั่งเป็นสีชมพู" },
+            purple: { en: "Ripe grapes and lavender flowers are ______.", th: "องุ่นสุกและดอกลาเวนเดอร์มีสีม่วง" },
+
+            book: { en: "I open my English ______ to read funny stories.", th: "ฉันเปิดหนังสือภาษาอังกฤษเพื่ออ่านนิทานสนุกๆ" },
+            pencil: { en: "I sharpen my wooden ______ to write neatly.", th: "ฉันเหลาดินสอไม้เพื่อเขียนให้เรียบร้อย" },
+            pen: { en: "The teacher writes feedback using a blue ______.", th: "คุณครูเขียนคำแนะนำโดยใช้ปากกาสีน้ำเงิน" },
+            bag: { en: "I pack my school ______ every evening.", th: "ฉันจัดกระเป๋านักเรียนทุกๆ เย็น" },
+            backpack: { en: "I zip up my ______ before walking to school.", th: "ฉันรูดซิปกระเป๋าเป้ก่อนเดินไปโรงเรียน" },
+            ruler: { en: "Use a straight ______ to draw straight lines.", th: "ใช้ไม้บรรทัดเพื่อวาดเส้นตรง" },
+            chair: { en: "Please sit down on your ______ quietly.", th: "กรุณานั่งลงบนเก้าอี้ของคุณอย่างเรียบร้อย" },
+            table: { en: "Keep your books neatly on the study ______.", th: "วางหนังสือให้เรียบร้อยบนโต๊ะเรียน" },
+            clock: { en: "The wall ______ tells us what time it is.", th: "นาฬิกาติดผนังบอกเราว่าตอนนี้เวลากี่โมงแล้ว" },
+            computer: { en: "We learn coding and type on the ______.", th: "เราเรียนเขียนโปรแกรมและพิมพ์บนคอมพิวเตอร์" },
+
+            car: { en: "Dad drives our family ______ to the park.", th: "คุณพ่อขับรถยนต์ของครอบครัวไปสวนสาธารณะ" },
+            bus: { en: "Students wave goodbye and get on the school ______.", th: "นักเรียนโบกมือลาแล้วขึ้นรถโรงเรียน" },
+            bicycle: { en: "Wear a helmet when riding your ______.", th: "สวมหมวกกันน็อกเสมอเมื่อปั่นจักรยาน" },
+            bike: { en: "I pedal my ______ down the park lane.", th: "ฉันปั่นจักรยานไปตามทางในสวนสาธารณะ" },
+            airplane: { en: "The white ______ flies high across the sky.", th: "เครื่องบินสีขาวบินข้ามท้องฟ้าสูง" },
+            helicopter: { en: "A rescue ______ can hover straight up in the air.", th: "เฮลิคอปเตอร์กู้ภัยสามารถลอยตัวนิ่งกลางอากาศได้" },
+            train: { en: "The long ______ runs fast on railway tracks.", th: "รถไฟขบวนยาววิ่งเร็วบนรางรถไฟ" },
+            boat: { en: "A small sailing ______ floats across the calm lake.", th: "เรือใบเล็กๆ ลอยข้ามทะเลสาบที่เงียบสงบ" },
+            rocket: { en: "Astronauts travel into deep space in a ______.", th: "นักบินอวกาศเดินทางสู่อวกาศลึกด้วยจรวด" },
+
+            sun: { en: "The bright ______ gives light and warmth to our world.", th: "ดวงอาทิตย์ส่องแสงสว่างและความอบอุ่นแก่โลกเรา" },
+            moon: { en: "The silver ______ shines brightly in the dark night.", th: "ดวงจันทร์สีเงินส่องแสงสว่างในยามค่ำคืนที่มืดมิด" },
+            star: { en: "Look up at the night sky and make a wish on a ______.", th: "มองขึ้นไปบนท้องฟ้ายามค่ำคืนแล้วอธิษฐานกับดวงดาว" },
+            rainbow: { en: "After the rain, I see a colorful ______ in the sky.", th: "หลังฝนตก ฉันเห็นสายรุ้งหลากสีสันบนท้องฟ้า" },
+            tree: { en: "Birds build their cozy nests on the tall green ______.", th: "นกสร้างรังแสนอบอุ่นบนต้นไม้สีเขียวสูงใหญ่" },
+            flower: { en: "Bees gather sweet nectar from each blooming ______.", th: "ผึ้งเก็บน้ำหวานจากดอกไม้แต่ละดอกที่เบ่งบาน" },
+            umbrella: { en: "Open your ______ to stay dry when it starts to rain.", th: "กางร่มของคุณเพื่อให้ตัวแห้งเมื่อฝนเริ่มตก" }
+        };
+
+        function getSentenceForWord(item) {
+            const key = item.word.toLowerCase().trim();
+            if (WORD_SENTENCES[key]) {
+                return WORD_SENTENCES[key];
+            }
+            return {
+                en: `This sentence is about ______ (${item.meaning}).`,
+                th: `ประโยคนี้เกี่ยวข้องกับ [ ${item.meaning} ] ที่เรากำลังเรียนรู้`
+            };
+        }
+
+        // 5 Starter Presets
         const PRESETS = [
             {
                 id: "body",
                 title: "ร่างกายของฉัน (My Body)",
                 icon: "👃",
                 badge: "ป.1 ยอดฮิต",
+                desc: "เรียนรู้คำศัพท์อวัยวะ orange, nose, mouth, eyes, ear, hand",
                 words: [
                     { word: "orange", meaning: "สีส้ม / ผลส้ม", image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊" },
                     { word: "nose", meaning: "จมูก", image: "https://api.iconify.design/fluent-emoji-flat/nose.svg", emoji: "👃" },
@@ -580,6 +769,7 @@
                 title: "สัตว์โลกน่ารัก (Cute Animals)",
                 icon: "🐶",
                 badge: "ป.1 สนุกสนาน",
+                desc: "เพื่อนรักสัตว์โลก cat, dog, rabbit, elephant, lion, bird",
                 words: [
                     { word: "cat", meaning: "แมว", image: "https://api.iconify.design/fluent-emoji-flat/cat.svg", emoji: "🐱" },
                     { word: "dog", meaning: "สุนัข", image: "https://api.iconify.design/fluent-emoji-flat/dog.svg", emoji: "🐶" },
@@ -594,6 +784,7 @@
                 title: "ผลไม้แสนอร่อย (Yummy Fruits)",
                 icon: "🍎",
                 badge: "ของโปรดเด็กๆ",
+                desc: "ผลไม้วิตามินซีสูง apple, banana, watermelon, strawberry, mango, grape",
                 words: [
                     { word: "apple", meaning: "แอปเปิ้ล", image: "https://api.iconify.design/fluent-emoji-flat/red-apple.svg", emoji: "🍎" },
                     { word: "banana", meaning: "กล้วย", image: "https://api.iconify.design/fluent-emoji-flat/banana.svg", emoji: "🍌" },
@@ -608,6 +799,7 @@
                 title: "สีสันสดใส (Colors)",
                 icon: "🎨",
                 badge: "ป.1 พื้นฐาน",
+                desc: "จิตรกรตัวน้อย red, blue, yellow, green, pink, purple",
                 words: [
                     { word: "red", meaning: "สีแดง", image: "https://api.iconify.design/fluent-emoji-flat/red-circle.svg", emoji: "🔴" },
                     { word: "blue", meaning: "สีฟ้า / สีน้ำเงิน", image: "https://api.iconify.design/fluent-emoji-flat/blue-circle.svg", emoji: "🔵" },
@@ -622,6 +814,7 @@
                 title: "สิ่งของในห้องเรียน (School Things)",
                 icon: "🎒",
                 badge: "เปิดเทอม",
+                desc: "อุปกรณ์การเรียน book, pencil, bag, ruler, chair, table",
                 words: [
                     { word: "book", meaning: "หนังสือ", image: "https://api.iconify.design/fluent-emoji-flat/open-book.svg", emoji: "📖" },
                     { word: "pencil", meaning: "ดินสอ", image: "https://api.iconify.design/fluent-emoji-flat/pencil.svg", emoji: "✏️" },
@@ -640,8 +833,18 @@
         let currentQuestionIdx = 0;
         let userScore = 0;
         let isSoundOn = true;
-        let activeView = "game";
+        let activeView = "home"; // Landing page first!
         let modalTargetWordIdx = null;
+
+        // True Fisher-Yates Shuffle for Non-Repetition
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
         // Helper: Render Visual (Image with graceful fallback to Emoji)
         function renderVisual(item, sizeClass = "text-7xl", imgClass = "w-28 h-28 object-contain") {
@@ -712,6 +915,11 @@
             }
         }
 
+        function speakFullSentence(sentenceTemplate, word) {
+            const completed = sentenceTemplate.replace(/______+/g, word);
+            speakWord(completed);
+        }
+
         function toggleAudio() {
             isSoundOn = !isSoundOn;
             document.getElementById('audioIcon').textContent = isSoundOn ? "🔊" : "🔇";
@@ -727,7 +935,7 @@
         }
 
         // ========================================================
-        // 3. AUTO-IMAGE SEARCH ENGINE (หาภาพการ์ตูนให้อัตโนมัติ)
+        // 3. AUTO-IMAGE SEARCH ENGINE
         // ========================================================
         let searchDebounceTimer = null;
 
@@ -739,7 +947,6 @@
                 return;
             }
 
-            // Auto-fill Thai meaning if known in dictionary
             if (LOCAL_KID_VOCAB[word] && !document.getElementById('new-meaning').value) {
                 document.getElementById('new-meaning').value = LOCAL_KID_VOCAB[word].meaning;
             }
@@ -766,13 +973,11 @@
             }
         }
 
-        // The Core Multi-Source Image Finder
         async function searchCartoonImages(query) {
             if (!query) return [];
             query = query.trim().toLowerCase();
             const results = [];
 
-            // 1. Check local kid dictionary for instant match
             if (LOCAL_KID_VOCAB[query]) {
                 const local = LOCAL_KID_VOCAB[query];
                 results.push({
@@ -782,7 +987,6 @@
                 });
             }
 
-            // 2. Query Iconify Vector API for kid-friendly colorful sets (Fluent, Twemoji, OpenMoji, Noto)
             try {
                 const iconifyUrl = `https://api.iconify.design/search?query=${encodeURIComponent(query)}&prefixes=fluent-emoji-flat,twemoji,openmoji,noto&limit=10`;
                 const res = await fetch(iconifyUrl);
@@ -806,7 +1010,6 @@
                 console.warn("Iconify search error:", e);
             }
 
-            // 3. Fallback to broad Iconify vector sets if few results
             if (results.length < 3) {
                 try {
                     const broadUrl = `https://api.iconify.design/search?query=${encodeURIComponent(query)}&limit=8`;
@@ -830,7 +1033,6 @@
                 } catch (e) {}
             }
 
-            // 4. Query Wikipedia thumbnail for illustration/photo if still empty
             if (results.length === 0) {
                 try {
                     const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
@@ -870,13 +1072,12 @@
             }
 
             countEl.textContent = `${candidates.length} รูปที่พบ`;
-            container.innerHTML = candidates.map((c, idx) => `
+            container.innerHTML = candidates.map(c => `
                 <button type="button" onclick="selectCandidateImage('${encodeURIComponent(c.url)}', '${c.emoji || '🌟'}', '${c.title}')" class="p-2 rounded-xl border-2 border-gray-200 hover:border-pink-400 hover:bg-pink-50 transition flex items-center justify-center aspect-square group bg-white shadow-xs" title="${c.title}">
                     <img src="${c.url}" alt="${c.title}" class="w-10 h-10 object-contain group-hover:scale-110 transition-transform">
                 </button>
             `).join('');
 
-            // Automatically select the very first found image!
             if (candidates.length > 0) {
                 selectCandidateImage(encodeURIComponent(candidates[0].url), candidates[0].emoji || '🌟', candidates[0].title);
             }
@@ -903,9 +1104,7 @@
             document.getElementById('selected-image-url').value = "";
         }
 
-        // ========================================================
-        // 4. BULK IMPORT WITH AUTOMATIC IMAGE SEARCH
-        // ========================================================
+        // Bulk Import with auto-image
         async function importBulkWordsWithAutoImages() {
             const text = document.getElementById('bulk-input').value.trim();
             if (!text) return;
@@ -933,7 +1132,6 @@
 
                 statusText.textContent = `กำลังค้นหาภาพอัตโนมัติ: ${i + 1}/${validLines.length} (${word})...`;
 
-                // Search image
                 const images = await searchCartoonImages(word);
                 let imgUrl = "";
                 let fallbackEmoji = "🌟";
@@ -967,9 +1165,7 @@
             alert(`🎉 นำเข้าและค้นหาภาพสำเร็จทั้งหมด ${addedCount} คำครับ!`);
         }
 
-        // ========================================================
-        // 5. CHANGE IMAGE MODAL (สำหรับเปลี่ยนรูปคำศัพท์เดิม)
-        // ========================================================
+        // Modal for changing image
         async function openChangeImageModal(wordIndex) {
             modalTargetWordIdx = wordIndex;
             const item = currentWords[wordIndex];
@@ -1021,7 +1217,7 @@
         }
 
         // ========================================================
-        // 6. VOCABULARY CRUD & EDITOR
+        // 4. VIEW CONTROLLER & LANDING PAGE
         // ========================================================
         function switchView(viewName) {
             activeView = viewName;
@@ -1030,141 +1226,73 @@
             document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
             document.getElementById(`view-${viewName}`).classList.remove('hidden');
 
-            const navBtns = ['game', 'editor', 'print'];
+            const navBtns = ['home', 'game', 'editor', 'print'];
             navBtns.forEach(name => {
                 const btn = document.getElementById(`nav-btn-${name}`);
-                if (name === viewName) {
-                    btn.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 bg-pink-500 text-white shadow-md";
-                } else {
-                    btn.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white";
+                if (btn) {
+                    if (name === viewName) {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 bg-pink-500 text-white shadow-md";
+                    } else {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white";
+                    }
                 }
             });
 
-            if (viewName === 'editor') {
+            if (viewName === 'home') {
+                renderLandingPage();
+            } else if (viewName === 'editor') {
                 renderEditor();
             } else if (viewName === 'print') {
                 renderPrintableWorksheet();
             }
         }
 
-        function renderEditor() {
-            // Render Presets
-            const presetContainer = document.getElementById('presets-container');
-            presetContainer.innerHTML = PRESETS.map(p => `
-                <button onclick="loadPreset('${p.id}')" class="text-left p-3 rounded-2xl border-2 ${currentPackTitle === p.title ? 'border-amber-400 bg-amber-50 shadow-sm' : 'border-gray-200 hover:border-amber-300 bg-white'} transition btn-bounce">
-                    <div class="text-2xl mb-1">${p.icon}</div>
-                    <div class="text-xs font-bold text-gray-800 truncate">${p.title}</div>
-                    <div class="text-[10px] text-amber-600 font-medium">${p.badge}</div>
-                </button>
-            `).join('');
+        function renderLandingPage() {
+            const container = document.getElementById('home-category-cards');
+            if (!container) return;
 
-            // Render Current Vocab List
-            document.getElementById('vocab-count').textContent = currentWords.length;
-            const vocabList = document.getElementById('vocab-list');
-            if (currentWords.length === 0) {
-                vocabList.innerHTML = `
-                    <div class="text-center py-8 text-gray-400">
-                        <div class="text-4xl mb-2">📦</div>
-                        <p class="text-sm">ยังไม่มีคำศัพท์ในชุดนี้ กรุณาเลือกหมวดหมู่หรือเพิ่มคำศัพท์ใหม่</p>
-                    </div>
-                `;
-                return;
-            }
-
-            vocabList.innerHTML = currentWords.map((item, idx) => `
-                <div class="flex items-center justify-between p-3 bg-pink-50/60 hover:bg-pink-50 rounded-2xl border border-pink-200 transition">
-                    <div class="flex items-center gap-3">
-                        <div onclick="openChangeImageModal(${idx})" class="w-12 h-12 bg-white rounded-xl shadow-sm border border-pink-100 flex items-center justify-center cursor-pointer hover:border-pink-400 transition" title="คลิกเพื่อเปลี่ยนรูปภาพ">
-                            ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+            container.innerHTML = PRESETS.map(p => `
+                <div class="bg-white rounded-3xl p-6 shadow-xl border-4 ${currentPackTitle === p.title ? 'border-pink-400 bg-pink-50/20 ring-4 ring-pink-100' : 'border-gray-100 hover:border-pink-300'} transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-4xl p-2 bg-pink-50 rounded-2xl group-hover:scale-110 transition-transform">${p.icon}</span>
+                            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">${p.badge}</span>
                         </div>
-                        <div>
-                            <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
-                                ${item.word}
-                                <button onclick="speakWord('${item.word}')" class="text-xs bg-white text-gray-600 hover:text-pink-600 p-1 rounded-full shadow-sm" title="ฟังเสียง">
-                                    🔊
-                                </button>
-                                <button onclick="openChangeImageModal(${idx})" class="text-[10px] bg-pink-100 hover:bg-pink-200 text-pink-700 px-2 py-0.5 rounded-full font-bold transition">
-                                    เปลี่ยนรูป 🖼️
-                                </button>
-                            </div>
-                            <div class="text-xs text-gray-600 font-medium">${item.meaning}</div>
+                        <h4 class="text-lg font-extrabold text-gray-800 mb-1">${p.title}</h4>
+                        <p class="text-xs text-gray-500 mb-4">${p.desc}</p>
+
+                        <!-- Preview Mini Avatars -->
+                        <div class="flex items-center gap-1.5 mb-6 overflow-hidden py-1">
+                            ${p.words.slice(0, 5).map(w => `
+                                <div class="w-8 h-8 rounded-lg bg-pink-50 border border-pink-100 flex items-center justify-center text-xs" title="${w.word} (${w.meaning})">
+                                    ${renderVisual(w, 'text-sm', 'w-6 h-6 object-contain')}
+                                </div>
+                            `).join('')}
+                            <span class="text-[11px] text-gray-400 font-bold ml-1">+${p.words.length} คำ</span>
                         </div>
                     </div>
-                    <button onclick="deleteVocab(${idx})" class="text-rose-400 hover:text-rose-600 p-2 rounded-xl hover:bg-white transition" title="ลบคำนี้">
-                        ✕
+
+                    <button onclick="playCategoryFromHome('${p.id}')" class="w-full bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white font-extrabold py-3 px-4 rounded-xl shadow-md btn-bounce text-sm flex items-center justify-center gap-2">
+                        <span>▶️</span> เริ่มเรียนหมวดนี้
                     </button>
                 </div>
             `).join('');
         }
 
-        function loadPreset(presetId) {
-            playSound('click');
-            const found = PRESETS.find(p => p.id === presetId);
-            if (found) {
-                currentPackTitle = found.title;
-                currentWords = JSON.parse(JSON.stringify(found.words));
-                document.getElementById('game-pack-title').textContent = currentPackTitle;
-                renderEditor();
-            }
+        function playCategoryFromHome(presetId) {
+            loadPreset(presetId);
+            launchNewRandomGame();
         }
 
-        async function addNewVocab() {
-            const wordEl = document.getElementById('new-word');
-            const meaningEl = document.getElementById('new-meaning');
-            const word = wordEl.value.trim().toLowerCase();
-            const meaning = meaningEl.value.trim();
-
-            if (!word || !meaning) {
-                alert("กรุณากรอกทั้งคำศัพท์ภาษาอังกฤษและคำแปลภาษาไทยครับ 😊");
-                return;
-            }
-
-            let imageUrl = document.getElementById('selected-image-url').value;
-            let emoji = document.getElementById('selected-emoji').value || '🌟';
-
-            // If image is still empty, auto search immediately
-            if (!imageUrl) {
-                const candidates = await searchCartoonImages(word);
-                if (candidates.length > 0) {
-                    imageUrl = candidates[0].url;
-                    emoji = candidates[0].emoji || '🌟';
-                }
-            }
-
-            playSound('click');
-            currentWords.push({
-                word: word,
-                meaning: meaning,
-                image: imageUrl,
-                emoji: emoji
-            });
-
-            currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
-            document.getElementById('game-pack-title').textContent = currentPackTitle;
-
-            wordEl.value = '';
-            meaningEl.value = '';
-            clearCandidates();
-            renderEditor();
-        }
-
-        function deleteVocab(index) {
-            playSound('click');
-            currentWords.splice(index, 1);
-            renderEditor();
-        }
-
-        function clearCurrentVocab() {
-            if (confirm("คุณต้องการล้างคำศัพท์ทั้งหมดในชุดนี้หรือไม่?")) {
-                currentWords = [];
-                currentPackTitle = "ชุดคำศัพท์ว่างเปล่า";
-                document.getElementById('game-pack-title').textContent = currentPackTitle;
-                renderEditor();
+        function launchNewRandomGame() {
+            if (generateExerciseQuestions()) {
+                switchView('game');
+                startQuizGame();
             }
         }
 
         // ========================================================
-        // 7. QUESTION GENERATOR ENGINE
+        // 5. QUESTION GENERATOR ENGINE (สุ่มใหม่ไม่ซ้ำกัน & มีเติมประโยค)
         // ========================================================
         function generateExerciseQuestions() {
             if (currentWords.length < 2) {
@@ -1172,12 +1300,14 @@
                 return false;
             }
 
+            const allowSentence = document.getElementById('cfg-sentence').checked;
             const allowMultiple = document.getElementById('cfg-multiple').checked;
             const allowListen = document.getElementById('cfg-listen').checked;
             const allowSpelling = document.getElementById('cfg-spelling').checked;
             const allowMeaning = document.getElementById('cfg-meaning').checked;
 
             const enabledTypes = [];
+            if (allowSentence) enabledTypes.push('sentence');
             if (allowMultiple) enabledTypes.push('picture');
             if (allowListen) enabledTypes.push('listening');
             if (allowSpelling) enabledTypes.push('spelling');
@@ -1189,19 +1319,47 @@
             }
 
             const generated = [];
-            const shuffledWords = [...currentWords].sort(() => 0.5 - Math.random());
+            
+            // True Randomization of words
+            const randomizedWords = shuffleArray(currentWords);
 
-            shuffledWords.forEach((targetItem, i) => {
-                const questionType = enabledTypes[i % enabledTypes.length];
+            // True Randomization of question types pool
+            const shuffledTypes = shuffleArray(enabledTypes);
+
+            randomizedWords.forEach((targetItem, i) => {
+                // Pick question type randomly ensuring variety
+                const questionType = shuffledTypes[i % shuffledTypes.length];
+                
+                // Shuffle others for distractors
                 const others = currentWords.filter(w => w.word !== targetItem.word);
-                const shuffledOthers = [...others].sort(() => 0.5 - Math.random());
-                const distractors = shuffledOthers.slice(0, 3);
+                const randomizedOthers = shuffleArray(others);
+                const distractors = randomizedOthers.slice(0, 3);
 
-                if (questionType === 'picture') {
-                    const options = [
+                // --- 1. NEW: SENTENCE FILL-IN (เติมประโยคให้สมบูรณ์) ---
+                if (questionType === 'sentence') {
+                    const sentenceData = getSentenceForWord(targetItem);
+                    const options = shuffleArray([
+                        { item: targetItem, text: `${targetItem.word} (${targetItem.meaning})`, isCorrect: true },
+                        ...distractors.map(d => ({ item: d, text: `${d.word} (${d.meaning})`, isCorrect: false }))
+                    ]);
+
+                    generated.push({
+                        type: 'sentence',
+                        target: targetItem,
+                        title: "เติมคำในประโยคให้สมบูรณ์ (Sentence Context)",
+                        instruction: "เลือกคำศัพท์ที่ถูกต้องเพื่อเติมลงในประโยคภาษาอังกฤษ:",
+                        sentenceEn: sentenceData.en,
+                        sentenceTh: sentenceData.th,
+                        options: options
+                    });
+                }
+
+                // --- 2. PICTURE MATCH (ดูรูปการ์ตูนทายคำศัพท์) ---
+                else if (questionType === 'picture') {
+                    const options = shuffleArray([
                         { text: `${targetItem.word} (${targetItem.meaning})`, isCorrect: true },
                         ...distractors.map(d => ({ text: `${d.word} (${d.meaning})`, isCorrect: false }))
-                    ].sort(() => 0.5 - Math.random());
+                    ]);
 
                     generated.push({
                         type: 'picture',
@@ -1211,11 +1369,13 @@
                         options: options
                     });
                 }
+
+                // --- 3. LISTENING CHALLENGE (ฟังเสียงแล้วเลือกภาพ) ---
                 else if (questionType === 'listening') {
-                    const options = [
+                    const options = shuffleArray([
                         { item: targetItem, isCorrect: true },
                         ...distractors.map(d => ({ item: d, isCorrect: false }))
-                    ].sort(() => 0.5 - Math.random());
+                    ]);
 
                     generated.push({
                         type: 'listening',
@@ -1225,8 +1385,10 @@
                         options: options
                     });
                 }
+
+                // --- 4. SPELLING (เรียงตัวอักษรสะกดคำ) ---
                 else if (questionType === 'spelling') {
-                    const letters = targetItem.word.toUpperCase().split('').sort(() => 0.5 - Math.random());
+                    const letters = shuffleArray(targetItem.word.toUpperCase().split(''));
                     generated.push({
                         type: 'spelling',
                         target: targetItem,
@@ -1236,11 +1398,13 @@
                         answer: targetItem.word.toUpperCase()
                     });
                 }
+
+                // --- 5. MEANING MATCH (จับคู่ความหมายภาษาไทย) ---
                 else if (questionType === 'meaning') {
-                    const options = [
+                    const options = shuffleArray([
                         { text: targetItem.meaning, isCorrect: true },
                         ...distractors.map(d => ({ text: d.meaning, isCorrect: false }))
-                    ].sort(() => 0.5 - Math.random());
+                    ]);
 
                     generated.push({
                         type: 'meaning',
@@ -1252,17 +1416,11 @@
                 }
             });
 
-            generatedQuestions = generated;
+            // Randomize the entire question list order as well!
+            generatedQuestions = shuffleArray(generated);
             currentQuestionIdx = 0;
             userScore = 0;
             return true;
-        }
-
-        function generateAndPlay() {
-            if (generateExerciseQuestions()) {
-                switchView('game');
-                startQuizGame();
-            }
         }
 
         function startQuizGame() {
@@ -1273,7 +1431,7 @@
         }
 
         // ========================================================
-        // 8. GAME RUNTIME RENDERING
+        // 6. GAME RUNTIME RENDERING
         // ========================================================
         function renderCurrentQuestion() {
             const container = document.getElementById('game-card-content');
@@ -1297,8 +1455,55 @@
                 </div>
             `;
 
-            // --- Type: PICTURE ---
-            if (q.type === 'picture') {
+            // --- 1. Type: SENTENCE (เติมคำในประโยคให้สมบูรณ์) ---
+            if (q.type === 'sentence') {
+                const sentenceHtml = q.sentenceEn.replace(/______+/g, `
+                    <span class="inline-block px-3 py-1 bg-amber-200 border-2 border-dashed border-amber-500 rounded-xl font-extrabold text-pink-600 animate-pulse tracking-widest mx-1 shadow-sm">
+                        ______
+                    </span>
+                `);
+
+                innerHtml += `
+                    <div class="my-5 text-center">
+                        <div class="p-6 bg-gradient-to-r from-pink-50 via-amber-50 to-pink-50 rounded-3xl border-3 border-pink-200 shadow-inner mb-4 relative">
+                            <div class="font-fredoka text-xl md:text-2xl text-gray-800 leading-relaxed font-bold">
+                                "${sentenceHtml}"
+                            </div>
+                            
+                            <div class="mt-3 flex items-center justify-center gap-2">
+                                <button onclick="speakFullSentence('${q.sentenceEn.replace(/'/g, "\\'")}', '${q.target.word}')" class="text-xs bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition flex items-center gap-1.5 btn-bounce" title="กดฟังประโยคเต็ม">
+                                    <span>🔊</span> กดฟังประโยคภาษาอังกฤษ
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Thai Clue Banner -->
+                        <div class="inline-block bg-white border border-pink-200 px-4 py-2 rounded-2xl text-xs md:text-sm text-gray-600 shadow-xs mb-3">
+                            <span class="text-pink-500 font-bold">💡 คำแปล:</span> ${q.sentenceTh}
+                        </div>
+
+                        <h3 class="text-base md:text-lg font-extrabold text-gray-800 mt-2">${q.instruction}</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-4">
+                        ${q.options.map((opt, idx) => `
+                            <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50/70 text-gray-800 font-bold p-3.5 rounded-2xl shadow-sm text-left transition duration-200 btn-bounce flex items-center justify-between group">
+                                <span class="flex items-center gap-3">
+                                    <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-black">${String.fromCharCode(65 + idx)}</span>
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        ${renderVisual(opt.item, 'text-xl', 'w-7 h-7 object-contain')}
+                                    </div>
+                                    <span class="font-fredoka text-base md:text-lg">${opt.text}</span>
+                                </span>
+                                <span class="text-gray-300 group-hover:text-pink-400 font-bold">👉</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // --- 2. Type: PICTURE ---
+            else if (q.type === 'picture') {
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="relative inline-block">
@@ -1326,7 +1531,7 @@
                 `;
             }
 
-            // --- Type: LISTENING ---
+            // --- 3. Type: LISTENING ---
             else if (q.type === 'listening') {
                 innerHtml += `
                     <div class="text-center my-6">
@@ -1352,7 +1557,7 @@
                 `;
             }
 
-            // --- Type: SPELLING ---
+            // --- 4. Type: SPELLING ---
             else if (q.type === 'spelling') {
                 innerHtml += `
                     <div class="text-center my-6">
@@ -1384,7 +1589,7 @@
                 `;
             }
 
-            // --- Type: MEANING ---
+            // --- 5. Type: MEANING ---
             else if (q.type === 'meaning') {
                 innerHtml += `
                     <div class="text-center my-6">
@@ -1416,8 +1621,10 @@
 
             container.innerHTML = innerHtml;
 
-            // Auto pronounce
-            if (q.type === 'picture' || q.type === 'meaning') {
+            // Audio trigger
+            if (q.type === 'sentence') {
+                setTimeout(() => speakFullSentence(q.sentenceEn, q.target.word), 400);
+            } else if (q.type === 'picture' || q.type === 'meaning') {
                 setTimeout(() => speakWord(q.target.word), 400);
             } else if (q.type === 'spelling') {
                 initSpellingQuestion(q.letters);
@@ -1494,7 +1701,7 @@
         }
 
         // ========================================================
-        // 9. FEEDBACK MODAL & SCORING
+        // 7. FEEDBACK MODAL & SCORING
         // ========================================================
         function submitAnswer(isCorrect, word) {
             const modal = document.getElementById('modal-feedback');
@@ -1510,13 +1717,13 @@
                 emojiEl.textContent = "🎉";
                 titleEl.textContent = "เก่งมาก! ตอบถูกต้อง";
                 titleEl.className = "text-2xl font-extrabold text-emerald-600 mb-2";
-                descEl.textContent = `ยอดเยี่ยมเลย คำว่า "${word}" จำได้แม่นยำมาก! ⭐`;
+                descEl.textContent = `ยอดเยี่ยมเลย คำว่า "${word}" นำมาใช้ในประโยคได้ถูกต้องสมบูรณ์! ⭐`;
             } else {
                 playSound('wrong');
                 emojiEl.textContent = "💪";
                 titleEl.textContent = "เกือบถูกแล้วนะ!";
                 titleEl.className = "text-2xl font-extrabold text-rose-500 mb-2";
-                descEl.textContent = `คำตอบที่ถูกต้องคือ "${word}" ไม่เป็นไรนะ ลองใหม่ในข้อถัดไป!`;
+                descEl.textContent = `คำตอบที่ถูกต้องคือ "${word}" ไม่เป็นไรนะ ค่อยๆ ฝึกฝนในข้อถัดไป!`;
             }
 
             modal.classList.remove('hidden');
@@ -1562,19 +1769,19 @@
                             ${userScore} <span class="text-2xl text-gray-500 font-normal">/ ${total}</span>
                         </div>
                         <div class="text-sm font-bold text-gray-700">
-                            ${isFullScore ? '🌟 ได้คะแนนเต็ม 100% สุดยอดอัจฉริยะตัวน้อย!' : '💖 เยี่ยมมากครับ ฝึกฝนอีกนิดจะเก่งขึ้นแน่นอน!'}
+                            ${isFullScore ? '🌟 ได้คะแนนเต็ม 100% สุดยอดอัจฉริยะตัวน้อย!' : '💖 เยี่ยมมากครับ เล่นซ้ำเพื่อสุ่มข้อสอบใหม่ได้เลย!'}
                         </div>
                     </div>
 
                     <div class="flex flex-wrap justify-center gap-3">
-                        <button onclick="startQuizGame()" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold py-3.5 px-8 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
-                            <span>🔄</span> เล่นใหม่อีกครั้ง
+                        <button onclick="launchNewRandomGame()" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold py-3.5 px-8 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
+                            <span>🎲</span> เล่นรอบใหม่ (สุ่มไม่ซ้ำเดิม)
                         </button>
-                        <button onclick="switchView('print')" class="bg-sky-500 hover:bg-sky-600 text-white font-extrabold py-3.5 px-8 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
+                        <button onclick="switchView('home')" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold py-3.5 px-6 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
+                            <span>🏠</span> กลับหน้าแรก
+                        </button>
+                        <button onclick="switchView('print')" class="bg-sky-500 hover:bg-sky-600 text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
                             <span>🖨️</span> พิมพ์ใบงานชุดนี้
-                        </button>
-                        <button onclick="switchView('editor')" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold py-3.5 px-8 rounded-2xl shadow-lg transition btn-bounce text-base flex items-center gap-2">
-                            <span>✏️</span> ปรับแต่งคำศัพท์เพิ่ม
                         </button>
                     </div>
                 </div>
@@ -1582,11 +1789,143 @@
         }
 
         // ========================================================
-        // 10. PRINTABLE A4 WORKSHEET GENERATION
+        // 8. VOCABULARY CRUD & EDITOR
+        // ========================================================
+        function renderEditor() {
+            // Render Presets
+            const presetContainer = document.getElementById('presets-container');
+            presetContainer.innerHTML = PRESETS.map(p => `
+                <button onclick="loadPreset('${p.id}')" class="text-left p-3 rounded-2xl border-2 ${currentPackTitle === p.title ? 'border-amber-400 bg-amber-50 shadow-sm' : 'border-gray-200 hover:border-amber-300 bg-white'} transition btn-bounce">
+                    <div class="text-2xl mb-1">${p.icon}</div>
+                    <div class="text-xs font-bold text-gray-800 truncate">${p.title}</div>
+                    <div class="text-[10px] text-amber-600 font-medium">${p.badge}</div>
+                </button>
+            `).join('');
+
+            // Render Current Vocab List
+            document.getElementById('vocab-count').textContent = currentWords.length;
+            const vocabList = document.getElementById('vocab-list');
+            if (currentWords.length === 0) {
+                vocabList.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <div class="text-4xl mb-2">📦</div>
+                        <p class="text-sm">ยังไม่มีคำศัพท์ในชุดนี้ กรุณาเลือกหมวดหมู่หรือเพิ่มคำศัพท์ใหม่</p>
+                    </div>
+                `;
+                return;
+            }
+
+            vocabList.innerHTML = currentWords.map((item, idx) => {
+                const s = getSentenceForWord(item);
+                return `
+                    <div class="p-3.5 bg-pink-50/60 hover:bg-pink-50 rounded-2xl border border-pink-200 transition">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div onclick="openChangeImageModal(${idx})" class="w-12 h-12 bg-white rounded-xl shadow-sm border border-pink-100 flex items-center justify-center cursor-pointer hover:border-pink-400 transition shrink-0" title="คลิกเพื่อเปลี่ยนรูปภาพ">
+                                    ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+                                </div>
+                                <div>
+                                    <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
+                                        ${item.word}
+                                        <button onclick="speakWord('${item.word}')" class="text-xs bg-white text-gray-600 hover:text-pink-600 p-1 rounded-full shadow-sm" title="ฟังเสียง">
+                                            🔊
+                                        </button>
+                                        <button onclick="openChangeImageModal(${idx})" class="text-[10px] bg-pink-100 hover:bg-pink-200 text-pink-700 px-2 py-0.5 rounded-full font-bold transition">
+                                            เปลี่ยนรูป 🖼️
+                                        </button>
+                                    </div>
+                                    <div class="text-xs text-gray-600 font-medium">${item.meaning}</div>
+                                </div>
+                            </div>
+                            <button onclick="deleteVocab(${idx})" class="text-rose-400 hover:text-rose-600 p-2 rounded-xl hover:bg-white transition" title="ลบคำนี้">
+                                ✕
+                            </button>
+                        </div>
+                        
+                        <!-- Sentence Snippet -->
+                        <div class="mt-2 pt-2 border-t border-pink-100 flex items-center justify-between text-[11px] text-gray-500">
+                            <span class="truncate">💬 "${s.en}"</span>
+                            <button onclick="speakFullSentence('${s.en.replace(/'/g, "\\'")}', '${item.word}')" class="text-pink-600 hover:underline shrink-0 ml-2 font-bold">
+                                ฟังประโยค 🔊
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadPreset(presetId) {
+            playSound('click');
+            const found = PRESETS.find(p => p.id === presetId);
+            if (found) {
+                currentPackTitle = found.title;
+                currentWords = JSON.parse(JSON.stringify(found.words));
+                document.getElementById('game-pack-title').textContent = currentPackTitle;
+                renderEditor();
+                renderLandingPage();
+            }
+        }
+
+        async function addNewVocab() {
+            const wordEl = document.getElementById('new-word');
+            const meaningEl = document.getElementById('new-meaning');
+            const word = wordEl.value.trim().toLowerCase();
+            const meaning = meaningEl.value.trim();
+
+            if (!word || !meaning) {
+                alert("กรุณากรอกทั้งคำศัพท์ภาษาอังกฤษและคำแปลภาษาไทยครับ 😊");
+                return;
+            }
+
+            let imageUrl = document.getElementById('selected-image-url').value;
+            let emoji = document.getElementById('selected-emoji').value || '🌟';
+
+            if (!imageUrl) {
+                const candidates = await searchCartoonImages(word);
+                if (candidates.length > 0) {
+                    imageUrl = candidates[0].url;
+                    emoji = candidates[0].emoji || '🌟';
+                }
+            }
+
+            playSound('click');
+            currentWords.push({
+                word: word,
+                meaning: meaning,
+                image: imageUrl,
+                emoji: emoji
+            });
+
+            currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
+            document.getElementById('game-pack-title').textContent = currentPackTitle;
+
+            wordEl.value = '';
+            meaningEl.value = '';
+            clearCandidates();
+            renderEditor();
+        }
+
+        function deleteVocab(index) {
+            playSound('click');
+            currentWords.splice(index, 1);
+            renderEditor();
+        }
+
+        function clearCurrentVocab() {
+            if (confirm("คุณต้องการล้างคำศัพท์ทั้งหมดในชุดนี้หรือไม่?")) {
+                currentWords = [];
+                currentPackTitle = "ชุดคำศัพท์ว่างเปล่า";
+                document.getElementById('game-pack-title').textContent = currentPackTitle;
+                renderEditor();
+            }
+        }
+
+        // ========================================================
+        // 9. PRINTABLE A4 WORKSHEET GENERATION (มี 3 ตอนครบครัน)
         // ========================================================
         function renderPrintableWorksheet() {
             document.getElementById('sheet-pack-name').textContent = currentPackTitle;
-            document.getElementById('sheet-max-score').textContent = currentWords.length;
+            document.getElementById('sheet-max-score').textContent = currentWords.length * 2;
 
             const area = document.getElementById('sheet-content-area');
             if (currentWords.length === 0) {
@@ -1594,10 +1933,10 @@
                 return;
             }
 
-            const shuffledWords = [...currentWords].sort(() => 0.5 - Math.random());
+            const shuffledWords = shuffleArray(currentWords);
 
             area.innerHTML = `
-                <!-- Part 1: โยงเส้นจับคู่ -->
+                <!-- Part 1: โยงเส้นจับคู่ภาพ -->
                 <div>
                     <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">1</span>
@@ -1632,11 +1971,35 @@
                     </div>
                 </div>
 
-                <!-- Part 2: เติมตัวอักษรที่หายไป & คัดลายมือ -->
+                <!-- Part 2: เติมคำในประโยคให้สมบูรณ์ (NEW SENTENCE CONTEXT) -->
                 <div class="mt-8">
                     <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">2</span>
-                        <span>ตอนที่ 2: เติมตัวอักษรที่หายไปให้เป็นคำศัพท์ที่สมบูรณ์</span>
+                        <span>ตอนที่ 2: เติมคำศัพท์ลงในช่องว่างของประโยคให้ถูกต้องสมบูรณ์</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        ${currentWords.map((item, idx) => {
+                            const s = getSentenceForWord(item);
+                            const cloze = s.en.replace(/______+/g, '____________________');
+                            return `
+                                <div class="p-3 border-2 border-dashed border-gray-300 rounded-2xl bg-white flex items-start gap-4">
+                                    <span class="w-6 h-6 rounded-full bg-pink-100 text-pink-600 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                                    <div class="flex-1">
+                                        <div class="font-fredoka text-base font-semibold text-gray-800">${cloze}</div>
+                                        <div class="text-xs text-gray-500 mt-1">(${s.th})</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <!-- Part 3: เติมตัวอักษรที่หายไป -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs">3</span>
+                        <span>ตอนที่ 3: เติมตัวอักษรที่หายไปให้เป็นคำศัพท์ที่สมบูรณ์</span>
                     </h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1665,7 +2028,7 @@
         }
 
         // ========================================================
-        // 11. CONFETTI EFFECT
+        // 10. CONFETTI EFFECT
         // ========================================================
         let confettiTimer = null;
         function startConfetti() {
@@ -1712,11 +2075,11 @@
             canvas.classList.add('hidden');
         }
 
-        // Initialize on load
+        // Initialize on load -> Show Landing Page First!
         window.addEventListener('DOMContentLoaded', () => {
+            renderLandingPage();
             renderEditor();
-            generateExerciseQuestions();
-            startQuizGame();
+            switchView('home');
         });
     </script>
 </body>
