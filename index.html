@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KidsVocab Studio - ระบบสร้างแบบฝึกหัดคำศัพท์ภาษาอังกฤษสำหรับเด็ก</title>
+    <title>KidsVocab Studio - ระบบสร้างแบบฝึกหัดคำศัพท์ภาษาอังกฤษสำหรับเด็ก พร้อมหาภาพอัตโนมัติ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Prompt for Thai, Fredoka for playful English -->
@@ -83,7 +83,7 @@
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 !important;
-                padding: 20mm !important;
+                padding: 15mm !important;
             }
         }
         .print-only {
@@ -94,7 +94,7 @@
 <body class="text-gray-800 antialiased selection:bg-pink-300">
 
     <!-- Top Navigation / Header -->
-    <header class="no-print bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b-4 border-pink-200 shadow-sm">
+    <header class="no-print bg-white/85 backdrop-blur-md sticky top-0 z-40 border-b-4 border-pink-200 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('game')">
                 <span class="text-4xl animate-bounce">🎈</span>
@@ -102,7 +102,7 @@
                     <h1 class="text-xl md:text-2xl font-extrabold text-pink-600 tracking-wide flex items-center gap-2">
                         KidsVocab Studio <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-0.5 rounded-full font-bold">ป.1 - ป.3</span>
                     </h1>
-                    <p class="text-xs text-gray-500 font-medium">ระบบสร้างและเล่นแบบฝึกหัดภาษาอังกฤษการ์ตูนน่ารัก</p>
+                    <p class="text-xs text-gray-500 font-medium">ระบบสร้างแบบฝึกหัดภาษาอังกฤษการ์ตูน พร้อมระบบค้นหาภาพอัตโนมัติ 🖼️</p>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
                     <span>🎮</span> เล่นเกมแบบฝึกหัด
                 </button>
                 <button onclick="switchView('editor')" id="nav-btn-editor" class="px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
-                    <span>✏️</span> จัดการคำศัพท์ & Gen
+                    <span>✏️</span> จัดการคำศัพท์ & หาภาพ
                 </button>
                 <button onclick="switchView('print')" id="nav-btn-print" class="px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 text-gray-600 hover:text-pink-600 hover:bg-white">
                     <span>🖨️</span> พิมพ์ใบงาน A4
@@ -151,7 +151,7 @@
                             ⭐ <span id="game-score-badge">0</span> คะแนน
                         </span>
                         <button onclick="switchView('editor')" class="text-xs bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold px-3 py-1.5 rounded-xl transition">
-                            เปลี่ยนชุดคำศัพท์ ⚙️
+                            ตั้งค่าคำศัพท์ ⚙️
                         </button>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
 
 
         <!-- ========================================== -->
-        <!-- VIEW 2: EDITOR VIEW (โหมดจัดการคำศัพท์ & GEN) -->
+        <!-- VIEW 2: EDITOR VIEW (โหมดจัดการคำศัพท์ & หาภาพ) -->
         <!-- ========================================== -->
         <div id="view-editor" class="view-panel hidden transition-all duration-300">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -200,9 +200,9 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                                    <span>📝</span> คำศัพท์ในชุดนี้ (<span id="vocab-count">0</span> คำ)
+                                    <span>📝</span> รายการคำศัพท์ในชุดนี้ (<span id="vocab-count">0</span> คำ)
                                 </h2>
-                                <p class="text-xs text-gray-500">สามารถแก้ไข เพิ่ม หรือลบคำศัพท์ได้ตามใจชอบ</p>
+                                <p class="text-xs text-gray-500">มีภาพการ์ตูนประจำแต่ละคำศัพท์ สามารถคลิกที่ภาพเพื่อเปลี่ยนได้</p>
                             </div>
                             <button onclick="clearCurrentVocab()" class="text-xs text-rose-500 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl font-bold transition">
                                 🗑️ ล้างทั้งหมด
@@ -210,68 +210,106 @@
                         </div>
 
                         <!-- Vocab Cards Container -->
-                        <div id="vocab-list" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+                        <div id="vocab-list" class="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
                             <!-- List injected by JS -->
                         </div>
                     </div>
 
-                    <!-- Quick Bulk Import -->
+                    <!-- Quick Bulk Import with Auto-Image Finder -->
                     <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-purple-200">
-                        <h2 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
-                            <span>⚡</span> นำเข้าคำศัพท์หลายคำพร้อมกัน (Bulk Import)
-                        </h2>
-                        <p class="text-xs text-gray-500 mb-3">พิมพ์คำศัพท์บรรทัดละ 1 คำในรูปแบบ: <code>คำภาษาอังกฤษ, คำแปลไทย</code></p>
-                        <textarea id="bulk-input" rows="3" placeholder="ตัวอย่าง:&#10;cat, แมว&#10;dog, สุนัข&#10;rabbit, กระต่าย" class="w-full text-sm p-3 border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 rounded-2xl outline-none"></textarea>
-                        <button onclick="importBulkWords()" class="mt-2 w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2.5 rounded-xl text-sm transition btn-bounce">
-                            + นำเข้าคำศัพท์เข้าชุดทันที
+                        <div class="flex items-center justify-between mb-2">
+                            <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                <span>⚡</span> นำเข้าหลายคำพร้อมกัน + ค้นหาภาพให้อัตโนมัติ!
+                            </h2>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full font-bold">Smart Auto-Image</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3">พิมพ์คำศัพท์บรรทัดละ 1 คำ (ระบบจะค้นหารูปการ์ตูนให้ทุกคำอัตโนมัติ): <code>คำภาษาอังกฤษ, คำแปลไทย</code></p>
+                        <textarea id="bulk-input" rows="3" placeholder="ตัวอย่าง:&#10;giraffe, ยีราฟ&#10;helicopter, เฮลิคอปเตอร์&#10;dinosaur, ไดโนเสาร์" class="w-full text-sm p-3 border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 rounded-2xl outline-none"></textarea>
+                        
+                        <div id="bulk-status" class="hidden text-xs text-purple-700 font-bold my-2 flex items-center gap-2">
+                            <span class="animate-spin text-base">⏳</span> <span id="bulk-status-text">กำลังค้นหาภาพอัตโนมัติ...</span>
+                        </div>
+
+                        <button onclick="importBulkWordsWithAutoImages()" id="bulk-btn" class="mt-2 w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-3 rounded-xl text-sm transition btn-bounce flex items-center justify-center gap-2 shadow-md">
+                            <span>🔍</span> นำเข้าและค้นหารูปภาพอัตโนมัติทันที
                         </button>
                     </div>
 
                 </div>
 
-                <!-- Right Column: Add Word & Exercise Settings (5 cols) -->
+                <!-- Right Column: Add Word with Live Auto-Image Finder (5 cols) -->
                 <div class="lg:col-span-5 space-y-6">
                     
-                    <!-- Add Single Word Form -->
+                    <!-- Add Single Word Form with Live Auto Search -->
                     <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-emerald-200">
-                        <h2 class="text-lg font-bold text-emerald-800 mb-4 flex items-center gap-2">
-                            <span>➕</span> เพิ่มคำศัพท์ใหม่
-                        </h2>
+                        <div class="flex items-center justify-between mb-3">
+                            <h2 class="text-lg font-bold text-emerald-800 flex items-center gap-2">
+                                <span>➕</span> เพิ่มคำศัพท์ใหม่
+                            </h2>
+                            <span class="text-[11px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">
+                                ค้นหารูปอัตโนมัติ ✨
+                            </span>
+                        </div>
 
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-600 mb-1">คำศัพท์ภาษาอังกฤษ (English Word) *</label>
-                                <input type="text" id="new-word" placeholder="เช่น tiger, apple, book" class="w-full text-base font-semibold px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none">
+                                <label class="block text-xs font-bold text-gray-600 mb-1">
+                                    คำศัพท์ภาษาอังกฤษ (English Word) * 
+                                    <span class="text-emerald-600 font-normal text-[11px]">(พิมพ์ปุ๊บ ระบบหารูปให้ทันที)</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" id="new-word" oninput="handleWordInput(this.value)" placeholder="เช่น rabbit, car, strawberry" class="w-full text-base font-semibold px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none pr-10">
+                                    <span id="word-search-spinner" class="hidden absolute right-3.5 top-3.5 text-emerald-500 animate-spin">⏳</span>
+                                </div>
                             </div>
 
                             <div>
                                 <label class="block text-xs font-bold text-gray-600 mb-1">คำแปลภาษาไทย (Thai Meaning) *</label>
-                                <input type="text" id="new-meaning" placeholder="เช่น เสือ, แอปเปิ้ล, หนังสือ" class="w-full text-base font-semibold px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none">
+                                <input type="text" id="new-meaning" placeholder="เช่น กระต่าย, รถยนต์, สตรอว์เบอร์รี" class="w-full text-base font-semibold px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none">
                             </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-gray-600 mb-1">รูปการ์ตูนประกอบ (Emoji หรือ SVG Icon)</label>
-                                <div class="flex items-center gap-2">
-                                    <input type="text" id="new-emoji" placeholder="🐯" value="🌟" class="text-center text-3xl w-20 py-2 rounded-2xl border-2 border-gray-200 focus:border-emerald-400 outline-none">
-                                    <div class="flex-1 flex flex-wrap gap-1.5 p-2 bg-emerald-50 rounded-2xl max-h-24 overflow-y-auto">
-                                        <!-- Quick Emoji Picker -->
-                                        <button type="button" onclick="setNewEmoji('🐱')" class="text-xl p-1 hover:scale-125 transition">🐱</button>
-                                        <button type="button" onclick="setNewEmoji('🐶')" class="text-xl p-1 hover:scale-125 transition">🐶</button>
-                                        <button type="button" onclick="setNewEmoji('🐰')" class="text-xl p-1 hover:scale-125 transition">🐰</button>
-                                        <button type="button" onclick="setNewEmoji('🦁')" class="text-xl p-1 hover:scale-125 transition">🦁</button>
-                                        <button type="button" onclick="setNewEmoji('🍎')" class="text-xl p-1 hover:scale-125 transition">🍎</button>
-                                        <button type="button" onclick="setNewEmoji('🍊')" class="text-xl p-1 hover:scale-125 transition">🍊</button>
-                                        <button type="button" onclick="setNewEmoji('🍌')" class="text-xl p-1 hover:scale-125 transition">🍌</button>
-                                        <button type="button" onclick="setNewEmoji('🍓')" class="text-xl p-1 hover:scale-125 transition">🍓</button>
-                                        <button type="button" onclick="setNewEmoji('👃')" class="text-xl p-1 hover:scale-125 transition">👃</button>
-                                        <button type="button" onclick="setNewEmoji('👄')" class="text-xl p-1 hover:scale-125 transition">👄</button>
-                                        <button type="button" onclick="setNewEmoji('👀')" class="text-xl p-1 hover:scale-125 transition">👀</button>
-                                        <button type="button" onclick="setNewEmoji('👂')" class="text-xl p-1 hover:scale-125 transition">👂</button>
-                                        <button type="button" onclick="setNewEmoji('✏️')" class="text-xl p-1 hover:scale-125 transition">✏️</button>
-                                        <button type="button" onclick="setNewEmoji('📖')" class="text-xl p-1 hover:scale-125 transition">📖</button>
-                                        <button type="button" onclick="setNewEmoji('🎒')" class="text-xl p-1 hover:scale-125 transition">🎒</button>
-                                        <button type="button" onclick="setNewEmoji('🚗')" class="text-xl p-1 hover:scale-125 transition">🚗</button>
+                            <!-- Live Image Selector Area -->
+                            <div class="border-2 border-emerald-100 bg-emerald-50/50 rounded-2xl p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+                                        <span>🖼️</span> ภาพการ์ตูนที่เลือกใช้
+                                    </label>
+                                    <button type="button" onclick="triggerManualSearch()" class="text-[11px] text-emerald-700 hover:text-emerald-900 font-bold underline">
+                                        ค้นหาใหม่ 🔄
+                                    </button>
+                                </div>
+
+                                <!-- Current Selected Image Preview -->
+                                <div class="flex items-center gap-4 bg-white p-3 rounded-2xl border border-emerald-200 shadow-sm mb-3">
+                                    <div id="current-preview-box" class="w-16 h-16 rounded-xl bg-pink-50 border-2 border-pink-200 flex items-center justify-center overflow-hidden shrink-0">
+                                        <span id="preview-fallback-emoji" class="text-3xl">🌟</span>
                                     </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div id="preview-label" class="text-xs font-bold text-gray-700 truncate">ยังไม่ได้เลือกรูป</div>
+                                        <div class="text-[10px] text-gray-400">คลิกที่รูปด้านล่างเพื่อเปลี่ยนรูปได้เลย</div>
+                                        <input type="hidden" id="selected-image-url" value="">
+                                        <input type="hidden" id="selected-emoji" value="🌟">
+                                    </div>
+                                </div>
+
+                                <!-- Candidate Images Gallery -->
+                                <div>
+                                    <div class="text-[11px] font-bold text-gray-500 mb-1.5 flex items-center justify-between">
+                                        <span>🎨 รูปภาพที่ค้นพบ (คลิกเพื่อเลือก):</span>
+                                        <span id="candidate-count" class="text-[10px] text-emerald-600">0 รูป</span>
+                                    </div>
+                                    <div id="image-candidates" class="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-36 overflow-y-auto p-1 bg-white rounded-xl border border-gray-200">
+                                        <!-- Candidate buttons injected by JS -->
+                                        <div class="col-span-full py-4 text-center text-xs text-gray-400">พิมพ์คำศัพท์ภาษาอังกฤษเพื่อค้นหาภาพอัตโนมัติ</div>
+                                    </div>
+                                </div>
+
+                                <!-- Custom Search Input for Image -->
+                                <div class="mt-3 pt-3 border-t border-emerald-100 flex items-center gap-2">
+                                    <input type="text" id="manual-image-keyword" placeholder="หรือพิมพ์คำค้นหาภาพ เช่น cartoon cat" class="flex-1 text-xs px-3 py-2 border rounded-xl outline-none focus:border-emerald-400" onkeydown="if(event.key==='Enter') searchImagesByKeyword(this.value)">
+                                    <button type="button" onclick="searchImagesByKeyword(document.getElementById('manual-image-keyword').value)" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-xl transition">
+                                        ค้นหา 🔍
+                                    </button>
                                 </div>
                             </div>
 
@@ -287,18 +325,18 @@
                             <span class="text-3xl animate-bounce">🚀</span>
                             <div>
                                 <h3 class="text-xl font-black">พร้อมสร้างแบบฝึกหัด!</h3>
-                                <p class="text-pink-100 text-xs">ระบบจะผสมโหมดรูปภาพ เสียง และสะกดคำให้อัตโนมัติ</p>
+                                <p class="text-pink-100 text-xs">ผสมโหมดรูปภาพ เสียง และสะกดคำให้อัตโนมัติ</p>
                             </div>
                         </div>
 
                         <div class="space-y-3 mb-6 bg-white/10 backdrop-blur p-4 rounded-2xl text-sm">
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-multiple" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดทายรูปภาพ (Picture Match)</span>
+                                <span>โหมดทายรูปภาพการ์ตูน (Picture Match)</span>
                             </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-listen" checked class="w-4 h-4 accent-amber-300 rounded">
-                                <span>โหมดฟังเสียงฝรั่งแล้วเลือกรูป (Listening)</span>
+                                <span>โหมดฟังเสียงแล้วเลือกภาพ (Listening)</span>
                             </label>
                             <label class="flex items-center gap-2.5 cursor-pointer">
                                 <input type="checkbox" id="cfg-spelling" checked class="w-4 h-4 accent-amber-300 rounded">
@@ -331,7 +369,7 @@
                     <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                         <span>🖨️</span> ตัวอย่างใบงานพร้อมพิมพ์ (Printable A4 Worksheet)
                     </h2>
-                    <p class="text-sm text-gray-500">สามารถกดสั่งพิมพ์ออกทางเครื่องพิมพ์ หรือบันทึกเป็นไฟล์ PDF แจกเด็กๆ ในห้องเรียนได้เลย</p>
+                    <p class="text-sm text-gray-500">พิมพ์ภาพการ์ตูนคมชัด ออกทางเครื่องพิมพ์ หรือบันทึกเป็นไฟล์ PDF แจกเด็กๆ ได้เลย</p>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -379,6 +417,32 @@
 
     </div>
 
+    <!-- Quick Modal for Changing an Existing Word's Picture -->
+    <div id="modal-change-image" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl border-4 border-pink-300 transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <span>🖼️</span> เปลี่ยนรูปภาพคำว่า: <span id="modal-change-word" class="text-pink-600 font-fredoka text-xl">cat</span>
+                </h3>
+                <button onclick="closeChangeImageModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
+            </div>
+
+            <!-- Search input inside modal -->
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="modal-search-input" placeholder="ค้นหารูปใหม่ เช่น cute cat" class="flex-1 text-sm px-3 py-2 border-2 border-pink-200 rounded-xl outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter') searchModalImages()">
+                <button onclick="searchModalImages()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold text-xs px-4 py-2 rounded-xl">ค้นหา</button>
+            </div>
+
+            <div id="modal-image-candidates" class="grid grid-cols-4 gap-3 max-h-60 overflow-y-auto p-2 bg-pink-50/50 rounded-2xl border border-pink-100 mb-4">
+                <!-- Injected via JS -->
+            </div>
+
+            <button onclick="closeChangeImageModal()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2.5 rounded-xl transition text-sm">
+                ปิดหน้าต่าง
+            </button>
+        </div>
+    </div>
+
     <!-- Cute Feedback Modal -->
     <div id="modal-feedback" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div id="modal-box" class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl border-4 border-pink-300 transform transition-all scale-95 opacity-0">
@@ -397,8 +461,105 @@
     <!-- JavaScript Logic -->
     <script>
         // ========================================================
-        // 1. DATA PRESETS & STATE
+        // 1. COMPREHENSIVE LOCAL VOCABULARY & IMAGE DATABASE
         // ========================================================
+        // Pre-indexed high-quality cute Fluent / OpenMoji / Noto vector SVGs
+        const LOCAL_KID_VOCAB = {
+            // Body
+            orange: { image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊", meaning: "สีส้ม / ผลส้ม" },
+            nose: { image: "https://api.iconify.design/fluent-emoji-flat/nose.svg", emoji: "👃", meaning: "จมูก" },
+            mouth: { image: "https://api.iconify.design/fluent-emoji-flat/mouth.svg", emoji: "👄", meaning: "ปาก" },
+            eyes: { image: "https://api.iconify.design/fluent-emoji-flat/eyes.svg", emoji: "👀", meaning: "ตา / ดวงตา" },
+            eye: { image: "https://api.iconify.design/fluent-emoji-flat/eye.svg", emoji: "👁️", meaning: "ตา" },
+            ear: { image: "https://api.iconify.design/fluent-emoji-flat/ear.svg", emoji: "👂", meaning: "หู" },
+            hand: { image: "https://api.iconify.design/fluent-emoji-flat/raised-hand.svg", emoji: "✋", meaning: "มือ" },
+            foot: { image: "https://api.iconify.design/fluent-emoji-flat/foot.svg", emoji: "🦶", meaning: "เท้า" },
+            head: { image: "https://api.iconify.design/fluent-emoji-flat/person.svg", emoji: "🧒", meaning: "ศีรษะ" },
+            arm: { image: "https://api.iconify.design/fluent-emoji-flat/flexed-biceps.svg", emoji: "💪", meaning: "แขน" },
+            leg: { image: "https://api.iconify.design/fluent-emoji-flat/leg.svg", emoji: "🦵", meaning: "ขา" },
+
+            // Animals
+            cat: { image: "https://api.iconify.design/fluent-emoji-flat/cat.svg", emoji: "🐱", meaning: "แมว" },
+            dog: { image: "https://api.iconify.design/fluent-emoji-flat/dog.svg", emoji: "🐶", meaning: "สุนัข" },
+            rabbit: { image: "https://api.iconify.design/fluent-emoji-flat/rabbit.svg", emoji: "🐰", meaning: "กระต่าย" },
+            elephant: { image: "https://api.iconify.design/fluent-emoji-flat/elephant.svg", emoji: "🐘", meaning: "ช้าง" },
+            lion: { image: "https://api.iconify.design/fluent-emoji-flat/lion.svg", emoji: "🦁", meaning: "สิงโต" },
+            tiger: { image: "https://api.iconify.design/fluent-emoji-flat/tiger.svg", emoji: "🐯", meaning: "เสือ" },
+            bear: { image: "https://api.iconify.design/fluent-emoji-flat/bear.svg", emoji: "🐻", meaning: "หมี" },
+            monkey: { image: "https://api.iconify.design/fluent-emoji-flat/monkey.svg", emoji: "🐵", meaning: "ลิง" },
+            bird: { image: "https://api.iconify.design/fluent-emoji-flat/bird.svg", emoji: "🐦", meaning: "นก" },
+            fish: { image: "https://api.iconify.design/fluent-emoji-flat/fish.svg", emoji: "🐟", meaning: "ปลา" },
+            duck: { image: "https://api.iconify.design/fluent-emoji-flat/duck.svg", emoji: "🦆", meaning: "เป็ด" },
+            pig: { image: "https://api.iconify.design/fluent-emoji-flat/pig.svg", emoji: "🐷", meaning: "หมู" },
+            cow: { image: "https://api.iconify.design/fluent-emoji-flat/cow.svg", emoji: "🐮", meaning: "วัว" },
+            horse: { image: "https://api.iconify.design/fluent-emoji-flat/horse.svg", emoji: "🐴", meaning: "ม้า" },
+            sheep: { image: "https://api.iconify.design/fluent-emoji-flat/sheep.svg", emoji: "🐑", meaning: "แกะ" },
+            chicken: { image: "https://api.iconify.design/fluent-emoji-flat/chicken.svg", emoji: "🐔", meaning: "ไก่" },
+            frog: { image: "https://api.iconify.design/fluent-emoji-flat/frog.svg", emoji: "🐸", meaning: "กบ" },
+            snake: { image: "https://api.iconify.design/fluent-emoji-flat/snake.svg", emoji: "🐍", meaning: "งู" },
+            turtle: { image: "https://api.iconify.design/fluent-emoji-flat/turtle.svg", emoji: "🐢", meaning: "เต่า" },
+            butterfly: { image: "https://api.iconify.design/fluent-emoji-flat/butterfly.svg", emoji: "🦋", meaning: "ผีเสื้อ" },
+            dinosaur: { image: "https://api.iconify.design/fluent-emoji-flat/t-rex.svg", emoji: "🦖", meaning: "ไดโนเสาร์" },
+            giraffe: { image: "https://api.iconify.design/fluent-emoji-flat/giraffe.svg", emoji: "🦒", meaning: "ยีราฟ" },
+            zebra: { image: "https://api.iconify.design/fluent-emoji-flat/zebra.svg", emoji: "🦓", meaning: "ม้าลาย" },
+
+            // Fruits & Food
+            apple: { image: "https://api.iconify.design/fluent-emoji-flat/red-apple.svg", emoji: "🍎", meaning: "แอปเปิ้ล" },
+            banana: { image: "https://api.iconify.design/fluent-emoji-flat/banana.svg", emoji: "🍌", meaning: "กล้วย" },
+            watermelon: { image: "https://api.iconify.design/fluent-emoji-flat/watermelon.svg", emoji: "🍉", meaning: "แตงโม" },
+            strawberry: { image: "https://api.iconify.design/fluent-emoji-flat/strawberry.svg", emoji: "🍓", meaning: "สตรอว์เบอร์รี" },
+            mango: { image: "https://api.iconify.design/fluent-emoji-flat/mango.svg", emoji: "🥭", meaning: "มะม่วง" },
+            grape: { image: "https://api.iconify.design/fluent-emoji-flat/grapes.svg", emoji: "🍇", meaning: "องุ่น" },
+            pineapple: { image: "https://api.iconify.design/fluent-emoji-flat/pineapple.svg", emoji: "🍍", meaning: "สับปะรด" },
+            pizza: { image: "https://api.iconify.design/fluent-emoji-flat/pizza.svg", emoji: "🍕", meaning: "พิซซ่า" },
+            milk: { image: "https://api.iconify.design/fluent-emoji-flat/glass-of-milk.svg", emoji: "🥛", meaning: "นม" },
+            egg: { image: "https://api.iconify.design/fluent-emoji-flat/egg.svg", emoji: "🥚", meaning: "ไข่" },
+            cake: { image: "https://api.iconify.design/fluent-emoji-flat/birthday-cake.svg", emoji: "🍰", meaning: "เค้ก" },
+            "ice cream": { image: "https://api.iconify.design/fluent-emoji-flat/ice-cream.svg", emoji: "🍦", meaning: "ไอศกรีม" },
+
+            // Colors
+            red: { image: "https://api.iconify.design/fluent-emoji-flat/red-circle.svg", emoji: "🔴", meaning: "สีแดง" },
+            blue: { image: "https://api.iconify.design/fluent-emoji-flat/blue-circle.svg", emoji: "🔵", meaning: "สีฟ้า / น้ำเงิน" },
+            yellow: { image: "https://api.iconify.design/fluent-emoji-flat/yellow-circle.svg", emoji: "🟡", meaning: "สีเหลือง" },
+            green: { image: "https://api.iconify.design/fluent-emoji-flat/green-circle.svg", emoji: "🟢", meaning: "สีเขียว" },
+            pink: { image: "https://api.iconify.design/fluent-emoji-flat/cherry-blossom.svg", emoji: "🌸", meaning: "สีชมพู" },
+            purple: { image: "https://api.iconify.design/fluent-emoji-flat/purple-circle.svg", emoji: "🟣", meaning: "สีม่วง" },
+
+            // School & Things
+            book: { image: "https://api.iconify.design/fluent-emoji-flat/open-book.svg", emoji: "📖", meaning: "หนังสือ" },
+            pencil: { image: "https://api.iconify.design/fluent-emoji-flat/pencil.svg", emoji: "✏️", meaning: "ดินสอ" },
+            pen: { image: "https://api.iconify.design/fluent-emoji-flat/pen.svg", emoji: "🖊️", meaning: "ปากกา" },
+            bag: { image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒", meaning: "กระเป๋า" },
+            backpack: { image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒", meaning: "กระเป๋านักเรียน" },
+            ruler: { image: "https://api.iconify.design/fluent-emoji-flat/straight-ruler.svg", emoji: "📏", meaning: "ไม้บรรทัด" },
+            chair: { image: "https://api.iconify.design/fluent-emoji-flat/chair.svg", emoji: "🪑", meaning: "เก้าอี้" },
+            table: { image: "https://api.iconify.design/fluent-emoji-flat/wood.svg", emoji: "🪵", meaning: "โต๊ะ" },
+            clock: { image: "https://api.iconify.design/fluent-emoji-flat/mantelpiece-clock.svg", emoji: "⏰", meaning: "นาฬิกา" },
+            computer: { image: "https://api.iconify.design/fluent-emoji-flat/laptop.svg", emoji: "💻", meaning: "คอมพิวเตอร์" },
+
+            // Vehicles
+            car: { image: "https://api.iconify.design/fluent-emoji-flat/automobile.svg", emoji: "🚗", meaning: "รถยนต์" },
+            bus: { image: "https://api.iconify.design/fluent-emoji-flat/bus.svg", emoji: "🚌", meaning: "รถบัส" },
+            bicycle: { image: "https://api.iconify.design/fluent-emoji-flat/bicycle.svg", emoji: "🚲", meaning: "รถจักรยาน" },
+            bike: { image: "https://api.iconify.design/fluent-emoji-flat/bicycle.svg", emoji: "🚲", meaning: "รถจักรยาน" },
+            airplane: { image: "https://api.iconify.design/fluent-emoji-flat/airplane.svg", emoji: "✈️", meaning: "เครื่องบิน" },
+            plane: { image: "https://api.iconify.design/fluent-emoji-flat/airplane.svg", emoji: "✈️", meaning: "เครื่องบิน" },
+            helicopter: { image: "https://api.iconify.design/fluent-emoji-flat/helicopter.svg", emoji: "🚁", meaning: "เฮลิคอปเตอร์" },
+            train: { image: "https://api.iconify.design/fluent-emoji-flat/train.svg", emoji: "🚆", meaning: "รถไฟ" },
+            boat: { image: "https://api.iconify.design/fluent-emoji-flat/sailboat.svg", emoji: "⛵", meaning: "เรือ" },
+            rocket: { image: "https://api.iconify.design/fluent-emoji-flat/rocket.svg", emoji: "🚀", meaning: "จรวด" },
+
+            // Nature
+            sun: { image: "https://api.iconify.design/fluent-emoji-flat/sun.svg", emoji: "☀️", meaning: "ดวงอาทิตย์" },
+            moon: { image: "https://api.iconify.design/fluent-emoji-flat/crescent-moon.svg", emoji: "🌙", meaning: "ดวงจันทร์" },
+            star: { image: "https://api.iconify.design/fluent-emoji-flat/star.svg", emoji: "⭐", meaning: "ดวงดาว" },
+            rainbow: { image: "https://api.iconify.design/fluent-emoji-flat/rainbow.svg", emoji: "🌈", meaning: "สายรุ้ง" },
+            tree: { image: "https://api.iconify.design/fluent-emoji-flat/deciduous-tree.svg", emoji: "🌳", meaning: "ต้นไม้" },
+            flower: { image: "https://api.iconify.design/fluent-emoji-flat/blossom.svg", emoji: "🌸", meaning: "ดอกไม้" },
+            umbrella: { image: "https://api.iconify.design/fluent-emoji-flat/umbrella.svg", emoji: "☂️", meaning: "ร่ม" }
+        };
+
+        // Presets with high-res cute SVG images
         const PRESETS = [
             {
                 id: "body",
@@ -406,12 +567,12 @@
                 icon: "👃",
                 badge: "ป.1 ยอดฮิต",
                 words: [
-                    { word: "orange", meaning: "สีส้ม / ผลส้ม", emoji: "🍊" },
-                    { word: "nose", meaning: "จมูก", emoji: "👃" },
-                    { word: "mouth", meaning: "ปาก", emoji: "👄" },
-                    { word: "eyes", meaning: "ตา / ดวงตา", emoji: "👀" },
-                    { word: "ear", meaning: "หู", emoji: "👂" },
-                    { word: "hand", meaning: "มือ", emoji: "✋" }
+                    { word: "orange", meaning: "สีส้ม / ผลส้ม", image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊" },
+                    { word: "nose", meaning: "จมูก", image: "https://api.iconify.design/fluent-emoji-flat/nose.svg", emoji: "👃" },
+                    { word: "mouth", meaning: "ปาก", image: "https://api.iconify.design/fluent-emoji-flat/mouth.svg", emoji: "👄" },
+                    { word: "eyes", meaning: "ตา / ดวงตา", image: "https://api.iconify.design/fluent-emoji-flat/eyes.svg", emoji: "👀" },
+                    { word: "ear", meaning: "หู", image: "https://api.iconify.design/fluent-emoji-flat/ear.svg", emoji: "👂" },
+                    { word: "hand", meaning: "มือ", image: "https://api.iconify.design/fluent-emoji-flat/raised-hand.svg", emoji: "✋" }
                 ]
             },
             {
@@ -420,12 +581,12 @@
                 icon: "🐶",
                 badge: "ป.1 สนุกสนาน",
                 words: [
-                    { word: "cat", meaning: "แมว", emoji: "🐱" },
-                    { word: "dog", meaning: "สุนัข", emoji: "🐶" },
-                    { word: "rabbit", meaning: "กระต่าย", emoji: "🐰" },
-                    { word: "elephant", meaning: "ช้าง", emoji: "🐘" },
-                    { word: "lion", meaning: "สิงโต", emoji: "🦁" },
-                    { word: "bird", meaning: "นก", emoji: "🐦" }
+                    { word: "cat", meaning: "แมว", image: "https://api.iconify.design/fluent-emoji-flat/cat.svg", emoji: "🐱" },
+                    { word: "dog", meaning: "สุนัข", image: "https://api.iconify.design/fluent-emoji-flat/dog.svg", emoji: "🐶" },
+                    { word: "rabbit", meaning: "กระต่าย", image: "https://api.iconify.design/fluent-emoji-flat/rabbit.svg", emoji: "🐰" },
+                    { word: "elephant", meaning: "ช้าง", image: "https://api.iconify.design/fluent-emoji-flat/elephant.svg", emoji: "🐘" },
+                    { word: "lion", meaning: "สิงโต", image: "https://api.iconify.design/fluent-emoji-flat/lion.svg", emoji: "🦁" },
+                    { word: "bird", meaning: "นก", image: "https://api.iconify.design/fluent-emoji-flat/bird.svg", emoji: "🐦" }
                 ]
             },
             {
@@ -434,12 +595,12 @@
                 icon: "🍎",
                 badge: "ของโปรดเด็กๆ",
                 words: [
-                    { word: "apple", meaning: "แอปเปิ้ล", emoji: "🍎" },
-                    { word: "banana", meaning: "กล้วย", emoji: "🍌" },
-                    { word: "watermelon", meaning: "แตงโม", emoji: "🍉" },
-                    { word: "strawberry", meaning: "สตรอว์เบอร์รี", emoji: "🍓" },
-                    { word: "mango", meaning: "มะม่วง", emoji: "🥭" },
-                    { word: "grape", meaning: "องุ่น", emoji: "🍇" }
+                    { word: "apple", meaning: "แอปเปิ้ล", image: "https://api.iconify.design/fluent-emoji-flat/red-apple.svg", emoji: "🍎" },
+                    { word: "banana", meaning: "กล้วย", image: "https://api.iconify.design/fluent-emoji-flat/banana.svg", emoji: "🍌" },
+                    { word: "watermelon", meaning: "แตงโม", image: "https://api.iconify.design/fluent-emoji-flat/watermelon.svg", emoji: "🍉" },
+                    { word: "strawberry", meaning: "สตรอว์เบอร์รี", image: "https://api.iconify.design/fluent-emoji-flat/strawberry.svg", emoji: "🍓" },
+                    { word: "mango", meaning: "มะม่วง", image: "https://api.iconify.design/fluent-emoji-flat/mango.svg", emoji: "🥭" },
+                    { word: "grape", meaning: "องุ่น", image: "https://api.iconify.design/fluent-emoji-flat/grapes.svg", emoji: "🍇" }
                 ]
             },
             {
@@ -448,12 +609,12 @@
                 icon: "🎨",
                 badge: "ป.1 พื้นฐาน",
                 words: [
-                    { word: "red", meaning: "สีแดง", emoji: "🔴" },
-                    { word: "blue", meaning: "สีฟ้า / สีน้ำเงิน", emoji: "🔵" },
-                    { word: "yellow", meaning: "สีเหลือง", emoji: "🟡" },
-                    { word: "green", meaning: "สีเขียว", emoji: "🟢" },
-                    { word: "pink", meaning: "สีชมพู", emoji: "🌸" },
-                    { word: "purple", meaning: "สีม่วง", emoji: "🟣" }
+                    { word: "red", meaning: "สีแดง", image: "https://api.iconify.design/fluent-emoji-flat/red-circle.svg", emoji: "🔴" },
+                    { word: "blue", meaning: "สีฟ้า / สีน้ำเงิน", image: "https://api.iconify.design/fluent-emoji-flat/blue-circle.svg", emoji: "🔵" },
+                    { word: "yellow", meaning: "สีเหลือง", image: "https://api.iconify.design/fluent-emoji-flat/yellow-circle.svg", emoji: "🟡" },
+                    { word: "green", meaning: "สีเขียว", image: "https://api.iconify.design/fluent-emoji-flat/green-circle.svg", emoji: "🟢" },
+                    { word: "pink", meaning: "สีชมพู", image: "https://api.iconify.design/fluent-emoji-flat/cherry-blossom.svg", emoji: "🌸" },
+                    { word: "purple", meaning: "สีม่วง", image: "https://api.iconify.design/fluent-emoji-flat/purple-circle.svg", emoji: "🟣" }
                 ]
             },
             {
@@ -462,26 +623,43 @@
                 icon: "🎒",
                 badge: "เปิดเทอม",
                 words: [
-                    { word: "book", meaning: "หนังสือ", emoji: "📖" },
-                    { word: "pencil", meaning: "ดินสอ", emoji: "✏️" },
-                    { word: "bag", meaning: "กระเป๋า", emoji: "🎒" },
-                    { word: "ruler", meaning: "ไม้บรรทัด", emoji: "📏" },
-                    { word: "chair", meaning: "เก้าอี้", emoji: "🪑" },
-                    { word: "table", meaning: "โต๊ะ", emoji: "🪵" }
+                    { word: "book", meaning: "หนังสือ", image: "https://api.iconify.design/fluent-emoji-flat/open-book.svg", emoji: "📖" },
+                    { word: "pencil", meaning: "ดินสอ", image: "https://api.iconify.design/fluent-emoji-flat/pencil.svg", emoji: "✏️" },
+                    { word: "bag", meaning: "กระเป๋า", image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒" },
+                    { word: "ruler", meaning: "ไม้บรรทัด", image: "https://api.iconify.design/fluent-emoji-flat/straight-ruler.svg", emoji: "📏" },
+                    { word: "chair", meaning: "เก้าอี้", image: "https://api.iconify.design/fluent-emoji-flat/chair.svg", emoji: "🪑" },
+                    { word: "table", meaning: "โต๊ะ", image: "https://api.iconify.design/fluent-emoji-flat/wood.svg", emoji: "🪵" }
                 ]
             }
         ];
 
         // Global State
         let currentPackTitle = "ร่างกายของฉัน (My Body)";
-        let currentWords = JSON.parse(JSON.stringify(PRESETS[0].words)); // default Body
+        let currentWords = JSON.parse(JSON.stringify(PRESETS[0].words));
         let generatedQuestions = [];
         let currentQuestionIdx = 0;
         let userScore = 0;
         let isSoundOn = true;
         let activeView = "game";
+        let modalTargetWordIdx = null;
 
-        // Web Audio Synthesizer (Zero dependencies, 100% works offline)
+        // Helper: Render Visual (Image with graceful fallback to Emoji)
+        function renderVisual(item, sizeClass = "text-7xl", imgClass = "w-28 h-28 object-contain") {
+            const emojiText = item.emoji || '🌟';
+            if (item.image) {
+                return `
+                    <div class="relative inline-flex items-center justify-center">
+                        <img src="${item.image}" alt="${item.word}" class="${imgClass} inline-block filter drop-shadow-md transition-transform hover:scale-105" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='inline-block';" loading="lazy">
+                        <span style="display:none;" class="${sizeClass}">${emojiText}</span>
+                    </div>
+                `;
+            }
+            return `<span class="${sizeClass}">${emojiText}</span>`;
+        }
+
+        // ========================================================
+        // 2. AUDIO & TEXT-TO-SPEECH
+        // ========================================================
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playTone(freq, type, duration) {
@@ -521,14 +699,13 @@
             }
         }
 
-        // Web Speech API for Clear English Pronunciation
         function speakWord(text) {
             if (!isSoundOn || !('speechSynthesis' in window)) return;
             try {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
                 utter.lang = 'en-US';
-                utter.rate = 0.82; // Kid-friendly clear pace
+                utter.rate = 0.82;
                 window.speechSynthesis.speak(utter);
             } catch (e) {
                 console.log(e);
@@ -550,7 +727,301 @@
         }
 
         // ========================================================
-        // 2. VIEW SWITCHING
+        // 3. AUTO-IMAGE SEARCH ENGINE (หาภาพการ์ตูนให้อัตโนมัติ)
+        // ========================================================
+        let searchDebounceTimer = null;
+
+        function handleWordInput(val) {
+            clearTimeout(searchDebounceTimer);
+            const word = val.trim().toLowerCase();
+            if (!word) {
+                clearCandidates();
+                return;
+            }
+
+            // Auto-fill Thai meaning if known in dictionary
+            if (LOCAL_KID_VOCAB[word] && !document.getElementById('new-meaning').value) {
+                document.getElementById('new-meaning').value = LOCAL_KID_VOCAB[word].meaning;
+            }
+
+            document.getElementById('word-search-spinner').classList.remove('hidden');
+            searchDebounceTimer = setTimeout(() => {
+                fetchAndDisplayCartoonImages(word);
+            }, 300);
+        }
+
+        function triggerManualSearch() {
+            const word = document.getElementById('new-word').value.trim().toLowerCase();
+            if (word) {
+                fetchAndDisplayCartoonImages(word);
+            } else {
+                alert("กรุณากรอกคำศัพท์ภาษาอังกฤษก่อนค้นหาภาพครับ 💡");
+            }
+        }
+
+        function searchImagesByKeyword(keyword) {
+            keyword = keyword.trim().toLowerCase();
+            if (keyword) {
+                fetchAndDisplayCartoonImages(keyword);
+            }
+        }
+
+        // The Core Multi-Source Image Finder
+        async function searchCartoonImages(query) {
+            if (!query) return [];
+            query = query.trim().toLowerCase();
+            const results = [];
+
+            // 1. Check local kid dictionary for instant match
+            if (LOCAL_KID_VOCAB[query]) {
+                const local = LOCAL_KID_VOCAB[query];
+                results.push({
+                    url: local.image,
+                    emoji: local.emoji,
+                    title: `Fluent 3D: ${query}`
+                });
+            }
+
+            // 2. Query Iconify Vector API for kid-friendly colorful sets (Fluent, Twemoji, OpenMoji, Noto)
+            try {
+                const iconifyUrl = `https://api.iconify.design/search?query=${encodeURIComponent(query)}&prefixes=fluent-emoji-flat,twemoji,openmoji,noto&limit=10`;
+                const res = await fetch(iconifyUrl);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.icons && data.icons.length > 0) {
+                        data.icons.forEach(iconName => {
+                            const [prefix, name] = iconName.split(':');
+                            const imgUrl = `https://api.iconify.design/${prefix}/${name}.svg`;
+                            if (!results.some(r => r.url === imgUrl)) {
+                                results.push({
+                                    url: imgUrl,
+                                    emoji: '🌟',
+                                    title: `${prefix} ${name}`
+                                });
+                            }
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn("Iconify search error:", e);
+            }
+
+            // 3. Fallback to broad Iconify vector sets if few results
+            if (results.length < 3) {
+                try {
+                    const broadUrl = `https://api.iconify.design/search?query=${encodeURIComponent(query)}&limit=8`;
+                    const res2 = await fetch(broadUrl);
+                    if (res2.ok) {
+                        const data2 = await res2.json();
+                        if (data2.icons) {
+                            data2.icons.forEach(iconName => {
+                                const [prefix, name] = iconName.split(':');
+                                const imgUrl = `https://api.iconify.design/${prefix}/${name}.svg`;
+                                if (!results.some(r => r.url === imgUrl)) {
+                                    results.push({
+                                        url: imgUrl,
+                                        emoji: '🌟',
+                                        title: iconName
+                                    });
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // 4. Query Wikipedia thumbnail for illustration/photo if still empty
+            if (results.length === 0) {
+                try {
+                    const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+                    const wikiRes = await fetch(wikiUrl);
+                    if (wikiRes.ok) {
+                        const wikiData = await wikiRes.json();
+                        if (wikiData.thumbnail && wikiData.thumbnail.source) {
+                            results.push({
+                                url: wikiData.thumbnail.source,
+                                emoji: '🌟',
+                                title: 'Wikipedia'
+                            });
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            return results;
+        }
+
+        async function fetchAndDisplayCartoonImages(query) {
+            document.getElementById('word-search-spinner').classList.remove('hidden');
+            const candidates = await searchCartoonImages(query);
+            document.getElementById('word-search-spinner').classList.add('hidden');
+
+            const container = document.getElementById('image-candidates');
+            const countEl = document.getElementById('candidate-count');
+
+            if (candidates.length === 0) {
+                countEl.textContent = "0 รูป";
+                container.innerHTML = `
+                    <div class="col-span-full py-3 text-center text-xs text-gray-400">
+                        ไม่พบรูปสำหรับคำนี้ สามารถพิมพ์คำค้นหาเพิ่มเติมด้านล่างได้ครับ
+                    </div>
+                `;
+                return;
+            }
+
+            countEl.textContent = `${candidates.length} รูปที่พบ`;
+            container.innerHTML = candidates.map((c, idx) => `
+                <button type="button" onclick="selectCandidateImage('${encodeURIComponent(c.url)}', '${c.emoji || '🌟'}', '${c.title}')" class="p-2 rounded-xl border-2 border-gray-200 hover:border-pink-400 hover:bg-pink-50 transition flex items-center justify-center aspect-square group bg-white shadow-xs" title="${c.title}">
+                    <img src="${c.url}" alt="${c.title}" class="w-10 h-10 object-contain group-hover:scale-110 transition-transform">
+                </button>
+            `).join('');
+
+            // Automatically select the very first found image!
+            if (candidates.length > 0) {
+                selectCandidateImage(encodeURIComponent(candidates[0].url), candidates[0].emoji || '🌟', candidates[0].title);
+            }
+        }
+
+        function selectCandidateImage(encodedUrl, emoji, title) {
+            const url = decodeURIComponent(encodedUrl);
+            document.getElementById('selected-image-url').value = url;
+            document.getElementById('selected-emoji').value = emoji || '🌟';
+
+            const box = document.getElementById('current-preview-box');
+            box.innerHTML = `<img src="${url}" class="w-12 h-12 object-contain animate-float" onerror="this.outerHTML='<span class=\\'text-3xl\\'>${emoji || '🌟'}</span>'">`;
+            document.getElementById('preview-label').textContent = title || "รูปภาพที่เลือก";
+        }
+
+        function clearCandidates() {
+            document.getElementById('word-search-spinner').classList.add('hidden');
+            document.getElementById('candidate-count').textContent = "0 รูป";
+            document.getElementById('image-candidates').innerHTML = `
+                <div class="col-span-full py-4 text-center text-xs text-gray-400">พิมพ์คำศัพท์ภาษาอังกฤษเพื่อค้นหาภาพอัตโนมัติ</div>
+            `;
+            document.getElementById('current-preview-box').innerHTML = `<span class="text-3xl">🌟</span>`;
+            document.getElementById('preview-label').textContent = "ยังไม่ได้เลือกรูป";
+            document.getElementById('selected-image-url').value = "";
+        }
+
+        // ========================================================
+        // 4. BULK IMPORT WITH AUTOMATIC IMAGE SEARCH
+        // ========================================================
+        async function importBulkWordsWithAutoImages() {
+            const text = document.getElementById('bulk-input').value.trim();
+            if (!text) return;
+
+            const lines = text.split('\n');
+            const validLines = lines.map(l => l.split(',')).filter(p => p.length >= 2 && p[0].trim() && p[1].trim());
+
+            if (validLines.length === 0) {
+                alert("รูปแบบไม่ถูกต้อง กรุณาพิมพ์เช่น: cat, แมว");
+                return;
+            }
+
+            const statusBox = document.getElementById('bulk-status');
+            const statusText = document.getElementById('bulk-status-text');
+            const bulkBtn = document.getElementById('bulk-btn');
+
+            statusBox.classList.remove('hidden');
+            bulkBtn.disabled = true;
+            bulkBtn.classList.add('opacity-50');
+
+            let addedCount = 0;
+            for (let i = 0; i < validLines.length; i++) {
+                const word = validLines[i][0].trim().toLowerCase();
+                const meaning = validLines[i][1].trim();
+
+                statusText.textContent = `กำลังค้นหาภาพอัตโนมัติ: ${i + 1}/${validLines.length} (${word})...`;
+
+                // Search image
+                const images = await searchCartoonImages(word);
+                let imgUrl = "";
+                let fallbackEmoji = "🌟";
+
+                if (images.length > 0) {
+                    imgUrl = images[0].url;
+                    fallbackEmoji = images[0].emoji || '🌟';
+                } else if (LOCAL_KID_VOCAB[word]) {
+                    imgUrl = LOCAL_KID_VOCAB[word].image;
+                    fallbackEmoji = LOCAL_KID_VOCAB[word].emoji;
+                }
+
+                currentWords.push({
+                    word: word,
+                    meaning: meaning,
+                    image: imgUrl,
+                    emoji: fallbackEmoji
+                });
+                addedCount++;
+            }
+
+            statusBox.classList.add('hidden');
+            bulkBtn.disabled = false;
+            bulkBtn.classList.remove('opacity-50');
+
+            playSound('correct');
+            currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
+            document.getElementById('game-pack-title').textContent = currentPackTitle;
+            document.getElementById('bulk-input').value = '';
+            renderEditor();
+            alert(`🎉 นำเข้าและค้นหาภาพสำเร็จทั้งหมด ${addedCount} คำครับ!`);
+        }
+
+        // ========================================================
+        // 5. CHANGE IMAGE MODAL (สำหรับเปลี่ยนรูปคำศัพท์เดิม)
+        // ========================================================
+        async function openChangeImageModal(wordIndex) {
+            modalTargetWordIdx = wordIndex;
+            const item = currentWords[wordIndex];
+            document.getElementById('modal-change-word').textContent = item.word;
+            document.getElementById('modal-search-input').value = item.word;
+
+            const modal = document.getElementById('modal-change-image');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            searchModalImages();
+        }
+
+        function closeChangeImageModal() {
+            const modal = document.getElementById('modal-change-image');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modalTargetWordIdx = null;
+        }
+
+        async function searchModalImages() {
+            const input = document.getElementById('modal-search-input');
+            const keyword = input.value.trim().toLowerCase();
+            const container = document.getElementById('modal-image-candidates');
+            container.innerHTML = `<div class="col-span-full py-4 text-center text-xs text-pink-600 animate-pulse">กำลังค้นหาภาพการ์ตูน... 🔍</div>`;
+
+            const candidates = await searchCartoonImages(keyword);
+            if (candidates.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-4 text-center text-xs text-gray-400">ไม่พบรูปภาพ ลองพิมพ์ค้นหาด้วยคำอื่นดูนะครับ</div>`;
+                return;
+            }
+
+            container.innerHTML = candidates.map(c => `
+                <button type="button" onclick="applyModalImage('${encodeURIComponent(c.url)}', '${c.emoji || '🌟'}')" class="p-2.5 rounded-2xl border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-100/60 transition flex items-center justify-center aspect-square group bg-white shadow-sm">
+                    <img src="${c.url}" alt="${c.title}" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                </button>
+            `).join('');
+        }
+
+        function applyModalImage(encodedUrl, emoji) {
+            if (modalTargetWordIdx !== null && currentWords[modalTargetWordIdx]) {
+                const url = decodeURIComponent(encodedUrl);
+                currentWords[modalTargetWordIdx].image = url;
+                currentWords[modalTargetWordIdx].emoji = emoji || '🌟';
+                playSound('click');
+                renderEditor();
+                closeChangeImageModal();
+            }
+        }
+
+        // ========================================================
+        // 6. VOCABULARY CRUD & EDITOR
         // ========================================================
         function switchView(viewName) {
             activeView = viewName;
@@ -576,9 +1047,6 @@
             }
         }
 
-        // ========================================================
-        // 3. VOCABULARY MANAGEMENT & PRESETS
-        // ========================================================
         function renderEditor() {
             // Render Presets
             const presetContainer = document.getElementById('presets-container');
@@ -606,12 +1074,17 @@
             vocabList.innerHTML = currentWords.map((item, idx) => `
                 <div class="flex items-center justify-between p-3 bg-pink-50/60 hover:bg-pink-50 rounded-2xl border border-pink-200 transition">
                     <div class="flex items-center gap-3">
-                        <span class="text-3xl p-1 bg-white rounded-xl shadow-sm border border-pink-100">${item.emoji}</span>
+                        <div onclick="openChangeImageModal(${idx})" class="w-12 h-12 bg-white rounded-xl shadow-sm border border-pink-100 flex items-center justify-center cursor-pointer hover:border-pink-400 transition" title="คลิกเพื่อเปลี่ยนรูปภาพ">
+                            ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+                        </div>
                         <div>
                             <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
                                 ${item.word}
                                 <button onclick="speakWord('${item.word}')" class="text-xs bg-white text-gray-600 hover:text-pink-600 p-1 rounded-full shadow-sm" title="ฟังเสียง">
                                     🔊
+                                </button>
+                                <button onclick="openChangeImageModal(${idx})" class="text-[10px] bg-pink-100 hover:bg-pink-200 text-pink-700 px-2 py-0.5 rounded-full font-bold transition">
+                                    เปลี่ยนรูป 🖼️
                                 </button>
                             </div>
                             <div class="text-xs text-gray-600 font-medium">${item.meaning}</div>
@@ -635,33 +1108,43 @@
             }
         }
 
-        function setNewEmoji(emoji) {
-            document.getElementById('new-emoji').value = emoji;
-        }
-
-        function addNewVocab() {
+        async function addNewVocab() {
             const wordEl = document.getElementById('new-word');
             const meaningEl = document.getElementById('new-meaning');
-            const emojiEl = document.getElementById('new-emoji');
-
             const word = wordEl.value.trim().toLowerCase();
             const meaning = meaningEl.value.trim();
-            const emoji = emojiEl.value.trim() || '🌟';
 
             if (!word || !meaning) {
                 alert("กรุณากรอกทั้งคำศัพท์ภาษาอังกฤษและคำแปลภาษาไทยครับ 😊");
                 return;
             }
 
+            let imageUrl = document.getElementById('selected-image-url').value;
+            let emoji = document.getElementById('selected-emoji').value || '🌟';
+
+            // If image is still empty, auto search immediately
+            if (!imageUrl) {
+                const candidates = await searchCartoonImages(word);
+                if (candidates.length > 0) {
+                    imageUrl = candidates[0].url;
+                    emoji = candidates[0].emoji || '🌟';
+                }
+            }
+
             playSound('click');
-            currentWords.push({ word, meaning, emoji });
+            currentWords.push({
+                word: word,
+                meaning: meaning,
+                image: imageUrl,
+                emoji: emoji
+            });
+
             currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
             document.getElementById('game-pack-title').textContent = currentPackTitle;
 
             wordEl.value = '';
             meaningEl.value = '';
-            emojiEl.value = '🌟';
-
+            clearCandidates();
             renderEditor();
         }
 
@@ -680,57 +1163,8 @@
             }
         }
 
-        function importBulkWords() {
-            const text = document.getElementById('bulk-input').value.trim();
-            if (!text) return;
-
-            const lines = text.split('\n');
-            let addedCount = 0;
-
-            lines.forEach(line => {
-                const parts = line.split(',');
-                if (parts.length >= 2) {
-                    const word = parts[0].trim().toLowerCase();
-                    const meaning = parts[1].trim();
-                    if (word && meaning) {
-                        currentWords.push({
-                            word,
-                            meaning,
-                            emoji: autoEmoji(word)
-                        });
-                        addedCount++;
-                    }
-                }
-            });
-
-            if (addedCount > 0) {
-                playSound('correct');
-                currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
-                document.getElementById('game-pack-title').textContent = currentPackTitle;
-                document.getElementById('bulk-input').value = '';
-                renderEditor();
-                alert(`นำเข้าคำศัพท์สำเร็จ ${addedCount} คำครับ! 🎉`);
-            } else {
-                alert("รูปแบบไม่ถูกต้อง กรุณาพิมพ์เช่น: cat, แมว");
-            }
-        }
-
-        // Smart Emoji Matcher for Custom words
-        function autoEmoji(word) {
-            const map = {
-                cat: '🐱', dog: '🐶', rabbit: '🐰', lion: '🦁', tiger: '🐯', elephant: '🐘', monkey: '🐵',
-                bird: '🐦', fish: '🐟', duck: '🦆', pig: '🐷', cow: '🐮', horse: '🐴', bear: '🐻',
-                apple: '🍎', banana: '🍌', orange: '🍊', strawberry: '🍓', watermelon: '🍉', mango: '🥭',
-                eyes: '👀', eye: '👁️', nose: '👃', mouth: '👄', ear: '👂', hand: '✋', foot: '🦶',
-                book: '📖', pencil: '✏️', bag: '🎒', pen: '🖊️', ruler: '📏', chair: '🪑', table: '🪵',
-                car: '🚗', bus: '🚌', plane: '✈️', boat: '⛵', bike: '🚲', train: '🚆',
-                sun: '☀️', moon: '🌙', star: '⭐', tree: '🌳', flower: '🌸', house: '🏠', milk: '🥛'
-            };
-            return map[word] || '🌟';
-        }
-
         // ========================================================
-        // 4. GENERATING QUESTIONS ENGINE
+        // 7. QUESTION GENERATOR ENGINE
         // ========================================================
         function generateExerciseQuestions() {
             if (currentWords.length < 2) {
@@ -755,19 +1189,15 @@
             }
 
             const generated = [];
-            // Shuffle words
             const shuffledWords = [...currentWords].sort(() => 0.5 - Math.random());
 
             shuffledWords.forEach((targetItem, i) => {
                 const questionType = enabledTypes[i % enabledTypes.length];
-                
-                // Pick 3 distractors
                 const others = currentWords.filter(w => w.word !== targetItem.word);
                 const shuffledOthers = [...others].sort(() => 0.5 - Math.random());
                 const distractors = shuffledOthers.slice(0, 3);
 
                 if (questionType === 'picture') {
-                    // Match picture with English word
                     const options = [
                         { text: `${targetItem.word} (${targetItem.meaning})`, isCorrect: true },
                         ...distractors.map(d => ({ text: `${d.word} (${d.meaning})`, isCorrect: false }))
@@ -776,13 +1206,12 @@
                     generated.push({
                         type: 'picture',
                         target: targetItem,
-                        title: "ทายคำศัพท์ให้ตรงกับรูปการ์ตูน",
+                        title: "ทายคำศัพท์จากภาพการ์ตูน",
                         instruction: "จากรูปภาพการ์ตูนนี้ ตรงกับคำศัพท์ภาษาอังกฤษคำว่าอะไร?",
                         options: options
                     });
                 }
                 else if (questionType === 'listening') {
-                    // Listen and pick cute picture
                     const options = [
                         { item: targetItem, isCorrect: true },
                         ...distractors.map(d => ({ item: d, isCorrect: false }))
@@ -797,9 +1226,7 @@
                     });
                 }
                 else if (questionType === 'spelling') {
-                    // Scramble letters for easy kid tapping
                     const letters = targetItem.word.toUpperCase().split('').sort(() => 0.5 - Math.random());
-
                     generated.push({
                         type: 'spelling',
                         target: targetItem,
@@ -810,7 +1237,6 @@
                     });
                 }
                 else if (questionType === 'meaning') {
-                    // Meaning Match
                     const options = [
                         { text: targetItem.meaning, isCorrect: true },
                         ...distractors.map(d => ({ text: d.meaning, isCorrect: false }))
@@ -839,9 +1265,6 @@
             }
         }
 
-        // ========================================================
-        // 5. GAME RUNTIME & RENDERING
-        // ========================================================
         function startQuizGame() {
             currentQuestionIdx = 0;
             userScore = 0;
@@ -849,6 +1272,9 @@
             renderCurrentQuestion();
         }
 
+        // ========================================================
+        // 8. GAME RUNTIME RENDERING
+        // ========================================================
         function renderCurrentQuestion() {
             const container = document.getElementById('game-card-content');
             const total = generatedQuestions.length;
@@ -876,10 +1302,10 @@
                 innerHtml += `
                     <div class="text-center my-6">
                         <div class="relative inline-block">
-                            <div class="text-8xl md:text-9xl p-6 bg-gradient-to-b from-amber-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-pink-100 animate-float">
-                                ${q.target.emoji}
+                            <div class="p-6 bg-gradient-to-b from-amber-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-pink-100">
+                                ${renderVisual(q.target, 'text-8xl md:text-9xl', 'w-36 h-36 md:w-44 md:h-44 object-contain animate-float')}
                             </div>
-                            <button onclick="speakWord('${q.target.word}')" class="absolute -bottom-2 -right-2 bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-90" title="กดฟังเสียงอ่าน">
+                            <button onclick="speakWord('${q.target.word}')" class="absolute -bottom-2 -right-2 bg-pink-500 hover:bg-pink-600 text-white p-3.5 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-90" title="กดฟังเสียงอ่าน">
                                 🔊
                             </button>
                         </div>
@@ -916,7 +1342,9 @@
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-6">
                         ${q.options.map(opt => `
                             <button onclick="submitAnswer(${opt.isCorrect}, '${q.target.word}')" class="bg-white border-3 border-pink-200 hover:border-pink-500 hover:bg-pink-50 p-4 rounded-3xl shadow-sm transition duration-200 btn-bounce text-center flex flex-col items-center justify-center">
-                                <span class="text-6xl mb-2">${opt.item.emoji}</span>
+                                <div class="w-20 h-20 mb-2 flex items-center justify-center">
+                                    ${renderVisual(opt.item, 'text-5xl', 'w-18 h-18 object-contain')}
+                                </div>
                                 <span class="text-xs font-bold text-gray-600">${opt.item.meaning}</span>
                             </button>
                         `).join('')}
@@ -928,8 +1356,8 @@
             else if (q.type === 'spelling') {
                 innerHtml += `
                     <div class="text-center my-6">
-                        <div class="text-7xl p-5 bg-gradient-to-b from-purple-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-purple-100">
-                            ${q.target.emoji}
+                        <div class="p-5 bg-gradient-to-b from-purple-50 to-pink-50 rounded-3xl inline-block shadow-inner border-2 border-purple-100">
+                            ${renderVisual(q.target, 'text-7xl', 'w-32 h-32 object-contain')}
                         </div>
                         <h3 class="text-lg md:text-xl font-extrabold text-gray-800 mt-4">${q.instruction}</h3>
                         <p class="text-sm text-pink-600 font-bold mt-1">คลิกตัวอักษรเพื่อเรียงคำศัพท์</p>
@@ -960,8 +1388,8 @@
             else if (q.type === 'meaning') {
                 innerHtml += `
                     <div class="text-center my-6">
-                        <div class="text-7xl p-5 bg-amber-50 rounded-3xl inline-block shadow-inner border-2 border-amber-100 mb-3">
-                            ${q.target.emoji}
+                        <div class="p-5 bg-amber-50 rounded-3xl inline-block shadow-inner border-2 border-amber-100 mb-3">
+                            ${renderVisual(q.target, 'text-7xl', 'w-28 h-28 object-contain')}
                         </div>
                         <div class="font-fredoka text-4xl font-extrabold text-pink-600 flex items-center justify-center gap-3">
                             <span>${q.target.word}</span>
@@ -988,7 +1416,7 @@
 
             container.innerHTML = innerHtml;
 
-            // Auto pronounce in picture/spelling mode
+            // Auto pronounce
             if (q.type === 'picture' || q.type === 'meaning') {
                 setTimeout(() => speakWord(q.target.word), 400);
             } else if (q.type === 'spelling') {
@@ -1011,7 +1439,6 @@
             const lettersContainer = document.getElementById('spelling-letters');
             if (!slotsContainer || !lettersContainer) return;
 
-            // Render current placed letters
             const currentWordTarget = generatedQuestions[currentQuestionIdx].answer;
             slotsContainer.innerHTML = Array.from({ length: currentWordTarget.length }).map((_, idx) => {
                 const item = currentSpellingSlots[idx];
@@ -1022,7 +1449,6 @@
                 `;
             }).join('');
 
-            // Render available letter chips
             lettersContainer.innerHTML = currentSpellingPool.map(item => `
                 <button onclick="pickSpellingLetter(${item.id})" class="w-12 h-12 rounded-2xl ${item.used ? 'opacity-20 pointer-events-none bg-gray-200 text-gray-400' : 'bg-gradient-to-tr from-pink-400 to-rose-400 text-white shadow-md hover:scale-110 active:scale-95'} font-fredoka text-2xl font-bold flex items-center justify-center transition-all">
                     ${item.char}
@@ -1068,7 +1494,7 @@
         }
 
         // ========================================================
-        // 6. FEEDBACK MODAL & SCORING
+        // 9. FEEDBACK MODAL & SCORING
         // ========================================================
         function submitAnswer(isCorrect, word) {
             const modal = document.getElementById('modal-feedback');
@@ -1114,7 +1540,6 @@
             }, 150);
         }
 
-        // Game Over Celebration
         function renderGameEndScreen() {
             playSound('win');
             startConfetti();
@@ -1157,7 +1582,7 @@
         }
 
         // ========================================================
-        // 7. PRINTABLE A4 WORKSHEET GENERATION
+        // 10. PRINTABLE A4 WORKSHEET GENERATION
         // ========================================================
         function renderPrintableWorksheet() {
             document.getElementById('sheet-pack-name').textContent = currentPackTitle;
@@ -1169,11 +1594,7 @@
                 return;
             }
 
-            // Generate 2 classic worksheet sections:
-            // Section 1: โยงเส้นจับคู่ภาพกับการ์ตูน & คำศัพท์
-            // Section 2: คัดลายมือ & เติมตัวอักษรที่หายไป
             const shuffledWords = [...currentWords].sort(() => 0.5 - Math.random());
-            const shuffledThai = [...currentWords].sort(() => 0.5 - Math.random());
 
             area.innerHTML = `
                 <!-- Part 1: โยงเส้นจับคู่ -->
@@ -1189,7 +1610,9 @@
                             ${currentWords.map((item, idx) => `
                                 <div class="flex items-center justify-between p-2 border-b border-gray-200">
                                     <div class="flex items-center gap-3">
-                                        <span class="text-3xl">${item.emoji}</span>
+                                        <div class="w-10 h-10 flex items-center justify-center">
+                                            ${renderVisual(item, 'text-2xl', 'w-9 h-9 object-contain')}
+                                        </div>
                                         <span class="text-sm font-bold text-gray-700">${item.meaning}</span>
                                     </div>
                                     <div class="w-4 h-4 rounded-full border-2 border-pink-500"></div>
@@ -1218,14 +1641,15 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         ${currentWords.map((item, idx) => {
-                            // Mask 1 or 2 letters
                             const chars = item.word.split('');
                             const maskIdx = Math.floor(chars.length / 2);
                             const maskedWord = chars.map((c, i) => i === maskIdx ? '___' : c).join(' ');
 
                             return `
                                 <div class="border-2 border-dashed border-gray-300 rounded-2xl p-4 flex items-center gap-4 bg-white">
-                                    <span class="text-4xl p-2 bg-gray-50 rounded-xl">${item.emoji}</span>
+                                    <div class="w-14 h-14 p-1 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
+                                        ${renderVisual(item, 'text-3xl', 'w-12 h-12 object-contain')}
+                                    </div>
                                     <div class="flex-1">
                                         <div class="text-xs text-gray-500 font-bold">${item.meaning}</div>
                                         <div class="font-fredoka text-xl font-bold tracking-widest text-pink-600 mt-1">
@@ -1241,7 +1665,7 @@
         }
 
         // ========================================================
-        // 8. LIGHTWEIGHT CONFETTI EFFECT
+        // 11. CONFETTI EFFECT
         // ========================================================
         let confettiTimer = null;
         function startConfetti() {
@@ -1279,7 +1703,6 @@
                 });
             }, 1000 / 60);
 
-            // Auto stop confetti after 5 seconds
             setTimeout(stopConfetti, 5000);
         }
 
