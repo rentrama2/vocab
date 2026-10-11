@@ -107,7 +107,7 @@
                 <div>
                     <h1 class="text-xl md:text-2xl font-extrabold text-pink-600 tracking-wide flex items-center gap-2">
                         KidsVocab Studio <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-0.5 rounded-full font-bold">ป.1 - ป.3</span>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">v2.3 ภาพใหญ่</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">v2.4 แบบฝึกหัด 10+ ข้อ</span>
                     </h1>
                     <p class="text-xs text-gray-500 font-medium">ผจญภัยคำศัพท์ & ประโยคภาษาอังกฤษการ์ตูนแสนสนุก 🌟</p>
                 </div>
@@ -165,17 +165,31 @@
                     </p>
 
                     <!-- Mascot Speech Bubble -->
-                    <div class="flex items-center gap-4 bg-white/95 text-gray-800 p-4 rounded-2xl shadow-xl border-2 border-pink-200 mb-8 max-w-lg">
+                    <div class="flex items-center gap-4 bg-white/95 text-gray-800 p-4 rounded-2xl shadow-xl border-2 border-pink-200 mb-6 max-w-lg">
                         <span class="text-5xl animate-bounce">🐻</span>
                         <div class="text-xs md:text-sm font-bold">
-                            <span class="text-pink-600">พี่หมีชวนรู้:</span> "สวัสดีครับคนเก่ง! วันนี้เรามาเรียนรู้การใช้คำศัพท์ในประโยคจริงกันนะ ภาพการ์ตูนใหญ่ชัดเจน พร้อมลุยแล้วกดปุ่มด้านล่างได้เลย!"
+                            <span class="text-pink-600">พี่หมีชวนรู้:</span> "สวัสดีครับคนเก่ง! วันนี้เรามาฝึกทำแบบฝึกหัดคำศัพท์และประโยคจริงกันนะ เลือกทำได้ทั้งรอบละ 10, 15 หรือ 20 ข้อ ภาพใหญ่สะใจ พร้อมลุยแล้วกดปุ่มด้านล่างได้เลย!"
+                        </div>
+                    </div>
+
+                    <!-- Quiz Length Selector on Hero Banner -->
+                    <div class="bg-white/20 backdrop-blur-md p-3.5 rounded-2xl border-2 border-white/40 mb-6 max-w-lg">
+                        <div class="flex items-center justify-between text-xs font-bold text-white mb-2">
+                            <span class="flex items-center gap-1.5">🎯 เลือกจำนวนข้อในแบบฝึกหัด:</span>
+                            <span class="bg-amber-300 text-amber-950 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold quiz-count-display-label">10 ข้อ (แนะนำ)</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-xs font-bold">
+                            <button type="button" onclick="setQuizCount(10)" data-count="10" class="quiz-count-btn py-2 px-2 rounded-xl text-center transition">10 ข้อ ⭐</button>
+                            <button type="button" onclick="setQuizCount(15)" data-count="15" class="quiz-count-btn py-2 px-2 rounded-xl text-center transition">15 ข้อ</button>
+                            <button type="button" onclick="setQuizCount(20)" data-count="20" class="quiz-count-btn py-2 px-2 rounded-xl text-center transition">20 ข้อ 🔥</button>
+                            <button type="button" onclick="setQuizCount('all')" data-count="all" class="quiz-count-btn py-2 px-2 rounded-xl text-center transition">ทั้งหมด</button>
                         </div>
                     </div>
 
                     <!-- CTA Buttons -->
                     <div class="flex flex-wrap gap-3.5">
                         <button onclick="launchNewRandomGame()" class="bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-8 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center gap-2">
-                            <span>🚀</span> เริ่มผจญภัยทันที (สุ่มโหมดใหม่)
+                            <span>🚀</span> เริ่มผจญภัยทันที (<span class="quiz-count-display-label">10 ข้อ</span>)
                         </button>
                         <a href="#category-section" class="bg-white/20 hover:bg-white/30 text-white font-bold py-4 px-6 rounded-2xl backdrop-blur transition btn-bounce flex items-center gap-2 text-base">
                             <span>🎒</span> เลือกหมวดหมู่ที่ชอบ
@@ -423,6 +437,20 @@
                             </div>
                         </div>
 
+                        <!-- Quiz Length Selector in Editor -->
+                        <div class="mb-4 bg-white/15 backdrop-blur p-3.5 rounded-2xl border border-white/25">
+                            <div class="flex items-center justify-between text-xs font-bold text-pink-100 mb-2">
+                                <span>🎯 จำนวนข้อในแบบฝึกหัด:</span>
+                                <span class="bg-amber-300 text-amber-950 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold quiz-count-display-label">10 ข้อ</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2 text-xs font-bold">
+                                <button type="button" onclick="setQuizCount(10)" data-count="10" class="quiz-count-btn py-2 px-1 rounded-xl text-center transition">10 ข้อ ⭐</button>
+                                <button type="button" onclick="setQuizCount(15)" data-count="15" class="quiz-count-btn py-2 px-1 rounded-xl text-center transition">15 ข้อ</button>
+                                <button type="button" onclick="setQuizCount(20)" data-count="20" class="quiz-count-btn py-2 px-1 rounded-xl text-center transition">20 ข้อ 🔥</button>
+                                <button type="button" onclick="setQuizCount('all')" data-count="all" class="quiz-count-btn py-2 px-1 rounded-xl text-center transition">ทั้งหมด</button>
+                            </div>
+                        </div>
+
                         <div class="space-y-3 mb-6 bg-white/10 backdrop-blur p-4 rounded-2xl text-sm">
                             <label class="flex items-center gap-2.5 cursor-pointer font-bold bg-white/10 p-2 rounded-xl">
                                 <input type="checkbox" id="cfg-sentence" checked class="w-4 h-4 accent-amber-300 rounded">
@@ -447,7 +475,7 @@
                         </div>
 
                         <button onclick="launchNewRandomGame()" class="w-full bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-6 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center justify-center gap-2">
-                            <span>🎮</span> เริ่มเล่นเกมแบบฝึกหัดทันที!
+                            <span>🎮</span> เริ่มเล่นเกมแบบฝึกหัดทันที! (<span class="quiz-count-display-label">10 ข้อ</span>)
                         </button>
                     </div>
 
@@ -754,21 +782,26 @@
             };
         }
 
-        // 5 Starter Presets
+        // Starter Presets with rich vocab lists (10 - 25 คำต่อชุด)
         const PRESETS = [
             {
                 id: "body",
                 title: "ร่างกายของฉัน (My Body)",
                 icon: "👃",
                 badge: "ป.1 ยอดฮิต",
-                desc: "เรียนรู้คำศัพท์อวัยวะ orange, nose, mouth, eyes, ear, hand",
+                desc: "เรียนรู้คำศัพท์อวัยวะ eyes, nose, mouth, ear, hand, foot, head, arm, leg ฯลฯ",
                 words: [
-                    { word: "orange", meaning: "สีส้ม / ผลส้ม", image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊" },
+                    { word: "eyes", meaning: "ตา / ดวงตา", image: "https://api.iconify.design/fluent-emoji-flat/eyes.svg", emoji: "👀" },
                     { word: "nose", meaning: "จมูก", image: "https://api.iconify.design/fluent-emoji-flat/nose.svg", emoji: "👃" },
                     { word: "mouth", meaning: "ปาก", image: "https://api.iconify.design/fluent-emoji-flat/mouth.svg", emoji: "👄" },
-                    { word: "eyes", meaning: "ตา / ดวงตา", image: "https://api.iconify.design/fluent-emoji-flat/eyes.svg", emoji: "👀" },
                     { word: "ear", meaning: "หู", image: "https://api.iconify.design/fluent-emoji-flat/ear.svg", emoji: "👂" },
-                    { word: "hand", meaning: "มือ", image: "https://api.iconify.design/fluent-emoji-flat/raised-hand.svg", emoji: "✋" }
+                    { word: "hand", meaning: "มือ", image: "https://api.iconify.design/fluent-emoji-flat/raised-hand.svg", emoji: "✋" },
+                    { word: "foot", meaning: "เท้า", image: "https://api.iconify.design/fluent-emoji-flat/foot.svg", emoji: "🦶" },
+                    { word: "head", meaning: "ศีรษะ", image: "https://api.iconify.design/fluent-emoji-flat/person.svg", emoji: "🧒" },
+                    { word: "arm", meaning: "แขน", image: "https://api.iconify.design/fluent-emoji-flat/flexed-biceps.svg", emoji: "💪" },
+                    { word: "leg", meaning: "ขา", image: "https://api.iconify.design/fluent-emoji-flat/leg.svg", emoji: "🦵" },
+                    { word: "eye", meaning: "ตา", image: "https://api.iconify.design/fluent-emoji-flat/eye.svg", emoji: "👁️" },
+                    { word: "orange", meaning: "สีส้ม / ผลส้ม", image: "https://api.iconify.design/fluent-emoji-flat/tangerine.svg", emoji: "🍊" }
                 ]
             },
             {
@@ -776,14 +809,26 @@
                 title: "สัตว์โลกน่ารัก (Cute Animals)",
                 icon: "🐶",
                 badge: "ป.1 สนุกสนาน",
-                desc: "เพื่อนรักสัตว์โลก cat, dog, rabbit, elephant, lion, bird",
+                desc: "เพื่อนรักสัตว์โลก cat, dog, rabbit, elephant, lion, tiger, bear, monkey, bird ฯลฯ",
                 words: [
                     { word: "cat", meaning: "แมว", image: "https://api.iconify.design/fluent-emoji-flat/cat.svg", emoji: "🐱" },
                     { word: "dog", meaning: "สุนัข", image: "https://api.iconify.design/fluent-emoji-flat/dog.svg", emoji: "🐶" },
                     { word: "rabbit", meaning: "กระต่าย", image: "https://api.iconify.design/fluent-emoji-flat/rabbit.svg", emoji: "🐰" },
                     { word: "elephant", meaning: "ช้าง", image: "https://api.iconify.design/fluent-emoji-flat/elephant.svg", emoji: "🐘" },
                     { word: "lion", meaning: "สิงโต", image: "https://api.iconify.design/fluent-emoji-flat/lion.svg", emoji: "🦁" },
-                    { word: "bird", meaning: "นก", image: "https://api.iconify.design/fluent-emoji-flat/bird.svg", emoji: "🐦" }
+                    { word: "tiger", meaning: "เสือ", image: "https://api.iconify.design/fluent-emoji-flat/tiger.svg", emoji: "🐯" },
+                    { word: "bear", meaning: "หมี", image: "https://api.iconify.design/fluent-emoji-flat/bear.svg", emoji: "🐻" },
+                    { word: "monkey", meaning: "ลิง", image: "https://api.iconify.design/fluent-emoji-flat/monkey.svg", emoji: "🐵" },
+                    { word: "bird", meaning: "นก", image: "https://api.iconify.design/fluent-emoji-flat/bird.svg", emoji: "🐦" },
+                    { word: "fish", meaning: "ปลา", image: "https://api.iconify.design/fluent-emoji-flat/fish.svg", emoji: "🐟" },
+                    { word: "duck", meaning: "เป็ด", image: "https://api.iconify.design/fluent-emoji-flat/duck.svg", emoji: "🦆" },
+                    { word: "pig", meaning: "หมู", image: "https://api.iconify.design/fluent-emoji-flat/pig.svg", emoji: "🐷" },
+                    { word: "cow", meaning: "วัว", image: "https://api.iconify.design/fluent-emoji-flat/cow.svg", emoji: "🐮" },
+                    { word: "horse", meaning: "ม้า", image: "https://api.iconify.design/fluent-emoji-flat/horse.svg", emoji: "🐴" },
+                    { word: "butterfly", meaning: "ผีเสื้อ", image: "https://api.iconify.design/fluent-emoji-flat/butterfly.svg", emoji: "🦋" },
+                    { word: "dinosaur", meaning: "ไดโนเสาร์", image: "https://api.iconify.design/fluent-emoji-flat/t-rex.svg", emoji: "🦖" },
+                    { word: "giraffe", meaning: "ยีราฟ", image: "https://api.iconify.design/fluent-emoji-flat/giraffe.svg", emoji: "🦒" },
+                    { word: "zebra", meaning: "ม้าลาย", image: "https://api.iconify.design/fluent-emoji-flat/zebra.svg", emoji: "🦓" }
                 ]
             },
             {
@@ -791,29 +836,40 @@
                 title: "ผลไม้แสนอร่อย (Yummy Fruits)",
                 icon: "🍎",
                 badge: "ของโปรดเด็กๆ",
-                desc: "ผลไม้วิตามินซีสูง apple, banana, watermelon, strawberry, mango, grape",
+                desc: "ผลไม้วิตามินซีสูง apple, banana, watermelon, strawberry, mango, grape, pizza, milk ฯลฯ",
                 words: [
                     { word: "apple", meaning: "แอปเปิ้ล", image: "https://api.iconify.design/fluent-emoji-flat/red-apple.svg", emoji: "🍎" },
                     { word: "banana", meaning: "กล้วย", image: "https://api.iconify.design/fluent-emoji-flat/banana.svg", emoji: "🍌" },
                     { word: "watermelon", meaning: "แตงโม", image: "https://api.iconify.design/fluent-emoji-flat/watermelon.svg", emoji: "🍉" },
                     { word: "strawberry", meaning: "สตรอว์เบอร์รี", image: "https://api.iconify.design/fluent-emoji-flat/strawberry.svg", emoji: "🍓" },
                     { word: "mango", meaning: "มะม่วง", image: "https://api.iconify.design/fluent-emoji-flat/mango.svg", emoji: "🥭" },
-                    { word: "grape", meaning: "องุ่น", image: "https://api.iconify.design/fluent-emoji-flat/grapes.svg", emoji: "🍇" }
+                    { word: "grape", meaning: "องุ่น", image: "https://api.iconify.design/fluent-emoji-flat/grapes.svg", emoji: "🍇" },
+                    { word: "pineapple", meaning: "สับปะรด", image: "https://api.iconify.design/fluent-emoji-flat/pineapple.svg", emoji: "🍍" },
+                    { word: "pizza", meaning: "พิซซ่า", image: "https://api.iconify.design/fluent-emoji-flat/pizza.svg", emoji: "🍕" },
+                    { word: "milk", meaning: "นม", image: "https://api.iconify.design/fluent-emoji-flat/glass-of-milk.svg", emoji: "🥛" },
+                    { word: "egg", meaning: "ไข่", image: "https://api.iconify.design/fluent-emoji-flat/egg.svg", emoji: "🥚" },
+                    { word: "cake", meaning: "เค้ก", image: "https://api.iconify.design/fluent-emoji-flat/birthday-cake.svg", emoji: "🍰" },
+                    { word: "ice cream", meaning: "ไอศกรีม", image: "https://api.iconify.design/fluent-emoji-flat/ice-cream.svg", emoji: "🍦" }
                 ]
             },
             {
                 id: "colors",
-                title: "สีสันสดใส (Colors)",
+                title: "สีสัน & ธรรมชาติ (Colors & Nature)",
                 icon: "🎨",
                 badge: "ป.1 พื้นฐาน",
-                desc: "จิตรกรตัวน้อย red, blue, yellow, green, pink, purple",
+                desc: "จิตรกรตัวน้อย red, blue, yellow, green, pink, purple, sun, star, rainbow ฯลฯ",
                 words: [
                     { word: "red", meaning: "สีแดง", image: "https://api.iconify.design/fluent-emoji-flat/red-circle.svg", emoji: "🔴" },
                     { word: "blue", meaning: "สีฟ้า / สีน้ำเงิน", image: "https://api.iconify.design/fluent-emoji-flat/blue-circle.svg", emoji: "🔵" },
                     { word: "yellow", meaning: "สีเหลือง", image: "https://api.iconify.design/fluent-emoji-flat/yellow-circle.svg", emoji: "🟡" },
                     { word: "green", meaning: "สีเขียว", image: "https://api.iconify.design/fluent-emoji-flat/green-circle.svg", emoji: "🟢" },
                     { word: "pink", meaning: "สีชมพู", image: "https://api.iconify.design/fluent-emoji-flat/cherry-blossom.svg", emoji: "🌸" },
-                    { word: "purple", meaning: "สีม่วง", image: "https://api.iconify.design/fluent-emoji-flat/purple-circle.svg", emoji: "🟣" }
+                    { word: "purple", meaning: "สีม่วง", image: "https://api.iconify.design/fluent-emoji-flat/purple-circle.svg", emoji: "🟣" },
+                    { word: "sun", meaning: "ดวงอาทิตย์", image: "https://api.iconify.design/fluent-emoji-flat/sun.svg", emoji: "☀️" },
+                    { word: "star", meaning: "ดวงดาว", image: "https://api.iconify.design/fluent-emoji-flat/star.svg", emoji: "⭐" },
+                    { word: "rainbow", meaning: "สายรุ้ง", image: "https://api.iconify.design/fluent-emoji-flat/rainbow.svg", emoji: "🌈" },
+                    { word: "tree", meaning: "ต้นไม้", image: "https://api.iconify.design/fluent-emoji-flat/deciduous-tree.svg", emoji: "🌳" },
+                    { word: "flower", meaning: "ดอกไม้", image: "https://api.iconify.design/fluent-emoji-flat/blossom.svg", emoji: "🌸" }
                 ]
             },
             {
@@ -821,14 +877,69 @@
                 title: "สิ่งของในห้องเรียน (School Things)",
                 icon: "🎒",
                 badge: "เปิดเทอม",
-                desc: "อุปกรณ์การเรียน book, pencil, bag, ruler, chair, table",
+                desc: "อุปกรณ์การเรียน book, pencil, pen, bag, backpack, ruler, chair, table, clock, computer ฯลฯ",
                 words: [
                     { word: "book", meaning: "หนังสือ", image: "https://api.iconify.design/fluent-emoji-flat/open-book.svg", emoji: "📖" },
                     { word: "pencil", meaning: "ดินสอ", image: "https://api.iconify.design/fluent-emoji-flat/pencil.svg", emoji: "✏️" },
+                    { word: "pen", meaning: "ปากกา", image: "https://api.iconify.design/fluent-emoji-flat/pen.svg", emoji: "🖊️" },
                     { word: "bag", meaning: "กระเป๋า", image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒" },
+                    { word: "backpack", meaning: "กระเป๋านักเรียน", image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒" },
                     { word: "ruler", meaning: "ไม้บรรทัด", image: "https://api.iconify.design/fluent-emoji-flat/straight-ruler.svg", emoji: "📏" },
                     { word: "chair", meaning: "เก้าอี้", image: "https://api.iconify.design/fluent-emoji-flat/chair.svg", emoji: "🪑" },
-                    { word: "table", meaning: "โต๊ะ", image: "https://api.iconify.design/fluent-emoji-flat/wood.svg", emoji: "🪵" }
+                    { word: "table", meaning: "โต๊ะ", image: "https://api.iconify.design/fluent-emoji-flat/wood.svg", emoji: "🪵" },
+                    { word: "clock", meaning: "นาฬิกา", image: "https://api.iconify.design/fluent-emoji-flat/mantelpiece-clock.svg", emoji: "⏰" },
+                    { word: "computer", meaning: "คอมพิวเตอร์", image: "https://api.iconify.design/fluent-emoji-flat/laptop.svg", emoji: "💻" }
+                ]
+            },
+            {
+                id: "vehicles",
+                title: "ยานพาหนะ & การเดินทาง (Vehicles)",
+                icon: "🚀",
+                badge: "ผจญภัย",
+                desc: "ยานพาหนะรอบตัว car, bus, bicycle, airplane, helicopter, train, boat, rocket",
+                words: [
+                    { word: "car", meaning: "รถยนต์", image: "https://api.iconify.design/fluent-emoji-flat/automobile.svg", emoji: "🚗" },
+                    { word: "bus", meaning: "รถบัส", image: "https://api.iconify.design/fluent-emoji-flat/bus.svg", emoji: "🚌" },
+                    { word: "bicycle", meaning: "รถจักรยาน", image: "https://api.iconify.design/fluent-emoji-flat/bicycle.svg", emoji: "🚲" },
+                    { word: "airplane", meaning: "เครื่องบิน", image: "https://api.iconify.design/fluent-emoji-flat/airplane.svg", emoji: "✈️" },
+                    { word: "helicopter", meaning: "เฮลิคอปเตอร์", image: "https://api.iconify.design/fluent-emoji-flat/helicopter.svg", emoji: "🚁" },
+                    { word: "train", meaning: "รถไฟ", image: "https://api.iconify.design/fluent-emoji-flat/train.svg", emoji: "🚆" },
+                    { word: "boat", meaning: "เรือ", image: "https://api.iconify.design/fluent-emoji-flat/sailboat.svg", emoji: "⛵" },
+                    { word: "rocket", meaning: "จรวด", image: "https://api.iconify.design/fluent-emoji-flat/rocket.svg", emoji: "🚀" }
+                ]
+            },
+            {
+                id: "megapack",
+                title: "ชุดรวมดาวสุดเก่ง (All-Stars Mega Pack)",
+                icon: "🌟",
+                badge: "รวมฮิต 25 คำ",
+                desc: "ชุดสุดคุ้มรวมคำศัพท์ยอดฮิต 25 คำ สำหรับฝึกทำโจทย์รอบละ 10-20 ข้ออย่างจุใจ",
+                words: [
+                    { word: "cat", meaning: "แมว", image: "https://api.iconify.design/fluent-emoji-flat/cat.svg", emoji: "🐱" },
+                    { word: "dog", meaning: "สุนัข", image: "https://api.iconify.design/fluent-emoji-flat/dog.svg", emoji: "🐶" },
+                    { word: "rabbit", meaning: "กระต่าย", image: "https://api.iconify.design/fluent-emoji-flat/rabbit.svg", emoji: "🐰" },
+                    { word: "lion", meaning: "สิงโต", image: "https://api.iconify.design/fluent-emoji-flat/lion.svg", emoji: "🦁" },
+                    { word: "elephant", meaning: "ช้าง", image: "https://api.iconify.design/fluent-emoji-flat/elephant.svg", emoji: "🐘" },
+                    { word: "apple", meaning: "แอปเปิ้ล", image: "https://api.iconify.design/fluent-emoji-flat/red-apple.svg", emoji: "🍎" },
+                    { word: "banana", meaning: "กล้วย", image: "https://api.iconify.design/fluent-emoji-flat/banana.svg", emoji: "🍌" },
+                    { word: "watermelon", meaning: "แตงโม", image: "https://api.iconify.design/fluent-emoji-flat/watermelon.svg", emoji: "🍉" },
+                    { word: "milk", meaning: "นม", image: "https://api.iconify.design/fluent-emoji-flat/glass-of-milk.svg", emoji: "🥛" },
+                    { word: "cake", meaning: "เค้ก", image: "https://api.iconify.design/fluent-emoji-flat/birthday-cake.svg", emoji: "🍰" },
+                    { word: "book", meaning: "หนังสือ", image: "https://api.iconify.design/fluent-emoji-flat/open-book.svg", emoji: "📖" },
+                    { word: "pencil", meaning: "ดินสอ", image: "https://api.iconify.design/fluent-emoji-flat/pencil.svg", emoji: "✏️" },
+                    { word: "bag", meaning: "กระเป๋า", image: "https://api.iconify.design/fluent-emoji-flat/backpack.svg", emoji: "🎒" },
+                    { word: "car", meaning: "รถยนต์", image: "https://api.iconify.design/fluent-emoji-flat/automobile.svg", emoji: "🚗" },
+                    { word: "airplane", meaning: "เครื่องบิน", image: "https://api.iconify.design/fluent-emoji-flat/airplane.svg", emoji: "✈️" },
+                    { word: "red", meaning: "สีแดง", image: "https://api.iconify.design/fluent-emoji-flat/red-circle.svg", emoji: "🔴" },
+                    { word: "blue", meaning: "สีฟ้า / สีน้ำเงิน", image: "https://api.iconify.design/fluent-emoji-flat/blue-circle.svg", emoji: "🔵" },
+                    { word: "yellow", meaning: "สีเหลือง", image: "https://api.iconify.design/fluent-emoji-flat/yellow-circle.svg", emoji: "🟡" },
+                    { word: "green", meaning: "สีเขียว", image: "https://api.iconify.design/fluent-emoji-flat/green-circle.svg", emoji: "🟢" },
+                    { word: "eyes", meaning: "ตา / ดวงตา", image: "https://api.iconify.design/fluent-emoji-flat/eyes.svg", emoji: "👀" },
+                    { word: "nose", meaning: "จมูก", image: "https://api.iconify.design/fluent-emoji-flat/nose.svg", emoji: "👃" },
+                    { word: "mouth", meaning: "ปาก", image: "https://api.iconify.design/fluent-emoji-flat/mouth.svg", emoji: "👄" },
+                    { word: "hand", meaning: "มือ", image: "https://api.iconify.design/fluent-emoji-flat/raised-hand.svg", emoji: "✋" },
+                    { word: "sun", meaning: "ดวงอาทิตย์", image: "https://api.iconify.design/fluent-emoji-flat/sun.svg", emoji: "☀️" },
+                    { word: "star", meaning: "ดวงดาว", image: "https://api.iconify.design/fluent-emoji-flat/star.svg", emoji: "⭐" }
                 ]
             }
         ];
@@ -839,9 +950,34 @@
         let generatedQuestions = [];
         let currentQuestionIdx = 0;
         let userScore = 0;
+        let targetQuestionCount = 10; // Default: 10 questions (มากกว่า 6 ข้อ!)
         let isSoundOn = true;
         let activeView = "home"; // Landing page first!
         let modalTargetWordIdx = null;
+
+        function setQuizCount(count) {
+            playSound('click');
+            targetQuestionCount = count;
+            updateQuizCountUI();
+        }
+
+        function updateQuizCountUI() {
+            const btns = document.querySelectorAll('.quiz-count-btn');
+            btns.forEach(btn => {
+                const val = btn.getAttribute('data-count');
+                const isSelected = (val === String(targetQuestionCount));
+                if (isSelected) {
+                    btn.className = "quiz-count-btn py-2 px-2 rounded-xl text-center font-black transition-all bg-yellow-400 text-yellow-950 shadow-md ring-2 ring-white scale-105";
+                } else {
+                    btn.className = "quiz-count-btn py-2 px-2 rounded-xl text-center font-bold transition-all bg-white/20 hover:bg-white/30 text-white";
+                }
+            });
+
+            const labels = document.querySelectorAll('.quiz-count-display-label');
+            labels.forEach(label => {
+                label.textContent = targetQuestionCount === 'all' ? 'ตามจำนวนคำทั้งหมด' : `${targetQuestionCount} ข้อ`;
+            });
+        }
 
         // True Fisher-Yates Shuffle for Non-Repetition
         function shuffleArray(array) {
@@ -1346,10 +1482,29 @@
             }
 
             const generated = [];
-            const randomizedWords = shuffleArray(currentWords);
             const shuffledTypes = shuffleArray(enabledTypes);
 
-            randomizedWords.forEach((targetItem, i) => {
+            // Determine target question count (10, 15, 20, or All)
+            let countToGenerate = targetQuestionCount === 'all' 
+                ? currentWords.length 
+                : parseInt(targetQuestionCount, 10);
+
+            if (isNaN(countToGenerate) || countToGenerate < 2) {
+                countToGenerate = Math.max(10, currentWords.length);
+            }
+
+            // Build word pool to match countToGenerate
+            let wordPool = [];
+            if (countToGenerate <= currentWords.length) {
+                wordPool = shuffleArray(currentWords).slice(0, countToGenerate);
+            } else {
+                while (wordPool.length < countToGenerate) {
+                    wordPool = wordPool.concat(shuffleArray(currentWords));
+                }
+                wordPool = wordPool.slice(0, countToGenerate);
+            }
+
+            wordPool.forEach((targetItem, i) => {
                 const questionType = shuffledTypes[i % shuffledTypes.length];
                 const others = currentWords.filter(w => w.word !== targetItem.word);
                 const randomizedOthers = shuffleArray(others);
@@ -2102,6 +2257,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderLandingPage();
             renderEditor();
+            updateQuizCountUI();
             switchView('home');
         });
     </script>
