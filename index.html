@@ -107,7 +107,7 @@
                 <div>
                     <h1 class="text-xl md:text-2xl font-extrabold text-pink-600 tracking-wide flex items-center gap-2">
                         KidsVocab Studio <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-0.5 rounded-full font-bold">ป.1 - ป.3</span>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">v2.5 เลือกคำศัพท์ได้ ✨</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] md:text-xs px-2.5 py-1 rounded-full font-black border border-emerald-300 shadow-sm">v2.6 ช่องติ๊กเลือกคำศัพท์ ☑️</span>
                     </h1>
                     <p class="text-xs text-gray-500 font-medium">ผจญภัยคำศัพท์ & ประโยคภาษาอังกฤษการ์ตูนแสนสนุก 🌟</p>
                 </div>
@@ -323,22 +323,31 @@
                             </div>
                         </div>
 
-                        <!-- Selection Quick Toolbar -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-pink-50/70 border border-pink-200 rounded-2xl mb-3 text-xs">
-                            <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="font-bold text-gray-700 mr-1">การเลือก:</span>
-                                <button type="button" onclick="selectAllVocab(true)" class="px-2.5 py-1 bg-white hover:bg-pink-100 text-pink-700 rounded-lg font-bold border border-pink-200 shadow-sm transition btn-bounce">
-                                    ✅ เลือกทั้งหมด
-                                </button>
-                                <button type="button" onclick="selectAllVocab(false)" class="px-2.5 py-1 bg-white hover:bg-gray-100 text-gray-600 rounded-lg font-bold border border-gray-200 shadow-sm transition btn-bounce">
-                                    ⬜ ยกเลิกทั้งหมด
-                                </button>
-                                <button type="button" onclick="randomSelectVocab(10)" class="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg font-bold transition btn-bounce flex items-center gap-1">
-                                    🎲 สุ่ม 10 คำ
-                                </button>
+                        <!-- Selection Quick Toolbar with Clear Guidance -->
+                        <div class="p-3 bg-gradient-to-r from-pink-50 via-purple-50 to-emerald-50 border-2 border-pink-200 rounded-2xl mb-3 shadow-sm">
+                            <div class="flex items-center justify-between gap-2 flex-wrap mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg">☑️</span>
+                                    <span class="text-xs font-bold text-gray-700">คลิกที่ปุ่ม <strong class="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-lg border border-emerald-300">✓ เลือกแล้ว</strong> เพื่อเลือก/ไม่เลือกคำที่จะนำไปออกสอบ:</span>
+                                </div>
+                                <div id="selection-status-badge" class="font-extrabold text-emerald-800 text-xs bg-white px-3 py-1 rounded-full border border-emerald-300 shadow-sm">
+                                    พร้อมใช้ 0 คำ ✨
+                                </div>
                             </div>
-                            <div id="selection-status-badge" class="font-bold text-pink-700 text-[11px] bg-white px-2.5 py-1 rounded-full border border-pink-200 shadow-sm">
-                                เลือกแล้ว 0 คำ
+                            <div class="flex items-center gap-2 flex-wrap text-xs pt-2 border-t border-pink-100">
+                                <span class="font-bold text-gray-600">ตัวช่วยด่วน:</span>
+                                <button type="button" onclick="selectAllVocab(true)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-sm transition btn-bounce flex items-center gap-1">
+                                    <span>✅</span> เลือกทั้งหมด
+                                </button>
+                                <button type="button" onclick="selectAllVocab(false)" class="px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded-xl font-bold border border-gray-300 shadow-sm transition btn-bounce flex items-center gap-1">
+                                    <span>⬜</span> ยกเลิกทั้งหมด
+                                </button>
+                                <button type="button" onclick="randomSelectVocab(10)" class="px-3 py-1.5 bg-amber-400 hover:bg-amber-500 text-amber-950 rounded-xl font-bold shadow-sm transition btn-bounce flex items-center gap-1">
+                                    <span>🎲</span> สุ่ม 10 คำ
+                                </button>
+                                <button type="button" onclick="randomSelectVocab(15)" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl font-bold border border-amber-300 transition btn-bounce flex items-center gap-1">
+                                    <span>🎲</span> สุ่ม 15 คำ
+                                </button>
                             </div>
                         </div>
 
@@ -2344,18 +2353,26 @@
                 const isSelected = item.selected !== false;
                 const s = getSentenceForWord(item);
                 return `
-                    <div class="p-3.5 rounded-2xl border-2 transition ${isSelected ? 'bg-pink-50/70 hover:bg-pink-50 border-pink-300 shadow-sm' : 'bg-gray-50/80 hover:bg-gray-100 border-gray-200 opacity-60'}">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <!-- Checkbox to toggle word selection -->
-                                <label class="cursor-pointer flex items-center p-1 rounded-lg hover:bg-white/80 transition" title="${isSelected ? 'คลิกเพื่อยกเลิกคำนี้' : 'คลิกเพื่อเลือกคำนี้'}">
-                                    <input type="checkbox" onchange="toggleSelectVocab(${idx})" ${isSelected ? 'checked' : ''} class="w-5 h-5 accent-pink-500 rounded cursor-pointer">
-                                </label>
+                    <div class="p-3.5 rounded-2xl border-2 transition ${isSelected ? 'bg-pink-50/70 hover:bg-pink-50 border-pink-300 shadow-sm' : 'bg-gray-50/80 hover:bg-gray-100 border-dashed border-gray-300 opacity-60'}">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2.5 sm:gap-3 flex-wrap sm:flex-nowrap">
+                                <!-- Big Prominent Custom Checkbox Button -->
+                                <button type="button" onclick="toggleSelectVocab(${idx})" class="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 transition-all btn-bounce select-none shrink-0 ${isSelected ? 'bg-emerald-500 hover:bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-100' : 'bg-white hover:bg-gray-50 text-gray-500 border-gray-300'}" title="${isSelected ? 'คลิกเพื่อยกเลิกคำนี้' : 'คลิกเพื่อเลือกคำนี้'}">
+                                    <div class="w-6 h-6 rounded-lg flex items-center justify-center text-sm font-black transition-all ${isSelected ? 'bg-white text-emerald-600 shadow-sm' : 'border-2 border-gray-300 text-transparent bg-gray-50'}">
+                                        ✓
+                                    </div>
+                                    <span class="text-xs font-black tracking-wide">
+                                        ${isSelected ? 'เลือกแล้ว ✓' : 'ไม่เลือก ✕'}
+                                    </span>
+                                </button>
+
+                                <!-- Visual Cartoon Preview -->
                                 <div onclick="openChangeImageModal(${idx})" class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-pink-100 flex items-center justify-center p-1 cursor-pointer hover:border-pink-400 transition shrink-0" title="คลิกเพื่อเปลี่ยนรูปภาพ">
                                     ${renderVisual(item, 'text-3xl', 'w-10 h-10')}
                                 </div>
+
                                 <div>
-                                    <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
+                                    <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2 flex-wrap">
                                         <span class="${isSelected ? '' : 'line-through text-gray-400'}">${item.word}</span>
                                         <button onclick="speakWord('${item.word}')" class="text-xs bg-white text-gray-600 hover:text-pink-600 p-1 rounded-full shadow-sm" title="ฟังเสียง">
                                             🔊
@@ -2363,11 +2380,15 @@
                                         <button onclick="openChangeImageModal(${idx})" class="text-[10px] bg-pink-100 hover:bg-pink-200 text-pink-700 px-2 py-0.5 rounded-full font-bold transition">
                                             เปลี่ยนรูป 🖼️
                                         </button>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isSelected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-gray-200 text-gray-600'}">
+                                            ${isSelected ? 'นำไปออกสอบ 🎯' : 'ข้ามคำนี้ ✕'}
+                                        </span>
                                     </div>
                                     <div class="text-xs text-gray-600 font-medium">${item.meaning}</div>
                                 </div>
                             </div>
-                            <button onclick="deleteVocab(${idx})" class="text-rose-400 hover:text-rose-600 p-2 rounded-xl hover:bg-white transition" title="ลบคำนี้">
+
+                            <button onclick="deleteVocab(${idx})" class="text-rose-400 hover:text-rose-600 p-2 rounded-xl hover:bg-white transition shrink-0" title="ลบคำนี้ออกจากรายการ">
                                 ✕
                             </button>
                         </div>
