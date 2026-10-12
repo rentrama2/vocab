@@ -107,7 +107,7 @@
                 <div>
                     <h1 class="text-xl md:text-2xl font-extrabold text-pink-600 tracking-wide flex items-center gap-2">
                         KidsVocab Studio <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-0.5 rounded-full font-bold">ป.1 - ป.3</span>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">v2.4 แบบฝึกหัด 10+ ข้อ</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">v2.5 เลือกคำศัพท์ได้ ✨</span>
                     </h1>
                     <p class="text-xs text-gray-500 font-medium">ผจญภัยคำศัพท์ & ประโยคภาษาอังกฤษการ์ตูนแสนสนุก 🌟</p>
                 </div>
@@ -304,18 +304,42 @@
                         </div>
                     </div>
 
-                    <!-- Vocab List in Current Pack -->
+                    <!-- Vocab List in Current Pack with Selection Features -->
                     <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-pink-200">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
                             <div>
                                 <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                                    <span>📝</span> รายการคำศัพท์ในชุดนี้ (<span id="vocab-count">0</span> คำ)
+                                    <span>📝</span> เลือกคำศัพท์ในชุดนี้ (<span id="vocab-selected-count" class="text-pink-600 font-extrabold">0</span> / <span id="vocab-count">0</span> คำ)
                                 </h2>
-                                <p class="text-xs text-gray-500">มีภาพการ์ตูนและประโยคประจำแต่ละคำศัพท์ คลิกที่ภาพเพื่อเปลี่ยนได้</p>
+                                <p class="text-xs text-gray-500">ติ๊กเลือกคำศัพท์ที่ต้องการนำไปออกข้อสอบหรือทำใบงาน (สลับ/สุ่มได้)</p>
                             </div>
-                            <button onclick="clearCurrentVocab()" class="text-xs text-rose-500 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl font-bold transition">
-                                🗑️ ล้างทั้งหมด
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="openWordBankModal()" class="text-xs bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm btn-bounce">
+                                    <span>📚</span> เลือกจากคลังคำ 60+
+                                </button>
+                                <button onclick="clearCurrentVocab()" class="text-xs text-rose-500 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl font-bold transition" title="ล้างรายการคำศัพท์">
+                                    🗑️ ล้างทั้งหมด
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Selection Quick Toolbar -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-pink-50/70 border border-pink-200 rounded-2xl mb-3 text-xs">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="font-bold text-gray-700 mr-1">การเลือก:</span>
+                                <button type="button" onclick="selectAllVocab(true)" class="px-2.5 py-1 bg-white hover:bg-pink-100 text-pink-700 rounded-lg font-bold border border-pink-200 shadow-sm transition btn-bounce">
+                                    ✅ เลือกทั้งหมด
+                                </button>
+                                <button type="button" onclick="selectAllVocab(false)" class="px-2.5 py-1 bg-white hover:bg-gray-100 text-gray-600 rounded-lg font-bold border border-gray-200 shadow-sm transition btn-bounce">
+                                    ⬜ ยกเลิกทั้งหมด
+                                </button>
+                                <button type="button" onclick="randomSelectVocab(10)" class="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg font-bold transition btn-bounce flex items-center gap-1">
+                                    🎲 สุ่ม 10 คำ
+                                </button>
+                            </div>
+                            <div id="selection-status-badge" class="font-bold text-pink-700 text-[11px] bg-white px-2.5 py-1 rounded-full border border-pink-200 shadow-sm">
+                                เลือกแล้ว 0 คำ
+                            </div>
                         </div>
 
                         <!-- Vocab Cards Container -->
@@ -474,6 +498,12 @@
                             </label>
                         </div>
 
+                        <!-- Active Selected Words Badge -->
+                        <div class="mb-4 bg-white/15 backdrop-blur p-3 rounded-2xl flex items-center justify-between text-xs font-bold">
+                            <span class="flex items-center gap-1.5"><span>🎯</span> คำศัพท์ที่จะใช้ทดสอบ:</span>
+                            <span id="cfg-active-vocab-count" class="bg-white text-pink-700 px-2.5 py-1 rounded-xl shadow-sm font-black">10 คำ</span>
+                        </div>
+
                         <button onclick="launchNewRandomGame()" class="w-full bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black py-4 px-6 rounded-2xl shadow-xl text-lg transition btn-bounce flex items-center justify-center gap-2">
                             <span>🎮</span> เริ่มเล่นเกมแบบฝึกหัดทันที! (<span class="quiz-count-display-label">10 ข้อ</span>)
                         </button>
@@ -565,6 +595,68 @@
             <button onclick="closeChangeImageModal()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2.5 rounded-xl transition text-sm">
                 ปิดหน้าต่าง
             </button>
+        </div>
+    </div>
+
+    <!-- Word Bank Picker Modal (เลือกคำศัพท์จากคลังคำ 60+ คำ) -->
+    <div id="modal-word-bank" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-3 md:p-4 z-50">
+        <div class="bg-white rounded-3xl p-5 md:p-7 max-w-4xl w-full shadow-2xl border-4 border-purple-300 transform transition-all scale-100 flex flex-col max-h-[92vh]">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100 shrink-0">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl md:text-4xl">📚</span>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-extrabold text-purple-900 flex items-center gap-2">
+                            คลังคำศัพท์สำหรับเด็ก (Word Bank)
+                            <span class="text-xs bg-purple-100 text-purple-700 font-bold px-2.5 py-0.5 rounded-full">60+ คำ</span>
+                        </h3>
+                        <p class="text-xs text-gray-500">ติ๊กเลือกคำศัพท์ที่ชอบ นำเข้าชุดแบบฝึกหัดได้ทันที</p>
+                    </div>
+                </div>
+                <button onclick="closeWordBankModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold p-1">✕</button>
+            </div>
+
+            <!-- Search & Action Toolbar -->
+            <div class="my-3 space-y-2.5 shrink-0">
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="relative flex-1 min-w-[200px]">
+                        <input type="text" id="wb-search-input" oninput="filterWordBank()" placeholder="ค้นหาคำศัพท์ เช่น cat, ช้าง, apple, สีแดง..." class="w-full text-sm pl-9 pr-4 py-2 border-2 border-purple-200 rounded-2xl outline-none focus:border-purple-400">
+                        <span class="absolute left-3 top-2 text-gray-400">🔍</span>
+                    </div>
+                    <button type="button" onclick="selectAllWordBank(true)" class="text-xs px-3 py-2 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold rounded-xl border border-purple-200 transition">
+                        ✅ เลือกทั้งหมดในหมวดนี้
+                    </button>
+                    <button type="button" onclick="selectAllWordBank(false)" class="text-xs px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 font-bold rounded-xl border border-gray-200 transition">
+                        ⬜ ล้างการเลือก
+                    </button>
+                </div>
+
+                <!-- Category Filter Pills -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs" id="wb-category-pills">
+                    <!-- Category pills injected by JS -->
+                </div>
+            </div>
+
+            <!-- Word Cards Grid (Scrollable) -->
+            <div id="wb-words-grid" class="flex-1 overflow-y-auto p-2 bg-purple-50/40 rounded-2xl border border-purple-100 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 min-h-[200px]">
+                <!-- Cards injected by JS -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3 shrink-0">
+                <div class="text-xs text-gray-600 font-bold flex items-center gap-2">
+                    <span>คำที่เลือกใหม่:</span>
+                    <span id="wb-selected-count-badge" class="bg-purple-600 text-white px-2.5 py-0.5 rounded-full text-xs font-black">0 คำ</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="closeWordBankModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-sm transition">
+                        ปิด
+                    </button>
+                    <button type="button" onclick="confirmImportWordBank()" id="wb-import-btn" class="px-5 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-extrabold rounded-xl text-sm transition btn-bounce shadow-md flex items-center gap-1.5">
+                        <span>➕</span> นำเข้าคำศัพท์ (<span id="wb-btn-count">0</span> คำ)
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -946,7 +1038,7 @@
 
         // Global State
         let currentPackTitle = "ร่างกายของฉัน (My Body)";
-        let currentWords = JSON.parse(JSON.stringify(PRESETS[0].words));
+        let currentWords = JSON.parse(JSON.stringify(PRESETS[0].words)).map(w => ({ ...w, selected: true }));
         let generatedQuestions = [];
         let currentQuestionIdx = 0;
         let userScore = 0;
@@ -977,6 +1069,231 @@
             labels.forEach(label => {
                 label.textContent = targetQuestionCount === 'all' ? 'ตามจำนวนคำทั้งหมด' : `${targetQuestionCount} ข้อ`;
             });
+        }
+
+        // ========================================================
+        // 2. VOCABULARY SELECTION & WORD BANK REPOSITORY
+        // ========================================================
+        const WORD_BANK_CATEGORIES = [
+            { id: "all", label: "🌟 ทั้งหมด (60+ คำ)" },
+            { id: "body", label: "👃 ร่างกาย", words: ["orange", "nose", "mouth", "eyes", "eye", "ear", "hand", "foot", "head", "arm", "leg"] },
+            { id: "animals", label: "🐶 สัตว์โลก", words: ["cat", "dog", "rabbit", "elephant", "lion", "tiger", "bear", "monkey", "bird", "fish", "duck", "pig", "cow", "horse", "sheep", "chicken", "frog", "snake", "turtle", "butterfly", "dinosaur", "giraffe", "zebra"] },
+            { id: "fruits", label: "🍎 ผลไม้ & อาหาร", words: ["apple", "banana", "watermelon", "strawberry", "mango", "grape", "pineapple", "pizza", "milk", "egg", "cake", "ice cream"] },
+            { id: "colors", label: "🎨 สี & ธรรมชาติ", words: ["red", "blue", "yellow", "green", "pink", "purple", "sun", "moon", "star", "rainbow", "tree", "flower", "umbrella"] },
+            { id: "school", label: "🎒 โรงเรียน", words: ["book", "pencil", "pen", "bag", "backpack", "ruler", "chair", "table", "clock", "computer"] },
+            { id: "vehicles", label: "🚀 ยานพาหนะ", words: ["car", "bus", "bicycle", "bike", "airplane", "plane", "helicopter", "train", "boat", "rocket"] }
+        ];
+
+        let wbActiveCategory = "all";
+        let wbSelectedWords = new Set();
+
+        // Returns currently selected/active words for quiz and worksheet
+        function getActiveWords() {
+            const selected = currentWords.filter(w => w.selected !== false);
+            return selected;
+        }
+
+        function toggleSelectVocab(idx) {
+            playSound('click');
+            if (currentWords[idx]) {
+                currentWords[idx].selected = currentWords[idx].selected === false ? true : false;
+                renderEditor();
+            }
+        }
+
+        function selectAllVocab(select = true) {
+            playSound('click');
+            currentWords.forEach(w => w.selected = select);
+            renderEditor();
+        }
+
+        function randomSelectVocab(count = 10) {
+            playSound('click');
+            if (currentWords.length <= count) {
+                selectAllVocab(true);
+                return;
+            }
+            currentWords.forEach(w => w.selected = false);
+            const indices = shuffleArray(currentWords.map((_, i) => i)).slice(0, count);
+            indices.forEach(idx => currentWords[idx].selected = true);
+            renderEditor();
+        }
+
+        // --- Word Bank Modal Controls ---
+        function openWordBankModal() {
+            playSound('click');
+            wbSelectedWords.clear();
+            wbActiveCategory = "all";
+            const searchInput = document.getElementById('wb-search-input');
+            if (searchInput) searchInput.value = '';
+            renderWordBankCategoryPills();
+            renderWordBankGrid();
+            updateWordBankCounter();
+            const modal = document.getElementById('modal-word-bank');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeWordBankModal() {
+            const modal = document.getElementById('modal-word-bank');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function renderWordBankCategoryPills() {
+            const container = document.getElementById('wb-category-pills');
+            if (!container) return;
+            container.innerHTML = WORD_BANK_CATEGORIES.map(cat => `
+                <button type="button" onclick="setWordBankCategory('${cat.id}')" class="px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition text-xs ${wbActiveCategory === cat.id ? 'bg-purple-600 text-white shadow-sm' : 'bg-white hover:bg-purple-50 text-gray-700 border border-purple-200'}">
+                    ${cat.label}
+                </button>
+            `).join('');
+        }
+
+        function setWordBankCategory(catId) {
+            playSound('click');
+            wbActiveCategory = catId;
+            renderWordBankCategoryPills();
+            renderWordBankGrid();
+        }
+
+        function filterWordBank() {
+            renderWordBankGrid();
+        }
+
+        function getWordBankFilteredWords() {
+            const keyword = (document.getElementById('wb-search-input')?.value || '').trim().toLowerCase();
+            let words = [];
+            if (wbActiveCategory === 'all') {
+                words = Object.keys(LOCAL_KID_VOCAB);
+            } else {
+                const foundCat = WORD_BANK_CATEGORIES.find(c => c.id === wbActiveCategory);
+                words = foundCat ? foundCat.words : Object.keys(LOCAL_KID_VOCAB);
+            }
+
+            const uniqueKeys = Array.from(new Set(words));
+            if (!keyword) return uniqueKeys;
+
+            return uniqueKeys.filter(key => {
+                const item = LOCAL_KID_VOCAB[key];
+                if (!item) return false;
+                return key.toLowerCase().includes(keyword) || (item.meaning && item.meaning.toLowerCase().includes(keyword));
+            });
+        }
+
+        function renderWordBankGrid() {
+            const grid = document.getElementById('wb-words-grid');
+            if (!grid) return;
+
+            const wordKeys = getWordBankFilteredWords();
+
+            if (wordKeys.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-10 text-center text-gray-400">
+                        <div class="text-4xl mb-2">🔍</div>
+                        <p class="text-sm font-bold text-gray-600">ไม่พบคำศัพท์ที่ตรงกับการค้นหา</p>
+                        <p class="text-xs text-gray-400 mt-1">ลองพิมพ์คำค้นหาอื่น หรือคลิกดูหมวดทั้งหมด</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const existingWords = new Set(currentWords.map(w => w.word.toLowerCase().trim()));
+
+            grid.innerHTML = wordKeys.map(key => {
+                const item = LOCAL_KID_VOCAB[key];
+                if (!item) return '';
+                const isAlreadyAdded = existingWords.has(key.toLowerCase().trim());
+                const isChecked = wbSelectedWords.has(key);
+
+                return `
+                    <div onclick="${isAlreadyAdded ? '' : `toggleWordBankSelection('${key}')`}" class="p-3 rounded-2xl border-2 transition relative flex flex-col items-center text-center cursor-pointer ${isAlreadyAdded ? 'bg-gray-100/90 border-gray-200 opacity-60 cursor-not-allowed' : (isChecked ? 'bg-purple-100 border-purple-500 shadow-sm ring-2 ring-purple-300' : 'bg-white hover:border-purple-300 border-gray-200 hover:shadow-sm')}">
+                        <div class="absolute top-2 right-2">
+                            ${isAlreadyAdded ? `
+                                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded-full">มีแล้ว</span>
+                            ` : `
+                                <input type="checkbox" ${isChecked ? 'checked' : ''} class="w-4 h-4 accent-purple-600 rounded cursor-pointer pointer-events-none">
+                            `}
+                        </div>
+                        <div class="w-12 h-12 flex items-center justify-center my-1">
+                            ${renderVisual(item, 'text-2xl', 'w-10 h-10')}
+                        </div>
+                        <div class="font-fredoka text-sm font-extrabold text-gray-800">${key}</div>
+                        <div class="text-[11px] text-gray-500 font-medium truncate max-w-full">${item.meaning}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleWordBankSelection(key) {
+            playSound('click');
+            if (wbSelectedWords.has(key)) {
+                wbSelectedWords.delete(key);
+            } else {
+                wbSelectedWords.add(key);
+            }
+            renderWordBankGrid();
+            updateWordBankCounter();
+        }
+
+        function selectAllWordBank(select = true) {
+            playSound('click');
+            const existingWords = new Set(currentWords.map(w => w.word.toLowerCase().trim()));
+            const visibleKeys = getWordBankFilteredWords();
+
+            if (select) {
+                visibleKeys.forEach(key => {
+                    if (!existingWords.has(key.toLowerCase().trim())) {
+                        wbSelectedWords.add(key);
+                    }
+                });
+            } else {
+                wbSelectedWords.clear();
+            }
+            renderWordBankGrid();
+            updateWordBankCounter();
+        }
+
+        function updateWordBankCounter() {
+            const count = wbSelectedWords.size;
+            const badge = document.getElementById('wb-selected-count-badge');
+            const btnCount = document.getElementById('wb-btn-count');
+            if (badge) badge.textContent = `${count} คำ`;
+            if (btnCount) btnCount.textContent = count;
+        }
+
+        function confirmImportWordBank() {
+            if (wbSelectedWords.size === 0) {
+                alert("กรุณาติ๊กเลือกคำศัพท์อย่างน้อย 1 คำ เพื่อนำเข้าครับ 😊");
+                return;
+            }
+
+            let addedCount = 0;
+            wbSelectedWords.forEach(key => {
+                const normKey = key.toLowerCase().trim();
+                if (!currentWords.some(w => w.word.toLowerCase().trim() === normKey)) {
+                    const data = LOCAL_KID_VOCAB[normKey];
+                    if (data) {
+                        currentWords.push({
+                            word: normKey,
+                            meaning: data.meaning,
+                            image: data.image,
+                            emoji: data.emoji || '🌟',
+                            selected: true
+                        });
+                        addedCount++;
+                    }
+                }
+            });
+
+            playSound('correct');
+            closeWordBankModal();
+            renderEditor();
+            alert(`นำเข้าคำศัพท์ใหม่จากคลังคำศัพท์เรียบร้อยแล้ว ${addedCount} คำ! 🎉`);
         }
 
         // True Fisher-Yates Shuffle for Non-Repetition
@@ -1311,7 +1628,8 @@
                     word: word,
                     meaning: meaning,
                     image: imgUrl,
-                    emoji: fallbackEmoji
+                    emoji: fallbackEmoji,
+                    selected: true
                 });
                 addedCount++;
             }
@@ -1458,8 +1776,9 @@
         // 5. QUESTION GENERATOR ENGINE (สุ่มใหม่ไม่ซ้ำกัน & มีเติมประโยค)
         // ========================================================
         function generateExerciseQuestions() {
-            if (currentWords.length < 2) {
-                alert("ต้องมีคำศัพท์อย่างน้อย 2 คำขึ้นไป เพื่อสร้างแบบฝึกหัดครับ 😊");
+            const activeWords = getActiveWords();
+            if (activeWords.length < 2) {
+                alert("ต้องมีคำศัพท์ที่ถูกเลือกอย่างน้อย 2 คำขึ้นไป เพื่อสร้างแบบฝึกหัดครับ 😊\n(กรุณาติ๊กเลือกคำศัพท์ในหน้าจัดการคำศัพท์)");
                 return false;
             }
 
@@ -1486,27 +1805,31 @@
 
             // Determine target question count (10, 15, 20, or All)
             let countToGenerate = targetQuestionCount === 'all' 
-                ? currentWords.length 
+                ? activeWords.length 
                 : parseInt(targetQuestionCount, 10);
 
             if (isNaN(countToGenerate) || countToGenerate < 2) {
-                countToGenerate = Math.max(10, currentWords.length);
+                countToGenerate = Math.max(Math.min(10, activeWords.length), 2);
             }
 
-            // Build word pool to match countToGenerate
+            // Build word pool to match countToGenerate from activeWords
             let wordPool = [];
-            if (countToGenerate <= currentWords.length) {
-                wordPool = shuffleArray(currentWords).slice(0, countToGenerate);
+            if (countToGenerate <= activeWords.length) {
+                wordPool = shuffleArray(activeWords).slice(0, countToGenerate);
             } else {
                 while (wordPool.length < countToGenerate) {
-                    wordPool = wordPool.concat(shuffleArray(currentWords));
+                    wordPool = wordPool.concat(shuffleArray(activeWords));
                 }
                 wordPool = wordPool.slice(0, countToGenerate);
             }
 
             wordPool.forEach((targetItem, i) => {
                 const questionType = shuffledTypes[i % shuffledTypes.length];
-                const others = currentWords.filter(w => w.word !== targetItem.word);
+                let others = activeWords.filter(w => w.word !== targetItem.word);
+                if (others.length < 3) {
+                    const extraOthers = currentWords.filter(w => w.word !== targetItem.word && !others.some(o => o.word === w.word));
+                    others = others.concat(extraOthers);
+                }
                 const randomizedOthers = shuffleArray(others);
                 const distractors = randomizedOthers.slice(0, 3);
 
@@ -1980,31 +2303,60 @@
                 </button>
             `).join('');
 
-            // Render Current Vocab List
-            document.getElementById('vocab-count').textContent = currentWords.length;
+            // Active / Selected count
+            const activeWords = getActiveWords();
+            const totalCount = currentWords.length;
+            const selectedCount = activeWords.length;
+
+            const selectedCountEl = document.getElementById('vocab-selected-count');
+            if (selectedCountEl) selectedCountEl.textContent = selectedCount;
+
+            const vocabCountEl = document.getElementById('vocab-count');
+            if (vocabCountEl) vocabCountEl.textContent = totalCount;
+
+            const cfgActiveEl = document.getElementById('cfg-active-vocab-count');
+            if (cfgActiveEl) cfgActiveEl.textContent = `${selectedCount} / ${totalCount} คำ`;
+
+            const statusBadge = document.getElementById('selection-status-badge');
+            if (statusBadge) {
+                if (selectedCount < 2) {
+                    statusBadge.textContent = '⚠️ ต้องเลือกอย่างน้อย 2 คำ';
+                    statusBadge.className = 'font-bold text-rose-600 text-[11px] bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200 shadow-sm';
+                } else {
+                    statusBadge.textContent = `พร้อมใช้ ${selectedCount} คำ ✨`;
+                    statusBadge.className = 'font-bold text-emerald-700 text-[11px] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shadow-sm';
+                }
+            }
+
             const vocabList = document.getElementById('vocab-list');
             if (currentWords.length === 0) {
                 vocabList.innerHTML = `
                     <div class="text-center py-8 text-gray-400">
                         <div class="text-4xl mb-2">📦</div>
-                        <p class="text-sm">ยังไม่มีคำศัพท์ในชุดนี้ กรุณาเลือกหมวดหมู่หรือเพิ่มคำศัพท์ใหม่</p>
+                        <p class="text-sm font-bold text-gray-600">ยังไม่มีคำศัพท์ในชุดนี้</p>
+                        <p class="text-xs text-gray-400 mt-1">คลิกปุ่ม <span class="text-purple-600 font-bold">"📚 เลือกจากคลังคำ 60+"</span> หรือเลือกหมวดหมู่ด้านบนได้เลย</p>
                     </div>
                 `;
                 return;
             }
 
             vocabList.innerHTML = currentWords.map((item, idx) => {
+                const isSelected = item.selected !== false;
                 const s = getSentenceForWord(item);
                 return `
-                    <div class="p-3.5 bg-pink-50/60 hover:bg-pink-50 rounded-2xl border border-pink-200 transition">
+                    <div class="p-3.5 rounded-2xl border-2 transition ${isSelected ? 'bg-pink-50/70 hover:bg-pink-50 border-pink-300 shadow-sm' : 'bg-gray-50/80 hover:bg-gray-100 border-gray-200 opacity-60'}">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
+                                <!-- Checkbox to toggle word selection -->
+                                <label class="cursor-pointer flex items-center p-1 rounded-lg hover:bg-white/80 transition" title="${isSelected ? 'คลิกเพื่อยกเลิกคำนี้' : 'คลิกเพื่อเลือกคำนี้'}">
+                                    <input type="checkbox" onchange="toggleSelectVocab(${idx})" ${isSelected ? 'checked' : ''} class="w-5 h-5 accent-pink-500 rounded cursor-pointer">
+                                </label>
                                 <div onclick="openChangeImageModal(${idx})" class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-pink-100 flex items-center justify-center p-1 cursor-pointer hover:border-pink-400 transition shrink-0" title="คลิกเพื่อเปลี่ยนรูปภาพ">
                                     ${renderVisual(item, 'text-3xl', 'w-10 h-10')}
                                 </div>
                                 <div>
                                     <div class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
-                                        ${item.word}
+                                        <span class="${isSelected ? '' : 'line-through text-gray-400'}">${item.word}</span>
                                         <button onclick="speakWord('${item.word}')" class="text-xs bg-white text-gray-600 hover:text-pink-600 p-1 rounded-full shadow-sm" title="ฟังเสียง">
                                             🔊
                                         </button>
@@ -2038,6 +2390,7 @@
             if (found) {
                 currentPackTitle = found.title;
                 currentWords = JSON.parse(JSON.stringify(found.words));
+                currentWords.forEach(w => w.selected = true);
                 document.getElementById('game-pack-title').textContent = currentPackTitle;
                 renderEditor();
                 renderLandingPage();
@@ -2071,7 +2424,8 @@
                 word: word,
                 meaning: meaning,
                 image: imageUrl,
-                emoji: emoji
+                emoji: emoji,
+                selected: true
             });
 
             currentPackTitle = "ชุดคำศัพท์ที่คุณกำหนดเอง (Custom Pack)";
@@ -2102,16 +2456,21 @@
         // 9. PRINTABLE A4 WORKSHEET GENERATION (มี 3 ตอนครบครัน)
         // ========================================================
         function renderPrintableWorksheet() {
-            document.getElementById('sheet-pack-name').textContent = currentPackTitle;
-            document.getElementById('sheet-max-score').textContent = currentWords.length * 2;
+            const activeWords = getActiveWords();
+            const sheetTitle = activeWords.length !== currentWords.length
+                ? `${currentPackTitle} (เลือก ${activeWords.length} คำ)`
+                : currentPackTitle;
+
+            document.getElementById('sheet-pack-name').textContent = sheetTitle;
+            document.getElementById('sheet-max-score').textContent = activeWords.length * 2;
 
             const area = document.getElementById('sheet-content-area');
-            if (currentWords.length === 0) {
-                area.innerHTML = `<p class="text-center text-gray-400">ยังไม่มีคำศัพท์ กรุณาเพิ่มคำศัพท์ก่อนพิมพ์ครับ</p>`;
+            if (activeWords.length === 0) {
+                area.innerHTML = `<p class="text-center text-gray-400 py-8">ยังไม่มีคำศัพท์ที่เลือก กรุณาติ๊กเลือกคำศัพท์ในหน้าจัดการคำศัพท์ก่อนพิมพ์ครับ</p>`;
                 return;
             }
 
-            const shuffledWords = shuffleArray(currentWords);
+            const shuffledWords = shuffleArray(activeWords);
 
             area.innerHTML = `
                 <!-- Part 1: โยงเส้นจับคู่ภาพ -->
@@ -2124,7 +2483,7 @@
                     <div class="grid grid-cols-2 gap-8 border-2 border-gray-200 rounded-2xl p-6 bg-pink-50/20">
                         <!-- Column Left: Picture + Thai -->
                         <div class="space-y-4">
-                            ${currentWords.map(item => `
+                            ${activeWords.map(item => `
                                 <div class="flex items-center justify-between p-2 border-b border-gray-200">
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 flex items-center justify-center">
@@ -2157,7 +2516,7 @@
                     </h3>
 
                     <div class="space-y-3">
-                        ${currentWords.map((item, idx) => {
+                        ${activeWords.map((item, idx) => {
                             const s = getSentenceForWord(item);
                             const cloze = s.en.replace(/______+/g, '____________________');
                             return `
@@ -2181,7 +2540,7 @@
                     </h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        ${currentWords.map(item => {
+                        ${activeWords.map(item => {
                             const chars = item.word.split('');
                             const maskIdx = Math.floor(chars.length / 2);
                             const maskedWord = chars.map((c, i) => i === maskIdx ? '___' : c).join(' ');
